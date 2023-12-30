@@ -2,15 +2,21 @@ import { ApolloServer } from 'apollo-server';
 import dotenv from 'dotenv';
 import typeDef from './schema.js';
 
-const keys = dotenv.config();
+const keys = dotenv.config().parsed;
+const { APIkey } = keys;
 const resolvers = {
   Query: {
-    fetchs: () => {
-      console.log('fetchs');
-      fetch('https://partners.every.org/v0.2/search/pets?take=1&apiKey=pk_live_4d17374d4c171f0f91524140256c6bc3')
-        .then((res) => res.json())
-      .then((data) => console.log(data.nonprofits));
-      return 'test';
+    fetchs: async (_, { search, take}) => {
+
+      try {
+        const res = await fetch(`https://partners.every.org/v0.2/search/${search}?take=${take}&apiKey=${APIkey}`);
+        const data = await res.json();
+        const nonprofits = data.nonprofits;
+        return nonprofits;
+      } catch (err) {
+        console.log(err);
+      }
+  
     },
   },
 };
