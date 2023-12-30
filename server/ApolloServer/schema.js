@@ -24,11 +24,26 @@ type Nonprofit {
   tagUrl: String,
   tagImageUrl: String,
 }
+type Cause {
+  description: String,
+  name: String,
+  profileUrl: String,
+  logoUrl: String,
+  coverImageUrl: String,
+  logoCloudinaryId: String,
+  matchedTerms: [String],
+  slug: String,
+  location: String,
+  tags: [String],
+}
 type Query {
   search(search: String, take: Int): [Search]
 }
 type Query {
   nonprofit(take: Int): [Nonprofit]
+}
+type Query {
+  cause(browse: String): [Cause]
 }
 `;
 
