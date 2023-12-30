@@ -1,16 +1,40 @@
 import { ApolloServer } from 'apollo-server';
 import dotenv from 'dotenv';
 import typeDef from './schema.js';
-
-const keys = dotenv.config();
+const URL = 'https://partners.every.org/v0.2';
+const keys = dotenv.config().parsed;
+const { APIkey } = keys;
 const resolvers = {
   Query: {
-    fetchs: () => {
-      console.log('fetchs');
-      fetch('https://partners.every.org/v0.2/search/pets?take=1&apiKey=pk_live_4d17374d4c171f0f91524140256c6bc3')
-        .then((res) => res.json())
-      .then((data) => console.log(data.nonprofits));
-      return 'test';
+    search: async (_, { search, take}) => {
+      try {
+        const res = await fetch(`${URL}/search/${search}?take=${take}&apiKey=${APIkey}`);
+        const data = await res.json();
+        const nonprofits = data.nonprofits;
+        return nonprofits;
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    nonprofit: async (_, { take }) => {
+      try {
+        const res = await fetch(`${URL}/nonprofit/maps?take=${take}apiKey=${APIkey}`);
+        const data = await res.json();
+        const nonprofit = data.data.nonprofitTags;
+        return nonprofit;
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    cause: async (_, { browse }) => {
+      try {
+        const res = await fetch(`${URL}/browse/${browse}?apiKey=${APIkey}`);
+        const data = await res.json();
+        const nonprofit = data.nonprofits;
+        return nonprofit;
+      } catch (err) {
+        console.log(err);
+      }
     },
   },
 };
