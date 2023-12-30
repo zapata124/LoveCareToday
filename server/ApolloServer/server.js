@@ -6,8 +6,7 @@ const keys = dotenv.config().parsed;
 const { APIkey } = keys;
 const resolvers = {
   Query: {
-    fetchs: async (_, { search, take}) => {
-
+    search: async (_, { search, take}) => {
       try {
         const res = await fetch(`https://partners.every.org/v0.2/search/${search}?take=${take}&apiKey=${APIkey}`);
         const data = await res.json();
@@ -16,7 +15,17 @@ const resolvers = {
       } catch (err) {
         console.log(err);
       }
-  
+    },
+    nonprofit: async (_, { take }) => {
+      try {
+        const res = await fetch(`https://partners.every.org/v0.2/nonprofit/maps?take=${take}apiKey=${APIkey}`);
+        const data = await res.json();
+        const nonprofit = data.data.nonprofitTags;
+        console.log(nonprofit);
+        return nonprofit;
+      } catch (err) {
+        console.log(err);
+      }
     },
   },
 };

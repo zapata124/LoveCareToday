@@ -15,8 +15,20 @@ type Search {
   websiteUrl: String,
   tags: [String],
 }
+type Nonprofit {
+  id: String,
+  tagName: String,
+  causeCatergory: String,
+  title: String,
+  tagImageCloudinaryId: String,
+  tagUrl: String,
+  tagImageUrl: String,
+}
 type Query {
-  fetchs(search: String, take: Int): [Search]
+  search(search: String, take: Int): [Search]
+}
+type Query {
+  nonprofit(take: Int): [Nonprofit]
 }
 `;
 
