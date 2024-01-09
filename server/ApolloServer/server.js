@@ -1,9 +1,13 @@
 import { ApolloServer } from 'apollo-server';
 import dotenv from 'dotenv';
 import typeDef from './schema.js';
+
+
 const URL = 'https://partners.every.org/v0.2';
 const keys = dotenv.config().parsed;
 const { APIkey } = keys;
+
+
 const resolvers = {
   Query: {
     search: async (_, { search, take}) => {
@@ -18,6 +22,7 @@ const resolvers = {
     },
     nonprofit: async (_, { take }) => {
       try {
+        console.log('server')
         const res = await fetch(`${URL}/nonprofit/maps?take=${take}apiKey=${APIkey}`);
         const data = await res.json();
         const nonprofit = data.data.nonprofitTags;
@@ -38,6 +43,8 @@ const resolvers = {
     },
   },
 };
+
+
 // we might need to change this to express
 const server = new ApolloServer({
   typeDefs: typeDef,
@@ -45,6 +52,7 @@ const server = new ApolloServer({
   csrfPrevention: true,
   cache: 'bounded',
 });
+
 
 // The `listen` method launches a web server.
 server.listen().then(({ url }) => {
