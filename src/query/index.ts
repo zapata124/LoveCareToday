@@ -13,3 +13,22 @@ export const getNonProfit = gql`
         }
     }
 `
+
+export const getNonProfitByTitle = gql`
+    query Cause($search: String, $take: Int) {
+        search(search: $search, take: $take) {
+            coverImageUrl
+            description
+            ein
+            logoCloudinaryId
+            location
+            logoUrl
+            matchedTerms
+            name
+            profileUrl
+            slug
+            tags
+            websiteUrl
+        }
+    }
+`

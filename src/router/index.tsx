@@ -1,18 +1,20 @@
-import { createBrowserRouter, Outlet, RouteObject } from 'react-router-dom';
+import { createBrowserRouter, RouteObject } from 'react-router-dom';
 import App from '../App';
+import Organization from '../pages/Organization';
+import MainCard from '../components/MainCard';
 
 const routes: RouteObject[] = [
   {
     path: '/',
-    element: <Outlet />,
+    element: <App />,
     children: [
       {
         path: '/',
-        element: <App />,
+        element: <MainCard />,
       },
       {
         path: '/:id',
-        element: <App />,
+        element: <Organization />,
       },
     ],
   },
