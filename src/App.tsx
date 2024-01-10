@@ -4,7 +4,7 @@ import { Outlet } from 'react-router-dom';
 
 const App: React.FC = () => {
   return (
-    <Container maxWidth='lg' sx={{ height: '86vh', mt: 15, bgcolor: 'red', overflowY: 'scroll' }}>
+    <Container maxWidth='lg' sx={{ height: '86vh', mt: 15, overflowY: 'scroll' }}>
       <Grid container spacing={2} sx={{ pt: 2, pb: 2 }}>
         <Outlet />
       </Grid>

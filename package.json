@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "concurrently \"vite\" \"cd server && nodemon ./ApolloServer/server.js\"",
+    "dev": "concurrently \"vite\" \"cd server && nodemon ./ApolloServer/server.ts\"",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "start": "vite"

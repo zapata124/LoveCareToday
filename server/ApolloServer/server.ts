@@ -1,6 +1,6 @@
 import { ApolloServer } from 'apollo-server';
 import dotenv from 'dotenv';
-import typeDef from './schema.js';
+import typeDef from './schema';
 
 
 const URL = 'https://partners.every.org/v0.2';
