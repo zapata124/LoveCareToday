@@ -18,7 +18,7 @@ type Search {
 type Nonprofit {
   id: String,
   tagName: String,
-  causeCatergory: String,
+  causeCategory: String,
   title: String,
   tagImageCloudinaryId: String,
   tagUrl: String,
