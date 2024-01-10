@@ -2,18 +2,18 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { FormControl } from '@mui/material';
-
+import { useNavigate } from 'react-router-dom';
 const SearchBar: React.FC = () => {
   const [search, setSearch] = React.useState('');
+  const navigate = useNavigate();
   const handleASearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(event.target.value);
   };
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setSearch('');
-    console.log(search, 'submitted');
+    navigate(`/search/${search}`);
   };
-  console.log(search);
   return (
     <Box sx={{ width: 600 }}>
       <FormControl fullWidth>
