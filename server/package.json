@@ -2,13 +2,12 @@
   "name": "server",
   "version": "1.0.0",
   "description": "",
-  "main": "./ApolloServer/server.js",
-  "type": "module",
+  "main": "./ApolloServer/server.ts",
   "scripts": {
     "compile": "tsc",
-    "start": "nodemon ./ApolloServer/server.js",
+    "start": "nodemon ./ApolloServer/server.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "TestServer": "nodemon ./ApolloServer/server.js"
+    "TestServer": "nodemon ./ApolloServer/server.ts"
   },
   "author": "",
   "license": "ISC",
@@ -21,11 +20,13 @@
     "dotenv": "^16.3.1",
     "graphql": "^16.6.0",
     "mongoose": "^6.10.0",
-    "node-fetch": "^3.3.0"
+    "node-fetch": "^3.3.0",
+    "nodemon": "^3.0.2"
   },
   "devDependencies": {
-    "@types/node": "^18.14.0",
+    "@types/node": "^18.19.6",
     "serverless-plugin-typescript": "^2.1.4",
+    "ts-node": "^10.9.2",
     "typescript": "^4.9.5"
   }
 }

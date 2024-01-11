@@ -3,7 +3,7 @@ import { gql } from '@apollo/client';
 export const getNonProfit = gql`
     query Query {
         nonprofit {
-            causeCatergory
+            causeCategory
             id
             tagImageCloudinaryId
             tagImageUrl
