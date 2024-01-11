@@ -9,7 +9,7 @@ const removeDash = (str: string) => {
   return str.replace(/-/g, ' ');
 };
 
-const Organization: React.FC = () => {
+const RenderSearch: React.FC = () => {
   const { id } = useParams();
   const parsedId = removeDash(id || '');
   const { loading, error, data } = useQuery(getNonProfitByTitle, {
@@ -19,4 +19,4 @@ const Organization: React.FC = () => {
   return <>{loading ? <div>Loading....</div> : <OrganizationCard data={data.search} />}</>;
 };
 
-export default Organization;
+export default RenderSearch;
