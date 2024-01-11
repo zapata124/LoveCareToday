@@ -3,10 +3,9 @@ import dotenv from 'dotenv';
 import typeDef from '../ApolloServer/schema';
 import axios from 'axios';
 
-const URL = 'https://partners.every.org/v0.2';
-// const keys = dotenv.config().parsed;
-// const { APIkey } = keys;
-const APIkey = 'pk_live_4d17374d4c171f0f91524140256c6bc3'
+const keys = dotenv.config().parsed;
+const { APIkey, URL } = keys;
+
 
 const resolvers = {
   Query: {
