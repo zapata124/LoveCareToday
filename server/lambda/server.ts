@@ -1,8 +1,6 @@
-import { ApolloServer } from 'apollo-server';
-// import { ApolloServer } from 'apollo-server-lambda';
+import { ApolloServer } from 'apollo-server-lambda';
 import dotenv from 'dotenv';
-import typeDef from './schema';
-// import { startServerAndCreateLambdaHandler, handlers } from '@as-integrations/aws-lambda';
+import typeDef from '../ApolloServer/schema';
 import axios from 'axios';
 
 const URL = 'https://partners.every.org/v0.2';
@@ -52,15 +50,4 @@ const server = new ApolloServer({
 });
 
 
-// The `listen` method launches a web server.
-server.listen().then(({ url }) => {
-  console.log(`🚀  Server ready at ${url}`);
-});
-
-// export const graphqlHandler = startServerAndCreateLambdaHandler(
-//   server as any,
-//   // We will be using the Proxy V2 handler
-//   handlers.createAPIGatewayProxyEventV2RequestHandler(),
-// );
-
-// export const graphqlHandler = server.createHandler();
+export const graphqlHandler = server.createHandler();
