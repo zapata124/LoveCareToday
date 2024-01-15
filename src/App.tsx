@@ -2,7 +2,7 @@ import React from 'react';
 import { AppBar, Container, Grid } from '@mui/material';
 import { Outlet } from 'react-router-dom';
 import SearchBar from './components/searchbar/SearchBar';
-
+import { Scrollbars } from 'react-custom-scrollbars';
 const App: React.FC = () => {
   return (
     <>
@@ -11,10 +11,12 @@ const App: React.FC = () => {
       >
         <SearchBar />
       </AppBar>
-      <Container maxWidth='lg' sx={{ height: '86vh', mt: 15, overflowY: 'scroll' }}>
-        <Grid container spacing={2} sx={{ pt: 2, pb: 2 }}>
-          <Outlet />
-        </Grid>
+      <Container maxWidth='lg' sx={{ height: '86vh', mt: 15 }}>
+        <Scrollbars style={{ width: '100%', height: '100%' }}>
+          <Grid container spacing={2} sx={{ pt: 2, pb: 2, pr: 2 }}>
+            <Outlet />
+          </Grid>
+        </Scrollbars>
       </Container>
     </>
   );
