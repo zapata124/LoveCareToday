@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { Autocomplete, FormControl } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+
 // import { useQuery } from '@apollo/client';
 // import { getNonProfitByTitle } from '../../query';
 
@@ -35,7 +36,7 @@ const SearchBar: React.FC = () => {
   //   };
 
   const navigate = useNavigate();
-  console.log(apiKey, URL);
+
   useEffect(() => {
     fetch(`https://${URL}/search/${search}?apiKey=${apiKey}`)
       .then((res) => res.json())
@@ -44,6 +45,7 @@ const SearchBar: React.FC = () => {
       })
       .catch((err) => console.log(err));
   }, [search]);
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setSearch('');
@@ -61,7 +63,7 @@ const SearchBar: React.FC = () => {
             value={search}
             onChange={(event: any, newValue: string | null | undefined) => {
               if (newValue === null || newValue === undefined) return;
-              setSearch(newValue as string);
+              handleSubmit(event);
             }}
             inputValue={search}
             onInputChange={(event, newInputValue) => {
