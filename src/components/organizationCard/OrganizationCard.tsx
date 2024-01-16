@@ -16,6 +16,7 @@ interface OrganizationCardProps {
 }
 
 const OrganizationCard: React.FC<OrganizationCardProps> = ({ data }) => {
+  console.log(data, 'data');
   function createWidget(slug: string) {
     /* tslint:disable-next-line */
     // @ts-expect-error this will work once loaded
@@ -47,7 +48,7 @@ const OrganizationCard: React.FC<OrganizationCardProps> = ({ data }) => {
                 subheader={item.slug}
                 avatar={<img src={item.logoUrl} />}
               />
-              <CardContent>
+              <CardContent sx={{ overflowY: 'auto' }}>
                 <Typography>{item.description}</Typography>
               </CardContent>
               <CardActions sx={{ justifyContent: 'center' }}>
@@ -59,7 +60,6 @@ const OrganizationCard: React.FC<OrganizationCardProps> = ({ data }) => {
                   {/* <a href={`https://www.every.org/${item.slug}#/donate`}>Donate</a> */}
                   Donate
                 </Button>
-                <div></div>
               </CardActions>
             </Card>
           </Grid>

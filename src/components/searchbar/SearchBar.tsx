@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import { Autocomplete, FormControl } from '@mui/material';
+import { Autocomplete, FormControl, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 // import { useQuery } from '@apollo/client';
@@ -11,13 +11,12 @@ const apiKey = import.meta.env.VITE_APIkey;
 const URL = import.meta.env.VITE_URL;
 
 const convertToLabeldOptions = (options: string[]) => {
-  const parced = options.map((option: any) => ({ label: option.name }));
+  const parced = options.map((option: any) => ({ label: option.name, logoUrl: option.logoUrl }));
   return parced;
 };
 const SearchBar: React.FC = () => {
   const [search, setSearch] = React.useState<string | undefined>('');
   const [searchOptions, setSearchqOptions] = React.useState<any>([]);
-
   // / This is here for late use ///
 
   //   const [newData, setNewData] = React.useState<any>([]);
@@ -41,6 +40,7 @@ const SearchBar: React.FC = () => {
     fetch(`https://${URL}/search/${search}?apiKey=${apiKey}`)
       .then((res) => res.json())
       .then((data: any) => {
+        console.log(data, 'data');
         setSearchqOptions(convertToLabeldOptions(data.nonprofits));
       })
       .catch((err) => console.log(err));
@@ -50,7 +50,7 @@ const SearchBar: React.FC = () => {
     event.preventDefault();
     setSearch('');
     setSearchqOptions([]);
-    navigate(`/search/${search}`);
+    navigate(`/search/${event.type === 'submit' ? search : event.target.outerText}`);
   };
 
   return (
@@ -60,18 +60,27 @@ const SearchBar: React.FC = () => {
           <Autocomplete
             autoComplete
             autoSelect
-            value={search}
-            onChange={(event: any, newValue: string | null | undefined) => {
+            onChange={(event: any, newValue: string | null | undefined | any) => {
               if (newValue === null || newValue === undefined) return;
               handleSubmit(event);
             }}
             inputValue={search}
-            onInputChange={(event, newInputValue) => {
-              setSearch(newInputValue);
+            onInputChange={(event, newInputValue, reason) => {
+              setSearch(reason === 'reset' ? '' : newInputValue);
             }}
             disablePortal
             id='combo-box-demo'
             options={searchOptions}
+            renderOption={(props, option: { label: string; logoUrl: string }) => {
+              return (
+                <Box component='li' sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
+                  <img loading='lazy' width='20' src={option.logoUrl} alt='' />
+                  <Typography sx={{ fontSize: 12, fontWeight: 'bold' }} noWrap>
+                    {option.label}
+                  </Typography>
+                </Box>
+              );
+            }}
             sx={{ width: 300 }}
             renderInput={(params) => <TextField {...params} placeholder='Search' />}
           />
