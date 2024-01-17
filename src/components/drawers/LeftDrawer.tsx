@@ -10,6 +10,7 @@ import {
   ListItemIcon,
   ListItemText,
   Slide,
+  Dialog,
 } from '@mui/material';
 import { causes as Causes } from './causes';
 import InboxIcon from '@mui/icons-material/Inbox';
@@ -63,25 +64,33 @@ const LeftDrawer: React.FC = () => {
           <Typography variant='h6'>Causes</Typography>
         </Slide>
       </Button>
-      <Slide direction='right' in={open} mountOnEnter unmountOnExit>
-        <Box
-          width={236}
-          height={'80%'}
-          overflow={'auto'}
-          sx={{
-            position: 'fixed',
-            zIndex: 1000,
-            top: 116,
-            left: '1%',
-            borderRadius: '25px 25px 25px 25px',
-            bgcolor: '#F0F8FF',
-          }}
-        >
-          <Scrollbars style={{ width: '100%', height: '100%' }}>
-            <CausesList open={open} causes={Causes} />
-          </Scrollbars>
-        </Box>
-      </Slide>
+      <Dialog
+        open={open}
+        keepMounted
+        onClose={handleDrawer}
+        aria-describedby='causes-list-modal'
+        hideBackdrop
+      >
+        <Slide direction='right' in={open} mountOnEnter unmountOnExit>
+          <Box
+            width={236}
+            height={'80%'}
+            overflow={'auto'}
+            sx={{
+              position: 'fixed',
+              zIndex: 1000,
+              top: 116,
+              left: '1%',
+              borderRadius: '25px 25px 25px 25px',
+              bgcolor: '#F0F8FF',
+            }}
+          >
+            <Scrollbars style={{ width: '100%', height: '100%' }}>
+              <CausesList open={open} causes={Causes} />
+            </Scrollbars>
+          </Box>
+        </Slide>
+      </Dialog>
     </>
   );
 };

@@ -4,7 +4,6 @@ import { useQuery } from '@apollo/client';
 import { useParams } from 'react-router-dom';
 
 import OrganizationCard from '../components/organizationCard';
-import { Skeleton } from '@mui/material';
 import { RenderSearchSkeleton } from '../components/skeletons';
 
 const removeDash = (str: string) => {

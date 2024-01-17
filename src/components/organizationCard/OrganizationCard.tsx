@@ -10,7 +10,6 @@ import {
   Button,
   Grow,
 } from '@mui/material';
-import { it } from 'node:test';
 
 interface OrganizationCardProps {
   data: unknown[];
