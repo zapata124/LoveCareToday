@@ -16,7 +16,6 @@ interface OrganizationCardProps {
 }
 
 const OrganizationCard: React.FC<OrganizationCardProps> = ({ data }) => {
-  console.log(data, 'data');
   function createWidget(slug: string) {
     /* tslint:disable-next-line */
     // @ts-expect-error this will work once loaded
