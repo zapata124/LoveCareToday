@@ -66,7 +66,7 @@ const LeftDrawer: React.FC = () => {
       </Button>
       <Dialog
         open={open}
-        keepMounted
+        // keepMounted
         onClose={handleDrawer}
         aria-describedby='causes-list-modal'
         hideBackdrop
@@ -75,7 +75,7 @@ const LeftDrawer: React.FC = () => {
           <Box
             width={236}
             height={'80%'}
-            overflow={'auto'}
+            overflow={'hidden'}
             sx={{
               position: 'fixed',
               zIndex: 1000,

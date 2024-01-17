@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import { Autocomplete, FormControl, Typography } from '@mui/material';
+import { Autocomplete, FormControl, Paper, Popper, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 // import { useQuery } from '@apollo/client';
@@ -54,10 +54,20 @@ const SearchBar: React.FC = () => {
   };
 
   return (
-    <Box sx={{ width: 600 }}>
-      <FormControl fullWidth>
+    <Box
+      sx={{
+        width: { xl: '50%', lg: '50%', md: '50%', sm: '50%', xs: '100%' },
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
+      <FormControl sx={{ width: '100%', pl: 1, pr: 1 }}>
         <form onSubmit={handleSubmit}>
           <Autocomplete
+            sx={{
+              '.MuiAutocomplete-inputRoot': { borderRadius: 500 },
+            }}
             autoComplete
             autoSelect
             onChange={(event: any, newValue: string | null | undefined | any) => {
@@ -68,6 +78,10 @@ const SearchBar: React.FC = () => {
             onInputChange={(event, newInputValue, reason) => {
               setSearch(reason === 'reset' ? '' : newInputValue);
             }}
+            PopperComponent={(props) => (
+              <Popper {...props} sx={{ display: 'flex', justifyContent: 'center' }} />
+            )}
+            PaperComponent={({ children }) => <Paper style={{ width: '94%' }}>{children}</Paper>}
             disablePortal
             id='combo-box-demo'
             options={searchOptions}
@@ -81,7 +95,7 @@ const SearchBar: React.FC = () => {
                 </Box>
               );
             }}
-            sx={{ width: 300 }}
+            fullWidth
             renderInput={(params) => <TextField {...params} placeholder='Search' />}
           />
         </form>
