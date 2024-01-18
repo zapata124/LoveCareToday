@@ -1,7 +1,14 @@
 import React, { useEffect } from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import { Autocomplete, FormControl, Paper, Popper, Typography } from '@mui/material';
+import {
+  Autocomplete,
+  CircularProgress,
+  FormControl,
+  Paper,
+  Popper,
+  Typography,
+} from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 // import { useQuery } from '@apollo/client';
@@ -82,7 +89,7 @@ const SearchBar: React.FC = () => {
               <Popper {...props} sx={{ display: 'flex', justifyContent: 'center' }} />
             )}
             isOptionEqualToValue={(option, value) => option.title === value.title}
-            loading={false}
+            loading={searchOptions.length === 0}
             open={search !== ''}
             PaperComponent={({ children }) => <Paper style={{ width: '92%' }}>{children}</Paper>}
             disablePortal
@@ -99,7 +106,23 @@ const SearchBar: React.FC = () => {
               );
             }}
             fullWidth
-            renderInput={(params) => <TextField {...params} placeholder='Search' />}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                placeholder='Search'
+                InputProps={{
+                  ...params.InputProps,
+                  endAdornment: (
+                    <React.Fragment>
+                      {searchOptions.length === 0 && search !== '' ? (
+                        <CircularProgress color='inherit' size={20} />
+                      ) : null}
+                      {params.InputProps.endAdornment}
+                    </React.Fragment>
+                  ),
+                }}
+              />
+            )}
           />
         </form>
       </FormControl>
