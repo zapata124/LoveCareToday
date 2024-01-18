@@ -56,7 +56,7 @@ const SearchBar: React.FC = () => {
   return (
     <Box
       sx={{
-        width: { xl: '50%', lg: '50%', md: '50%', sm: '50%', xs: '100%' },
+        width: { xl: '25%', lg: '35%', md: '45%', sm: '50%', xs: '100%' },
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
@@ -66,7 +66,7 @@ const SearchBar: React.FC = () => {
         <form onSubmit={handleSubmit}>
           <Autocomplete
             sx={{
-              '.MuiAutocomplete-inputRoot': { borderRadius: 500 },
+              '.MuiAutocomplete-inputRoot': { borderRadius: 500, padding: 0, pl: 2 },
             }}
             autoComplete
             autoSelect
@@ -81,7 +81,10 @@ const SearchBar: React.FC = () => {
             PopperComponent={(props) => (
               <Popper {...props} sx={{ display: 'flex', justifyContent: 'center' }} />
             )}
-            PaperComponent={({ children }) => <Paper style={{ width: '94%' }}>{children}</Paper>}
+            isOptionEqualToValue={(option, value) => option.title === value.title}
+            loading={false}
+            open={search !== ''}
+            PaperComponent={({ children }) => <Paper style={{ width: '92%' }}>{children}</Paper>}
             disablePortal
             id='combo-box-demo'
             options={searchOptions}
