@@ -4,6 +4,7 @@ import { useQuery } from '@apollo/client';
 import { useParams } from 'react-router-dom';
 
 import OrganizationCard from '../components/organizationCard';
+import { RenderSearchSkeleton } from '../components/skeletons';
 
 const removeDash = (str: string) => {
   return str.replace(/-/g, ' ');
@@ -16,7 +17,7 @@ const Organization: React.FC = () => {
     variables: { search: parsedId, take: 20 },
   });
   console.log(data, loading, error, id, parsedId);
-  return <>{loading ? <div>Loading....</div> : <OrganizationCard data={data.search} />}</>;
+  return <>{loading ? <RenderSearchSkeleton /> : <OrganizationCard data={data.search} />}</>;
 };
 
 export default Organization;

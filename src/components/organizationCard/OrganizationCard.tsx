@@ -46,7 +46,7 @@ const OrganizationCard: React.FC<OrganizationCardProps> = ({ data }) => {
             key={item.name}
           >
             <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
-              <Card sx={{ height: 1 }}>
+              <Card sx={{ position: 'relative', height: 1 }}>
                 <CardMedia component={'img'} height={'140'} image={item.coverImageUrl} />
                 <CardHeader
                   title={item.name}
@@ -56,11 +56,12 @@ const OrganizationCard: React.FC<OrganizationCardProps> = ({ data }) => {
                 <CardContent sx={{ overflowY: 'auto' }}>
                   <Typography>{item.description}</Typography>
                 </CardContent>
-                <CardActions sx={{ justifyContent: 'center' }}>
+                <CardActions sx={{ height: 40 }}>
                   <Button
                     id={`every-donate-${item.slug}`}
                     // sx={{ bgcolor: 'red' }}
                     href={`https://www.every.org/${item.slug}#/donate`}
+                    sx={{ position: 'absolute', bottom: '4%', right: '4%' }}
                   >
                     {/* <a href={`https://www.every.org/${item.slug}#/donate`}>Donate</a> */}
                     Donate

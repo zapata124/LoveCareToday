@@ -16,18 +16,29 @@ import { causes as Causes } from './causes';
 import InboxIcon from '@mui/icons-material/Inbox';
 import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
 import Scrollbars from 'react-custom-scrollbars';
-
+import { useNavigate } from 'react-router-dom';
 interface CausesListProps {
   open: boolean;
   causes: string[];
+  onClose?: () => void;
 }
 
-const CausesList: React.FC<CausesListProps> = ({ open, causes }) => {
+const CausesList: React.FC<CausesListProps> = ({ open, causes, onClose }) => {
+  const navigate = useNavigate();
   return (
     <List>
       {causes.map((cause) => {
         return (
-          <ListItem disablePadding key={cause}>
+          <ListItem
+            disablePadding
+            key={cause}
+            onClick={() => {
+              if (onClose) {
+                onClose();
+                navigate(cause);
+              }
+            }}
+          >
             <ListItemButton>
               <ListItemIcon>
                 <InboxIcon />
@@ -86,7 +97,7 @@ const LeftDrawer: React.FC = () => {
             }}
           >
             <Scrollbars style={{ width: '100%', height: '100%' }}>
-              <CausesList open={open} causes={Causes} />
+              <CausesList open={open} causes={Causes} onClose={handleDrawer} />
             </Scrollbars>
           </Box>
         </Slide>
