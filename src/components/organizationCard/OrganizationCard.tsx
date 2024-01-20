@@ -10,7 +10,7 @@ import {
   Button,
   Grow,
 } from '@mui/material';
-
+import StockImage from '../../assets/charity-8366471_1280.png';
 interface OrganizationCardProps {
   data: unknown[];
 }
@@ -38,6 +38,7 @@ const OrganizationCard: React.FC<OrganizationCardProps> = ({ data }) => {
           createWidget(item.slug);
           console.log(item.slug, 'slug');
         }, 0);
+        console.log(item, 'item');
         return (
           <Grow
             in={true}
@@ -47,7 +48,11 @@ const OrganizationCard: React.FC<OrganizationCardProps> = ({ data }) => {
           >
             <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
               <Card sx={{ position: 'relative', height: 1 }}>
-                <CardMedia component={'img'} height={'140'} image={item.coverImageUrl} />
+                <CardMedia
+                  component={'img'}
+                  height={'140'}
+                  image={item && item.coverImageUrl ? item.coverImageUrl : StockImage}
+                />
                 <CardHeader
                   title={item.name}
                   subheader={item.slug}
@@ -61,7 +66,7 @@ const OrganizationCard: React.FC<OrganizationCardProps> = ({ data }) => {
                     id={`every-donate-${item.slug}`}
                     // sx={{ bgcolor: 'red' }}
                     href={`https://www.every.org/${item.slug}#/donate`}
-                    sx={{ position: 'absolute', bottom: '4%', right: '4%' }}
+                    sx={{ position: 'absolute', bottom: '2%', right: '2%' }}
                   >
                     {/* <a href={`https://www.every.org/${item.slug}#/donate`}>Donate</a> */}
                     Donate
