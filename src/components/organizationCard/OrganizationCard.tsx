@@ -9,8 +9,10 @@ import {
   Typography,
   Button,
   Grow,
+  Link,
 } from '@mui/material';
 import StockImage from '../../assets/charity-8366471_1280.png';
+// import { Link } from 'react-router-dom';
 interface OrganizationCardProps {
   data?: unknown[];
   children?: React.ReactNode;
@@ -22,6 +24,7 @@ interface HoverCardProps {
   logoUrl: string;
   coverImageUrl: string;
   description: string;
+  websiteUrl?: string;
 }
 const HoverCard: React.FC<HoverCardProps> = ({
   children,
@@ -30,6 +33,7 @@ const HoverCard: React.FC<HoverCardProps> = ({
   logoUrl,
   coverImageUrl,
   description,
+  websiteUrl,
 }) => {
   const [hover, setHover] = React.useState(false);
   const handleMouseEnter = () => {
@@ -51,7 +55,6 @@ const HoverCard: React.FC<HoverCardProps> = ({
   }
   setTimeout(() => {
     createWidget(slug);
-    console.log(slug, 'slug');
   }, 0);
   return (
     <Card
@@ -79,34 +82,22 @@ const HoverCard: React.FC<HoverCardProps> = ({
       <CardContent sx={{ overflowY: 'auto', height: 114 }}>
         <Typography>{description}</Typography>
       </CardContent>
-      <CardActions sx={{ height: 40, justifyContent: 'flex-end' }}>{hover && children}</CardActions>
+      <CardActions sx={{ height: 40, justifyContent: websiteUrl ? 'space-between' : 'flex-end' }}>
+        {websiteUrl && (
+          <Link href={websiteUrl as string} underline='none' sx={{ pl: 1 }}>
+            <Typography variant='body2'>Learn More</Typography>
+          </Link>
+        )}
+        {hover && children}
+      </CardActions>
     </Card>
   );
 };
 
 const OrganizationCard: React.FC<OrganizationCardProps> = ({ data }) => {
-  function createWidget(slug: string) {
-    /* tslint:disable-next-line */
-    // @ts-expect-error this will work once loaded
-    everyDotOrgDonateButton?.createButton({
-      selector: `#every-donate-${slug}`,
-    });
-    /* tslint:disable-next-line */
-    // @ts-expect-error this will work once loaded
-    everyDotOrgDonateButton?.createWidget({
-      selector: `#every-donate-${slug}`,
-      nonprofitSlug: slug,
-      //   nonprofitSlug: 'lilbubsbigfund',
-    });
-  }
-
   return (
     <>
       {data?.map((item: any, index: number) => {
-        // setTimeout(() => {
-        //   createWidget(item.slug);
-        //   console.log(item.slug, 'slug');
-        // }, 0);
         console.log(item, 'item');
         return (
           <Grow
@@ -121,16 +112,8 @@ const OrganizationCard: React.FC<OrganizationCardProps> = ({ data }) => {
                 slug={item.slug}
                 logoUrl={item.logoUrl}
                 coverImageUrl={item.coverImageUrl}
-                description={item.description} // sx={{ position: 'relative', height: 1 }}
-                // onClick={() => {
-                //   console.log('clicked');
-                // }}
-                // onMouseEnter={() => {
-                //   console.log('hovered');
-                // }}
-                // onMouseOver={() => {
-                //   console.log('hovered');
-                // }}
+                description={item.description}
+                websiteUrl={item.websiteUrl}
               >
                 <Button
                   id={`every-donate-${item.slug}`}
@@ -138,7 +121,6 @@ const OrganizationCard: React.FC<OrganizationCardProps> = ({ data }) => {
                   href={`https://www.every.org/${item.slug}#/donate`}
                   sx={{ position: 'relative', bottom: '2%', right: '2%' }}
                 >
-                  {/* <a href={`https://www.every.org/${item.slug}#/donate`}>Donate</a> */}
                   Donate
                 </Button>
               </HoverCard>

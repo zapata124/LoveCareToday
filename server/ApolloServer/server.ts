@@ -10,6 +10,7 @@ const resolvers = {
   Query: {
     search: async (_, { search, take}) => {
       try {
+        console.log('server')
         const res = await fetch(`https://${URL}/search/${search}?take=${take}&apiKey=${APIkey}`);
         const data = await res.json();
         const nonprofits = data.nonprofits;
@@ -21,7 +22,7 @@ const resolvers = {
     nonprofit: async (_, { take }) => {
       try {
         console.log('server')
-        const res = await fetch(`https://${URL}/nonprofit/maps?take=${take}apiKey=${APIkey}`);
+        const res = await fetch(`https://${URL}/nonprofit/maps?take=${take}&apiKey=${APIkey}`);
         const data = await res.json();
         const nonprofit = data.data.nonprofitTags;
         return nonprofit;
@@ -29,11 +30,12 @@ const resolvers = {
         console.log(err);
       }
     },
-    cause: async (_, { browse }) => {
+    cause: async (_, { browse, take }) => {
       try {
-        const res = await fetch(`https://${URL}/browse/${browse}?apiKey=${APIkey}`);
+        const res = await fetch(`https://${URL}/browse/${browse}?take=${take}&apiKey=${APIkey}`);
         const data = await res.json();
         const nonprofit = data.nonprofits;
+        console.log(nonprofit.length)
         return nonprofit;
       } catch (err) {
         console.log(err);

@@ -15,6 +15,7 @@ import { getNonProfit } from '../../query';
 const replaceSpace = (str: string) => {
   return str.replace(/\s/g, '-');
 };
+// not in use
 const MainCard: React.FC = () => {
   const { loading, error, data } = useQuery(getNonProfit);
   console.log(data, loading, error);

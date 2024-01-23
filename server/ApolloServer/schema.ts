@@ -43,7 +43,7 @@ type Query {
   nonprofit(take: Int): [Nonprofit]
 }
 type Query {
-  cause(browse: String): [Cause]
+  cause(browse: String, take: Int): [Cause]
 }
 `;
 
