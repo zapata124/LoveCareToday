@@ -5,7 +5,7 @@ import typeDef from './schema';
 const keys = dotenv.config().parsed;
 const { APIkey, URL } = keys;
 
-
+// / Lamba version of this server is using axios
 const resolvers = {
   Query: {
     search: async (_, { search, take}) => {
