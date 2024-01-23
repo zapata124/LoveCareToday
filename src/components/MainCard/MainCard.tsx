@@ -11,9 +11,7 @@ import {
 import { Link as RouterLink } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { getNonProfit } from '../../query';
-// interface CharityCardProps {
 
-// }
 const replaceSpace = (str: string) => {
   return str.replace(/\s/g, '-');
 };
