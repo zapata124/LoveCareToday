@@ -11,38 +11,44 @@ import {
   Slide,
   Dialog,
 } from '@mui/material';
-import { causes as Causes } from './causes';
+import { causes as Causes, TypeCauses } from './causes';
 import InboxIcon from '@mui/icons-material/Inbox';
 import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
 import Scrollbars from 'react-custom-scrollbars';
 import { useNavigate } from 'react-router-dom';
+// import { ReactComponent as AdoptionSVG } from '../../assets/adoption_symbol.svg';
+// import AdoptionSVG from '../svgs/AdoptionSVG';
+import AdoptionIMG from '../../assets/heart2121clear2.png';
+
 interface CausesListProps {
   open: boolean;
-  causes: string[];
+  causes: TypeCauses[];
   onClose?: () => void;
 }
 
 const CausesList: React.FC<CausesListProps> = ({ open, causes, onClose }) => {
   const navigate = useNavigate();
+
   return (
     <List>
       {causes.map((cause) => {
         return (
           <ListItem
             disablePadding
-            key={cause}
+            key={cause.cause}
             onClick={() => {
               if (onClose) {
                 onClose();
-                navigate(cause);
+                navigate(cause.cause);
               }
             }}
           >
             <ListItemButton>
-              <ListItemIcon>
-                <InboxIcon />
+              <ListItemIcon sx={{ justifyContent: 'center' }}>
+                {/* <AdoptionSVG /> */}
+                <img src={cause.image} alt='adoptionImage' />
               </ListItemIcon>
-              {open && <ListItemText primary={cause} />}
+              {open && <ListItemText primary={cause.cause} />}
             </ListItemButton>
           </ListItem>
         );

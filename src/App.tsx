@@ -1,9 +1,10 @@
 import React from 'react';
-import { AppBar, Container, Grid } from '@mui/material';
+import { AppBar, Container } from '@mui/material';
 import { Outlet } from 'react-router-dom';
 import SearchBar from './components/searchbar/SearchBar';
-import { Scrollbars } from 'react-custom-scrollbars';
 import { LeftDrawer } from './components/drawers';
+// import { ReactComponent as AdoptionSVG } from './assets/adoption_symbol.svg';
+
 const App: React.FC = () => {
   return (
     <>

@@ -53,7 +53,8 @@
     "rtk-query-graphql": "^1.0.1",
     "sort-by": "^1.2.0",
     "styled-component": "^2.8.0",
-    "styled-components": "^5.3.6"
+    "styled-components": "^5.3.6",
+    "vite-plugin-svgr": "^4.2.0"
   },
   "devDependencies": {
     "@types/mui-image": "^1.0.3",
