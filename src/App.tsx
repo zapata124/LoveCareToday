@@ -23,13 +23,19 @@ const App: React.FC = () => {
       <LeftDrawer />
       <Container
         maxWidth='lg'
-        sx={{ height: '82vh', mt: 15, bgcolor: '#f5f5f5', borderRadius: '24px' }}
+        sx={{
+          height: '82vh',
+          mt: 15,
+          bgcolor: '#f5f5f5',
+          borderRadius: '24px',
+          overflow: 'hidden',
+        }}
       >
-        <Scrollbars style={{ width: '100%', height: '100%' }}>
+        {/* <Scrollbars style={{ width: '100%', height: '100%' }}>
           <Grid container spacing={2} sx={{ pt: 2, pb: 2, pr: 2 }}>
-            <Outlet />
           </Grid>
-        </Scrollbars>
+        </Scrollbars> */}
+        <Outlet />
       </Container>
     </>
   );
