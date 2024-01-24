@@ -47,6 +47,7 @@
     "react-hook-form": "^7.43.0",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.8.0",
+    "react-swipeable": "^7.0.1",
     "react-swipeable-views": "^0.14.0",
     "react-swipeable-views-utils": "^0.14.0",
     "react-time": "^4.3.0",

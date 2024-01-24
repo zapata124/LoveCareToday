@@ -3,6 +3,10 @@ import People from '../../assets/people2121clear.png'
 import Lion from '../../assets/lion1919clear.png'
 import Art from '../../assets/art1919clear.png'
 import Athelete from '../../assets/athlete1919clear.png'
+import Autism from '../../assets/autism1919clear.png'
+import Buddha from '../../assets/buddha1919clear.png'
+import Awareness from '../../assets/awareness1919clear.png'
+import Cat from '../../assets/cat1919clear.png'
 export type TypeCauses = {
     cause: string,
     image: any
@@ -30,19 +34,19 @@ export const causes: TypeCauses[] = [
     },
     {
         'cause': 'Autism',
-        'image': null
+        'image': Autism
     },
     {
         'cause': 'Buddhism',
-        'image': null
+        'image': Buddha
     },
     {
         'cause': 'Cancer',
-        'image': null
+        'image': Awareness
     },
     {
         'cause': 'Cats',
-        'image': null
+        'image': Cat
     },
     {
         'cause': 'Christianity',

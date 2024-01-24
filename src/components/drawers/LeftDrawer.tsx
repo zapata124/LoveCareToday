@@ -19,7 +19,8 @@ import { useNavigate } from 'react-router-dom';
 // import { ReactComponent as AdoptionSVG } from '../../assets/adoption_symbol.svg';
 // import AdoptionSVG from '../svgs/AdoptionSVG';
 import AdoptionIMG from '../../assets/heart2121clear2.png';
-
+import { useSwipeable } from 'react-swipeable';
+import { HandledEvents, SwipeCallback, SwipeEventData } from 'react-swipeable/es/types';
 interface CausesListProps {
   open: boolean;
   causes: TypeCauses[];
@@ -46,7 +47,7 @@ const CausesList: React.FC<CausesListProps> = ({ open, causes, onClose }) => {
             <ListItemButton>
               <ListItemIcon sx={{ justifyContent: 'center' }}>
                 {/* <AdoptionSVG /> */}
-                <img src={cause.image} alt='adoptionImage' />
+                {cause.image ? <img src={cause.image} alt='adoptionImage' /> : <InboxIcon />}
               </ListItemIcon>
               {open && <ListItemText primary={cause.cause} />}
             </ListItemButton>
@@ -62,6 +63,10 @@ const LeftDrawer: React.FC = () => {
   const handleDrawer = () => {
     setOpen(!open);
   };
+  const handlers = useSwipeable({
+    onSwipedLeft: () => setOpen(false) as SwipeCallback | undefined,
+  });
+
   return (
     <>
       <Button
@@ -87,25 +92,27 @@ const LeftDrawer: React.FC = () => {
         aria-describedby='causes-list-modal'
         hideBackdrop
       >
-        <Slide direction='right' in={open} mountOnEnter unmountOnExit>
-          <Box
-            width={236}
-            height={'80%'}
-            overflow={'hidden'}
-            sx={{
-              position: 'fixed',
-              zIndex: 1000,
-              top: 116,
-              left: '1%',
-              borderRadius: '25px 25px 25px 25px',
-              bgcolor: '#F0F8FF',
-            }}
-          >
-            <Scrollbars style={{ width: '100%', height: '100%' }}>
-              <CausesList open={open} causes={Causes} onClose={handleDrawer} />
-            </Scrollbars>
-          </Box>
-        </Slide>
+        <Box {...handlers}>
+          <Slide direction='right' in={open} mountOnEnter unmountOnExit>
+            <Box
+              width={236}
+              height={'80%'}
+              overflow={'hidden'}
+              sx={{
+                position: 'fixed',
+                zIndex: 1000,
+                top: 116,
+                left: '1%',
+                borderRadius: '25px 25px 25px 25px',
+                bgcolor: '#F0F8FF',
+              }}
+            >
+              <Scrollbars style={{ width: '100%', height: '100%' }}>
+                <CausesList open={open} causes={Causes} onClose={handleDrawer} />
+              </Scrollbars>
+            </Box>
+          </Slide>
+        </Box>
       </Dialog>
     </>
   );
