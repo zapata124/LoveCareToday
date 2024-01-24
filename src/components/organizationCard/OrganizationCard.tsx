@@ -98,7 +98,7 @@ const HoverCard: React.FC<HoverCardProps> = ({
 const OrganizationCard: React.FC<OrganizationCardProps> = ({ data }) => {
   return (
     <Scrollbars style={{ width: '100%', height: '100%' }}>
-      <Grid container spacing={2} sx={{ pt: 2, pb: 2, pr: 2 }}>
+      <Grid container spacing={2} sx={{ pt: 2, pb: 2, pr: 1 }}>
         {data?.map((item: any, index: number) => {
           console.log(item, 'item');
           return (

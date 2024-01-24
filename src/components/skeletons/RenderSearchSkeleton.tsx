@@ -19,7 +19,7 @@ const SkeletonCard: React.FC = () => {
 };
 const RenderSearchSkeleton: React.FC = () => {
   return (
-    <Grid container spacing={2} sx={{ pt: 2, pb: 2, pr: 2 }}>
+    <Grid container spacing={2}>
       <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
         <SkeletonCard />
       </Grid>

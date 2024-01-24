@@ -31,10 +31,6 @@ const App: React.FC = () => {
           overflow: 'hidden',
         }}
       >
-        {/* <Scrollbars style={{ width: '100%', height: '100%' }}>
-          <Grid container spacing={2} sx={{ pt: 2, pb: 2, pr: 2 }}>
-          </Grid>
-        </Scrollbars> */}
         <Outlet />
       </Container>
     </>
