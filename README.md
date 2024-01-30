@@ -2,4 +2,4 @@
 
 # Love Care Today
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Live under development [Demo](https://lovecaretoday.com).
