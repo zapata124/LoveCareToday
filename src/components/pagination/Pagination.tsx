@@ -1,8 +1,10 @@
 import React from 'react';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
+import { useUpdatePage } from '../../providers/PageProvider';
 
 const PaginationApp = () => {
+  const { page, totalPages, handleUpdatePage } = useUpdatePage();
   return (
     <Stack
       sx={{
@@ -12,7 +14,14 @@ const PaginationApp = () => {
         alignItems: 'flex-end',
       }}
     >
-      <Pagination count={10} />
+      <Pagination
+        onChange={(event: any, page: number) => {
+          console.log('this is data', page);
+          handleUpdatePage(page);
+        }}
+        count={totalPages}
+        page={page}
+      />
     </Stack>
   );
 };
