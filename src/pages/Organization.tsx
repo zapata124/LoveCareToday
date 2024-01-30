@@ -16,10 +16,13 @@ const Organization: React.FC = () => {
   const parsedId = removeDash(id || '').toLowerCase();
   console.log({ parsedId });
   const { loading, error, data } = useQuery(getNonProfitByCause, {
-    variables: { browse: parsedId, take: 20 },
+    variables: { browse: parsedId, take: 20, page: 1 },
   });
   console.log(data, loading, error, id, parsedId, 'ddddddddd');
-  return <>{loading ? <RenderSearchSkeleton /> : <OrganizationCard data={data.cause} />}</>;
+  const loadings = true;
+  return (
+    <>{loading ? <RenderSearchSkeleton /> : <OrganizationCard data={data.cause.nonprofits} />}</>
+  );
 };
 
 export default Organization;

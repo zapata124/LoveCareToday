@@ -11,6 +11,7 @@ import {
 import { Link as RouterLink } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { getNonProfit } from '../../query';
+import { RenderSearchSkeleton } from '../skeletons';
 
 const replaceSpace = (str: string) => {
   return str.replace(/\s/g, '-');
@@ -18,16 +19,15 @@ const replaceSpace = (str: string) => {
 // not in use
 const MainCard: React.FC = () => {
   const { loading, error, data } = useQuery(getNonProfit);
-  console.log(data, loading, error);
-
+  console.log(data);
   return (
     <>
       {loading ? (
-        'Loading...'
+        <RenderSearchSkeleton />
       ) : (
         <Grid container spacing={2} sx={{ pt: 2, pb: 2, pr: 1 }}>
           {data?.nonprofit?.map((item: any) => (
-            <Grid item xs={12} sm={6} md={6} lg={6} xl={6} key={item.id}>
+            <Grid item xs={6} sm={6} md={6} lg={6} xl={6} key={item.id}>
               <Card sx={{ height: 1 }}>
                 <CardHeader
                   title={item.title}

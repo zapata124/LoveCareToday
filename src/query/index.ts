@@ -1,52 +1,59 @@
 import { gql } from '@apollo/client';
-import { get } from 'http';
 
 export const getNonProfit = gql`
-    query Query {
-        nonprofit {
-            causeCategory
-            id
-            tagImageCloudinaryId
-            tagImageUrl
-            tagName
-            tagUrl
-            title
-        }
+  query Query {
+    nonprofit {
+      causeCategory
+      id
+      tagImageCloudinaryId
+      tagImageUrl
+      tagName
+      tagUrl
+      title
     }
-`
+  }
+`;
 
 export const getNonProfitByTitle = gql`
-    query Query($search: String, $take: Int) {
-        search(search: $search, take: $take) {
-            coverImageUrl
-            description
-            ein
-            logoCloudinaryId
-            location
-            logoUrl
-            matchedTerms
-            name
-            profileUrl
-            slug
-            tags
-            websiteUrl
-        }
+  query Query($search: String, $take: Int) {
+    search(search: $search, take: $take) {
+      coverImageUrl
+      description
+      ein
+      logoCloudinaryId
+      location
+      logoUrl
+      matchedTerms
+      name
+      profileUrl
+      slug
+      tags
+      websiteUrl
     }
-`
+  }
+`;
 
 export const getNonProfitByCause = gql`
-    query Query($browse: String, $take: Int) {
-            cause(browse: $browse, take: $take) {
-            coverImageUrl
-            description
-            location
-            logoCloudinaryId
-            logoUrl
-            matchedTerms
-            name
-            profileUrl
-            slug
-            tags
-        }
+  query Cause($browse: String, $take: Int, $page: Int) {
+    cause(browse: $browse, take: $take, page: $page) {
+      nonprofits {
+        coverImageUrl
+        description
+        location
+        logoCloudinaryId
+        logoUrl
+        matchedTerms
+        name
+        profileUrl
+        slug
+        tags
+      }
+      pagination {
+        page
+        page_size
+        pages
+        total_results
+      }
     }
-`
+  }
+`;

@@ -28,11 +28,13 @@ const resolvers = {
         return err
       }
     },
-    cause: async (_, { browse, take }) => {
+    cause: async (_, { browse, take, page }) => {
       try {
-        const res = await axios(`https://${URL}/browse/${browse}?take=${take}&apiKey=${APIkey}`);
-        const nonprofit = res.data.nonprofits;
-        return nonprofit;
+        const res = await axios(`https://${URL}/browse/${browse}?take=${take}&page=${page}&apiKey=${APIkey}`);
+        console.log(res)
+        return {
+          ...res.data
+        };
       } catch (err) {
         console.log(err);
         return err

@@ -36,6 +36,16 @@ type Cause {
   location: String,
   tags: [String],
 }
+type Pagination {
+  page: Int,
+  pages: Int,
+  page_size: Int,
+  total_results: Int
+}
+type GetCauses {
+  nonprofits: [Cause],
+  pagination: Pagination
+}
 type Query {
   search(search: String, take: Int): [Search]
 }
@@ -43,7 +53,7 @@ type Query {
   nonprofit(take: Int): [Nonprofit]
 }
 type Query {
-  cause(browse: String, take: Int): [Cause]
+  cause(browse: String, take: Int, page: Int): GetCauses
 }
 `;
 

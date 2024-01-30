@@ -1,8 +1,9 @@
 import React from 'react';
-import { AppBar, Container } from '@mui/material';
+import { AppBar, Box, Container } from '@mui/material';
 import { Outlet } from 'react-router-dom';
 import SearchBar from './components/searchbar/SearchBar';
 import { LeftDrawer } from './components/drawers';
+import PaginationApp from './components/pagination';
 // import { ReactComponent as AdoptionSVG } from './assets/adoption_symbol.svg';
 
 const App: React.FC = () => {
@@ -25,14 +26,26 @@ const App: React.FC = () => {
       <Container
         maxWidth='lg'
         sx={{
-          height: '82vh',
-          mt: 15,
-          bgcolor: '#f5f5f5',
-          borderRadius: '24px',
-          overflow: 'hidden',
+          height: '100vh',
+          position: 'relative',
         }}
+        disableGutters
       >
-        <Outlet />
+        <PaginationApp />
+        <Container
+          maxWidth='lg'
+          sx={{
+            height: '82vh',
+            // mt: 15,
+            bgcolor: '#f5f5f5',
+            borderRadius: '24px',
+            overflow: 'hidden',
+            position: 'relative',
+            top: 127,
+          }}
+        >
+          <Outlet />
+        </Container>
       </Container>
     </>
   );
