@@ -1,9 +1,10 @@
 import React from 'react';
-import { AppBar, Container, Grid } from '@mui/material';
+import { AppBar, Container } from '@mui/material';
 import { Outlet } from 'react-router-dom';
 import SearchBar from './components/searchbar/SearchBar';
-import { Scrollbars } from 'react-custom-scrollbars';
 import { LeftDrawer } from './components/drawers';
+// import { ReactComponent as AdoptionSVG } from './assets/adoption_symbol.svg';
+
 const App: React.FC = () => {
   return (
     <>
@@ -23,13 +24,15 @@ const App: React.FC = () => {
       <LeftDrawer />
       <Container
         maxWidth='lg'
-        sx={{ height: '82vh', mt: 15, bgcolor: '#f5f5f5', borderRadius: '24px' }}
+        sx={{
+          height: '82vh',
+          mt: 15,
+          bgcolor: '#f5f5f5',
+          borderRadius: '24px',
+          overflow: 'hidden',
+        }}
       >
-        <Scrollbars style={{ width: '100%', height: '100%' }}>
-          <Grid container spacing={2} sx={{ pt: 2, pb: 2, pr: 2 }}>
-            <Outlet />
-          </Grid>
-        </Scrollbars>
+        <Outlet />
       </Container>
     </>
   );

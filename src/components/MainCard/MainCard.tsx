@@ -25,7 +25,7 @@ const MainCard: React.FC = () => {
       {loading ? (
         'Loading...'
       ) : (
-        <>
+        <Grid container spacing={2} sx={{ pt: 2, pb: 2, pr: 1 }}>
           {data?.nonprofit?.map((item: any) => (
             <Grid item xs={12} sm={6} md={6} lg={6} xl={6} key={item.id}>
               <Card sx={{ height: 1 }}>
@@ -47,7 +47,7 @@ const MainCard: React.FC = () => {
               </Card>
             </Grid>
           ))}
-        </>
+        </Grid>
       )}
     </>
   );

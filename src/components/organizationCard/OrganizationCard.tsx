@@ -12,6 +12,7 @@ import {
   Link,
 } from '@mui/material';
 import StockImage from '../../assets/charity-8366471_1280.png';
+import Scrollbars from 'react-custom-scrollbars';
 // import { Link } from 'react-router-dom';
 interface OrganizationCardProps {
   data?: unknown[];
@@ -96,39 +97,41 @@ const HoverCard: React.FC<HoverCardProps> = ({
 
 const OrganizationCard: React.FC<OrganizationCardProps> = ({ data }) => {
   return (
-    <>
-      {data?.map((item: any, index: number) => {
-        console.log(item, 'item');
-        return (
-          <Grow
-            in={true}
-            style={{ transformOrigin: '0 0 0' }}
-            {...{ timeout: 1000 + index * 300 }}
-            key={item.name}
-          >
-            <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
-              <HoverCard
-                name={item.name}
-                slug={item.slug}
-                logoUrl={item.logoUrl}
-                coverImageUrl={item.coverImageUrl}
-                description={item.description}
-                websiteUrl={item.websiteUrl}
-              >
-                <Button
-                  id={`every-donate-${item.slug}`}
-                  // sx={{ bgcolor: 'red' }}
-                  href={`https://www.every.org/${item.slug}#/donate`}
-                  sx={{ position: 'relative', bottom: '2%', right: '2%' }}
+    <Scrollbars style={{ width: '100%', height: '100%' }}>
+      <Grid container spacing={2} sx={{ pt: 2, pb: 2, pr: 1 }}>
+        {data?.map((item: any, index: number) => {
+          console.log(item, 'item');
+          return (
+            <Grow
+              in={true}
+              style={{ transformOrigin: '0 0 0' }}
+              {...{ timeout: 1000 + index * 300 }}
+              key={item.name}
+            >
+              <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
+                <HoverCard
+                  name={item.name}
+                  slug={item.slug}
+                  logoUrl={item.logoUrl}
+                  coverImageUrl={item.coverImageUrl}
+                  description={item.description}
+                  websiteUrl={item.websiteUrl}
                 >
-                  Donate
-                </Button>
-              </HoverCard>
-            </Grid>
-          </Grow>
-        );
-      })}
-    </>
+                  <Button
+                    id={`every-donate-${item.slug}`}
+                    // sx={{ bgcolor: 'red' }}
+                    href={`https://www.every.org/${item.slug}#/donate`}
+                    sx={{ position: 'relative', bottom: '2%', right: '2%' }}
+                  >
+                    Donate
+                  </Button>
+                </HoverCard>
+              </Grid>
+            </Grow>
+          );
+        })}
+      </Grid>
+    </Scrollbars>
   );
 };
 

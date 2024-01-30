@@ -1,5 +1,6 @@
 import React from 'react';
 import { Avatar, Box, Grid, Skeleton } from '@mui/material';
+
 const SkeletonCard: React.FC = () => {
   return (
     <Box width={1} height={400} sx={{ position: 'relative' }}>
@@ -18,7 +19,7 @@ const SkeletonCard: React.FC = () => {
 };
 const RenderSearchSkeleton: React.FC = () => {
   return (
-    <>
+    <Grid container spacing={2}>
       <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
         <SkeletonCard />
       </Grid>
@@ -31,7 +32,7 @@ const RenderSearchSkeleton: React.FC = () => {
       <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
         <SkeletonCard />
       </Grid>
-    </>
+    </Grid>
   );
 };
 
