@@ -21,7 +21,7 @@ const resolvers = {
     nonprofit: async (_, { take }) => {
       try {
         const res = await axios(`https://${URL}/nonprofit/maps?take=${take}&apiKey=${APIkey}`);
-        const nonprofit = await res.data.data.nonprofitTags;
+        const nonprofit = res.data.data.nonprofitTags;
         return nonprofit;
       } catch (err) {
         console.log(err);
@@ -31,7 +31,6 @@ const resolvers = {
     cause: async (_, { browse, take, page }) => {
       try {
         const res = await axios(`https://${URL}/browse/${browse}?take=${take}&page=${page}&apiKey=${APIkey}`);
-        console.log(res)
         return {
           ...res.data
         };
