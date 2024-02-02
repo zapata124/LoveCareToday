@@ -16,11 +16,8 @@ import InboxIcon from '@mui/icons-material/Inbox';
 import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
 import Scrollbars from 'react-custom-scrollbars';
 import { useNavigate } from 'react-router-dom';
-// import { ReactComponent as AdoptionSVG } from '../../assets/adoption_symbol.svg';
-// import AdoptionSVG from '../svgs/AdoptionSVG';
-import AdoptionIMG from '../../assets/heart2121clear2.png';
 import { useSwipeable } from 'react-swipeable';
-import { HandledEvents, SwipeCallback, SwipeEventData } from 'react-swipeable/es/types';
+import { SwipeCallback } from 'react-swipeable/es/types';
 interface CausesListProps {
   open: boolean;
   causes: TypeCauses[];
@@ -46,7 +43,6 @@ const CausesList: React.FC<CausesListProps> = ({ open, causes, onClose }) => {
           >
             <ListItemButton>
               <ListItemIcon sx={{ justifyContent: 'center' }}>
-                {/* <AdoptionSVG /> */}
                 {cause.image ? <img src={cause.image} alt='adoptionImage' /> : <InboxIcon />}
               </ListItemIcon>
               {open && <ListItemText primary={cause.cause} />}
@@ -85,13 +81,7 @@ const LeftDrawer: React.FC = () => {
           <Typography variant='h6'>Causes</Typography>
         </Slide>
       </Button>
-      <Dialog
-        open={open}
-        // keepMounted
-        onClose={handleDrawer}
-        aria-describedby='causes-list-modal'
-        hideBackdrop
-      >
+      <Dialog open={open} onClose={handleDrawer} aria-describedby='causes-list-modal' hideBackdrop>
         <Box {...handlers}>
           <Slide direction='right' in={open} mountOnEnter unmountOnExit>
             <Box

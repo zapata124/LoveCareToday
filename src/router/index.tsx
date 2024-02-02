@@ -14,12 +14,12 @@ const routes: RouteObject[] = [
         element: <MainCard />,
       },
       {
-        path: '/:id',
-        element: <Organization />,
-      },
-      {
         path: '/search/:id',
         element: <RenderSearched />,
+      },
+      {
+        path: '/:id',
+        element: <Organization />,
       },
     ],
   },

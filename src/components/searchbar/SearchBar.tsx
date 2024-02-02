@@ -11,9 +11,6 @@ import {
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
-// import { useQuery } from '@apollo/client';
-// import { getNonProfitByTitle } from '../../query';
-
 const apiKey = import.meta.env.VITE_APIkey;
 const URL = import.meta.env.VITE_URL;
 
@@ -23,23 +20,7 @@ const convertToLabeldOptions = (options: string[]) => {
 };
 const SearchBar: React.FC = () => {
   const [search, setSearch] = React.useState<string | undefined>('');
-  const [searchOptions, setSearchqOptions] = React.useState<any>([]);
-  // / This is here for late use ///
-
-  //   const [newData, setNewData] = React.useState<any>([]);
-
-  //   const { loading, error, data } = useQuery(getNonProfitByTitle, {
-  //     variables: { search: search, take: 10 },
-  //   });
-  //   useEffect(() => {
-  //     if (data?.search) {
-  //       const parced = data?.search.map((option: any) => ({ label: option.name }));
-  //       setNewData(parced);
-  //     }
-  //   }, [data]);
-  //   const handleASearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //     setSearch(event.target.value);
-  //   };
+  const [searchOptions, setSearchqOptions] = React.useState<any[]>([]);
 
   const navigate = useNavigate();
 
@@ -47,7 +28,6 @@ const SearchBar: React.FC = () => {
     fetch(`https://${URL}/search/${search}?apiKey=${apiKey}`)
       .then((res) => res.json())
       .then((data: any) => {
-        console.log(data, 'data');
         setSearchqOptions(convertToLabeldOptions(data.nonprofits));
       })
       .catch((err) => console.log(err));
@@ -57,7 +37,7 @@ const SearchBar: React.FC = () => {
     event.preventDefault();
     setSearch('');
     setSearchqOptions([]);
-    navigate(`/search/${event.type === 'submit' ? search : event.target.outerText}`);
+    navigate(`/search/${event.type === 'click' ? event.target.outerText : search}`);
   };
 
   return (

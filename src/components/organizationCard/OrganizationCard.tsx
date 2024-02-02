@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
   Grid,
   Card,
@@ -13,7 +13,6 @@ import {
 } from '@mui/material';
 import StockImage from '../../assets/charity-8366471_1280.png';
 import Scrollbars from 'react-custom-scrollbars';
-// import { Link } from 'react-router-dom';
 interface OrganizationCardProps {
   data?: unknown[];
   children?: React.ReactNode;
@@ -51,7 +50,6 @@ const HoverCard: React.FC<HoverCardProps> = ({
     everyDotOrgDonateButton?.createWidget({
       selector: `#every-donate-${slug}`,
       nonprofitSlug: slug,
-      //   nonprofitSlug: 'lilbubsbigfund',
     });
   }
   setTimeout(() => {
@@ -60,11 +58,9 @@ const HoverCard: React.FC<HoverCardProps> = ({
   return (
     <Card
       onMouseEnter={() => {
-        console.log('hovered');
         handleMouseEnter();
       }}
       onMouseLeave={() => {
-        console.log('hovered');
         handleMouseEnter();
       }}
       sx={{ position: 'relative', height: 400 }}
@@ -100,7 +96,6 @@ const OrganizationCard: React.FC<OrganizationCardProps> = ({ data }) => {
     <Scrollbars style={{ width: '100%', height: '100%' }}>
       <Grid container spacing={2} sx={{ pt: 2, pb: 2, pr: 1 }}>
         {data?.map((item: any, index: number) => {
-          console.log(item, 'item');
           return (
             <Grow
               in={true}
@@ -119,7 +114,6 @@ const OrganizationCard: React.FC<OrganizationCardProps> = ({ data }) => {
                 >
                   <Button
                     id={`every-donate-${item.slug}`}
-                    // sx={{ bgcolor: 'red' }}
                     href={`https://www.every.org/${item.slug}#/donate`}
                     sx={{ position: 'relative', bottom: '2%', right: '2%' }}
                   >
