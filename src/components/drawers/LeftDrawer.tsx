@@ -74,6 +74,7 @@ const LeftDrawer: React.FC = () => {
           left: 22,
           ':hover': { bgcolor: 'transparent' },
           bgcolor: 'transparent',
+          zIndex: 1,
         }}
       >
         <VolunteerActivismIcon fontSize='large' />
