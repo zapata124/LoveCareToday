@@ -1,8 +1,6 @@
 import { createBrowserRouter, RouteObject } from 'react-router-dom';
 import App from '../App';
-import Organization from '../pages/Organization';
-import MainCard from '../components/MainCard';
-import RenderSearched from '../pages/RenderSearched';
+import { Featured, Organization, RenderSearched } from '../pages';
 
 const routes: RouteObject[] = [
   {
@@ -11,7 +9,7 @@ const routes: RouteObject[] = [
     children: [
       {
         path: '/',
-        element: <MainCard />,
+        element: <Featured />,
       },
       {
         path: '/search/:id',

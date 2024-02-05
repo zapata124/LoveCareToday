@@ -14,3 +14,7 @@ declare module '*.svg' {
     >
     export default ReactComponent
 }
+
+interface Children {
+  children: React.ReactNode
+}

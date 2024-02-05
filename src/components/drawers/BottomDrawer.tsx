@@ -44,7 +44,7 @@ const BottomDrawer: React.FC = () => {
   };
 
   return (
-    <div>
+    <div style={{ position: 'absolute' }}>
       <Button onClick={toggleDrawer} sx={{ postion: 'relative', bottom: '0px', float: 'right' }}>
         Bottom
       </Button>

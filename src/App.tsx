@@ -23,6 +23,7 @@ const App: React.FC = () => {
         <SearchBar />
       </AppBar>
       <LeftDrawer />
+      <BottomDrawer />
       <Container
         maxWidth='lg'
         sx={{
@@ -48,7 +49,6 @@ const App: React.FC = () => {
           </Container>
         </PageProvider>
       </Container>
-      {/* <BottomDrawer /> */}
     </Box>
   );
 };
