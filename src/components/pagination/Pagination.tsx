@@ -2,14 +2,12 @@ import React from 'react';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import { useUpdatePage } from '../../providers/PageProvider';
-import { useParams, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+
 const PaginationApp = () => {
   const { page, totalPages, handleUpdatePage } = useUpdatePage();
-  const param = useParams();
   const location = useLocation().pathname;
   const findSearch = location.search('search');
-
-  console.log(param, 'useParams', location, findSearch);
   return (
     <Stack
       sx={{

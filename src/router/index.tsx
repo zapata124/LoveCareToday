@@ -8,7 +8,7 @@ const routes: RouteObject[] = [
     element: <App />,
     children: [
       {
-        path: '/',
+        path: '/featured',
         element: <Featured />,
       },
       {
@@ -16,7 +16,7 @@ const routes: RouteObject[] = [
         element: <RenderSearched />,
       },
       {
-        path: '/:id',
+        path: '/cause/:id',
         element: <Organization />,
       },
     ],

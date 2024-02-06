@@ -1,12 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { AppBar, Box, Container } from '@mui/material';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import SearchBar from './components/searchbar/SearchBar';
 import { BottomDrawer, LeftDrawer } from './components/drawers';
 import PaginationApp from './components/pagination';
 import PageProvider from './providers/PageProvider';
 
 const App: React.FC = () => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    navigate('/featured');
+  }, []);
   return (
     <Box sx={{ height: '100vh', psotion: 'relative' }}>
       <AppBar

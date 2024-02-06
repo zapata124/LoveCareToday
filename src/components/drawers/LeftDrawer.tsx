@@ -37,7 +37,7 @@ const CausesList: React.FC<CausesListProps> = ({ open, causes, onClose }) => {
             onClick={() => {
               if (onClose) {
                 onClose();
-                navigate(cause.cause);
+                navigate(`/cause/${cause.cause}`);
               }
             }}
           >
