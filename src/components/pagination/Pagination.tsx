@@ -47,7 +47,7 @@ const MobilePagination: React.FC = () => {
       <Button size='small' onClick={handlePrevPage}>
         <KeyboardArrowLeftIcon />
       </Button>
-      <FormControl sx={{ m: 1, minWidth: 120 }}>
+      <FormControl sx={{ m: 1 }}>
         <Select
           value={String(page)}
           onChange={handleChange}
