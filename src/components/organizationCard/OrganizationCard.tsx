@@ -57,12 +57,12 @@ const HoverCard: React.FC<HoverCardProps> = ({
   }, 0);
   return (
     <Card
-      onMouseEnter={() => {
-        handleMouseEnter();
-      }}
-      onMouseLeave={() => {
-        handleMouseEnter();
-      }}
+      // onMouseEnter={() => {
+      //   handleMouseEnter();
+      // }}
+      // onMouseLeave={() => {
+      //   handleMouseEnter();
+      // }}
       sx={{ position: 'relative', height: 400 }}
     >
       <CardMedia
@@ -85,7 +85,7 @@ const HoverCard: React.FC<HoverCardProps> = ({
             <Typography variant='body2'>Learn More</Typography>
           </Link>
         )}
-        {hover && children}
+        {children}
       </CardActions>
     </Card>
   );
