@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Grid,
   Card,
@@ -26,6 +26,15 @@ interface HoverCardProps {
   description: string;
   websiteUrl?: string;
 }
+
+const getStringCutOffSIndex = (description: string) => {
+  for (let i = 0; i < description.length; i++) {
+    if (description[i] === '.' && description[i + 1] === '.') {
+      return i;
+    }
+  }
+  return description.length;
+};
 const HoverCard: React.FC<HoverCardProps> = ({
   children,
   name,
@@ -35,7 +44,8 @@ const HoverCard: React.FC<HoverCardProps> = ({
   description,
   websiteUrl,
 }) => {
-  const [hover, setHover] = React.useState(false);
+  const [hover, setHover] = useState(false);
+
   const handleMouseEnter = () => {
     setHover(!hover);
   };
@@ -77,7 +87,12 @@ const HoverCard: React.FC<HoverCardProps> = ({
         sx={{ height: 32 }}
       />
       <CardContent sx={{ overflowY: 'auto', height: 114 }}>
-        <Typography>{description}</Typography>
+        {description && (
+          <Typography>{`${description.substring(
+            0,
+            getStringCutOffSIndex(description),
+          )}.`}</Typography>
+        )}
       </CardContent>
       <CardActions sx={{ height: 40, justifyContent: websiteUrl ? 'space-between' : 'flex-end' }}>
         {websiteUrl && (
@@ -92,6 +107,13 @@ const HoverCard: React.FC<HoverCardProps> = ({
 };
 
 const OrganizationCard: React.FC<OrganizationCardProps> = ({ data }) => {
+  useEffect(() => {
+    fetch(
+      'https://partners.every.org/v0.2/nonprofit/Animal-Charity-Evaluators?apiKey=pk_live_4d17374d4c171f0f91524140256c6bc3',
+    )
+      .then((data) => data.json())
+      .then((data) => console.log(data));
+  }, []);
   return (
     <Scrollbars style={{ width: '100%', height: '100%' }}>
       <Grid container spacing={2} sx={{ pt: 2, pb: 2, pr: 1 }}>
