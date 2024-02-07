@@ -57,11 +57,14 @@ const MobilePagination: React.FC = () => {
           SelectDisplayProps={{
             style: {
               padding: 0,
-              border: 'none',
             },
           }}
           IconComponent={() => null}
-          sx={{ textAlign: 'center', '.MuiOutlinedInput-notchedOutline': { border: 0 } }}
+          sx={{
+            '.MuiOutlinedInput-notchedOutline': {
+              border: 'none',
+            },
+          }}
         >
           {createMenus(totalPages)}
         </Select>
@@ -96,7 +99,7 @@ const PaginationApp = () => {
           <MobilePagination />
         ) : (
           <Pagination
-            onChange={(event: any, page: number) => {
+            onChange={(event: React.ChangeEvent<unknown>, page: number) => {
               handleUpdatePage(page);
             }}
             count={totalPages}
