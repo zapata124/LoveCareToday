@@ -27,7 +27,7 @@ interface HoverCardProps {
   websiteUrl?: string;
 }
 
-const getStringCutOffSIndex = (description: string) => {
+const getShortDescription = (description: string) => {
   for (let i = 0; i < description.length; i++) {
     if (description[i] === '.' && description[i + 1] === '.') {
       return i;
@@ -35,6 +35,7 @@ const getStringCutOffSIndex = (description: string) => {
   }
   return description.length;
 };
+
 const HoverCard: React.FC<HoverCardProps> = ({
   children,
   name,
@@ -65,6 +66,7 @@ const HoverCard: React.FC<HoverCardProps> = ({
   setTimeout(() => {
     createWidget(slug);
   }, 0);
+  console.log('render');
   return (
     <Card
       // onMouseEnter={() => {
@@ -90,7 +92,7 @@ const HoverCard: React.FC<HoverCardProps> = ({
         {description && (
           <Typography>{`${description.substring(
             0,
-            getStringCutOffSIndex(description),
+            getShortDescription(description),
           )}.`}</Typography>
         )}
       </CardContent>
@@ -107,13 +109,6 @@ const HoverCard: React.FC<HoverCardProps> = ({
 };
 
 const OrganizationCard: React.FC<OrganizationCardProps> = ({ data }) => {
-  useEffect(() => {
-    fetch(
-      'https://partners.every.org/v0.2/nonprofit/Animal-Charity-Evaluators?apiKey=pk_live_4d17374d4c171f0f91524140256c6bc3',
-    )
-      .then((data) => data.json())
-      .then((data) => console.log(data));
-  }, []);
   return (
     <Scrollbars style={{ width: '100%', height: '100%' }}>
       <Grid container spacing={2} sx={{ pt: 2, pb: 2, pr: 1 }}>
