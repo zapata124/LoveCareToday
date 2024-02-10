@@ -7,7 +7,7 @@ import OrganizationCard from '../components/organizationCard';
 import { RenderSearchSkeleton } from '../components/skeletons';
 import { Typography, useMediaQuery, useTheme } from '@mui/material';
 import { causes } from '../components/drawers/causes';
-
+import { client } from '../client';
 const date = new Date().getDate();
 const featuredCause = causes[date].cause;
 
@@ -39,15 +39,22 @@ const MemoFeatured = React.memo(FeatureTypography);
 
 const Featured: React.FC = () => {
   const { id } = useParams();
-  const { handleShow } = useUpdatePage();
+
   const { page, handleUpdatePage, handleTotalPages } = useUpdatePage();
 
   const { loading, error, data } = useQuery(getNonProfitByCause, {
     variables: { browse: featuredCause.toLowerCase(), take: 20, page: page },
   });
+  // we need to write why this is here same for the other useEffects
+  // allows render of MemoFeatured component
   useEffect(() => {
-    handleShow();
-  }, []);
+    if (page) {
+      client.query({
+        query: getNonProfitByCause,
+        variables: { browse: featuredCause.toLowerCase(), take: 20, page: page + 1 },
+      });
+    }
+  }, [page]);
   useEffect(() => {
     if (data?.cause?.pagination?.pages) {
       handleTotalPages(data.cause.pagination.pages);

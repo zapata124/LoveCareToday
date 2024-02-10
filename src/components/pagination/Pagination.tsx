@@ -44,7 +44,7 @@ const MobilePagination: React.FC = () => {
   };
   return (
     <Stack direction={'row'}>
-      <Button size='small' onClick={handlePrevPage}>
+      <Button size='small' onClick={handlePrevPage} disabled={page === 1 ? true : false}>
         <KeyboardArrowLeftIcon />
       </Button>
       <FormControl sx={{ m: 1 }}>
@@ -69,7 +69,7 @@ const MobilePagination: React.FC = () => {
           {createMenus(totalPages)}
         </Select>
       </FormControl>
-      <Button size='small' onClick={handleNexrPage}>
+      <Button size='small' onClick={handleNexrPage} disabled={page === totalPages ? true : false}>
         <KeyboardArrowRightIcon />
       </Button>
     </Stack>
