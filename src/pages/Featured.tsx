@@ -40,7 +40,7 @@ const MemoFeatured = React.memo(FeatureTypography);
 const Featured: React.FC = () => {
   const { id } = useParams();
 
-  const { page, handleUpdatePage, handleTotalPages } = useUpdatePage();
+  const { page, totalPages, handleUpdatePage, handleTotalPages } = useUpdatePage();
 
   const { loading, error, data } = useQuery(getNonProfitByCause, {
     variables: { browse: featuredCause.toLowerCase(), take: 20, page: page },
@@ -48,7 +48,7 @@ const Featured: React.FC = () => {
   // we need to write why this is here same for the other useEffects
   // allows render of MemoFeatured component
   useEffect(() => {
-    if (page) {
+    if (page && page !== totalPages) {
       client.query({
         query: getNonProfitByCause,
         variables: { browse: featuredCause.toLowerCase(), take: 20, page: page + 1 },
