@@ -1,15 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { AppBar, Box, Container } from '@mui/material';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import SearchBar from './components/searchbar/SearchBar';
-import { LeftDrawer } from './components/drawers';
+import { BottomDrawer, LeftDrawer } from './components/drawers';
 import PaginationApp from './components/pagination';
 import PageProvider from './providers/PageProvider';
-// import { ReactComponent as AdoptionSVG } from './assets/adoption_symbol.svg';
 
 const App: React.FC = () => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    navigate('/featured');
+  }, []);
   return (
-    <>
+    <Box sx={{ height: '100vh', psotion: 'relative' }}>
       <AppBar
         sx={{
           bgcolor: 'white',
@@ -24,6 +27,7 @@ const App: React.FC = () => {
         <SearchBar />
       </AppBar>
       <LeftDrawer />
+      <BottomDrawer />
       <Container
         maxWidth='lg'
         sx={{
@@ -49,7 +53,7 @@ const App: React.FC = () => {
           </Container>
         </PageProvider>
       </Container>
-    </>
+    </Box>
   );
 };
 

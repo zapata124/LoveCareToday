@@ -1,8 +1,6 @@
 import { createBrowserRouter, RouteObject } from 'react-router-dom';
 import App from '../App';
-import Organization from '../pages/Organization';
-import MainCard from '../components/MainCard';
-import RenderSearched from '../pages/RenderSearched';
+import { Featured, Organization, RenderSearched } from '../pages';
 
 const routes: RouteObject[] = [
   {
@@ -10,15 +8,15 @@ const routes: RouteObject[] = [
     element: <App />,
     children: [
       {
-        path: '/',
-        element: <MainCard />,
+        path: '/featured',
+        element: <Featured />,
       },
       {
         path: '/search/:id',
         element: <RenderSearched />,
       },
       {
-        path: '/:id',
+        path: '/cause/:id',
         element: <Organization />,
       },
     ],

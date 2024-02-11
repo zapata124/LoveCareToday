@@ -1,15 +1,90 @@
 import React from 'react';
-import Pagination from '@mui/material/Pagination';
-import Stack from '@mui/material/Stack';
 import { useUpdatePage } from '../../providers/PageProvider';
-import { useParams, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import {
+  Stack,
+  Button,
+  FormControl,
+  Select,
+  MenuItem,
+  SelectChangeEvent,
+  Pagination,
+  useTheme,
+  useMediaQuery,
+} from '@mui/material';
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
+
+const createMenus = (count: number) => {
+  const menus = [];
+
+  for (let i = 1; i <= count; i++) {
+    menus.push(
+      <MenuItem value={i} sx={{ justifyContent: 'center' }} key={`menu-${i}`}>
+        {i}
+      </MenuItem>,
+    );
+  }
+  return menus;
+};
+const MobilePagination: React.FC = () => {
+  const { page, totalPages, handleUpdatePage } = useUpdatePage();
+  const handleChange = (event: SelectChangeEvent) => {
+    handleUpdatePage(Number(event.target.value));
+  };
+  const handlePrevPage = () => {
+    if (page !== 1) {
+      handleUpdatePage(page - 1);
+    }
+  };
+  const handleNexrPage = () => {
+    if (page !== totalPages) {
+      handleUpdatePage(page + 1);
+    }
+  };
+  return (
+    <Stack direction={'row'}>
+      <Button size='small' onClick={handlePrevPage} disabled={page === 1 ? true : false}>
+        <KeyboardArrowLeftIcon />
+      </Button>
+      <FormControl sx={{ m: 1 }}>
+        <Select
+          value={String(page)}
+          onChange={handleChange}
+          displayEmpty
+          inputProps={{ 'aria-label': 'Without label' }}
+          size='small'
+          SelectDisplayProps={{
+            style: {
+              padding: 0,
+            },
+          }}
+          IconComponent={() => null}
+          sx={{
+            '.MuiOutlinedInput-notchedOutline': {
+              border: 'none',
+            },
+          }}
+        >
+          {createMenus(totalPages)}
+        </Select>
+      </FormControl>
+      <Button size='small' onClick={handleNexrPage} disabled={page === totalPages ? true : false}>
+        <KeyboardArrowRightIcon />
+      </Button>
+    </Stack>
+  );
+};
+
 const PaginationApp = () => {
   const { page, totalPages, handleUpdatePage } = useUpdatePage();
-  const param = useParams();
+
   const location = useLocation().pathname;
   const findSearch = location.search('search');
 
-  console.log(param, 'useParams', location, findSearch);
+  const theme = useTheme();
+  const mobile = useMediaQuery(theme.breakpoints.down('sm'));
+
   return (
     <Stack
       sx={{
@@ -20,13 +95,17 @@ const PaginationApp = () => {
       }}
     >
       {findSearch < 0 && location !== '/' ? (
-        <Pagination
-          onChange={(event: any, page: number) => {
-            handleUpdatePage(page);
-          }}
-          count={totalPages}
-          page={page}
-        />
+        mobile ? (
+          <MobilePagination />
+        ) : (
+          <Pagination
+            onChange={(event: React.ChangeEvent<unknown>, page: number) => {
+              handleUpdatePage(page);
+            }}
+            count={totalPages}
+            page={page}
+          />
+        )
       ) : null}
     </Stack>
   );

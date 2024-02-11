@@ -17,6 +17,7 @@ const Organization: React.FC = () => {
   const { loading, error, data } = useQuery(getNonProfitByCause, {
     variables: { browse: parsedId, take: 20, page: page },
   });
+  console.log(data);
   useEffect(() => {
     if (data?.cause?.pagination?.pages) {
       handleTotalPages(data.cause.pagination.pages);

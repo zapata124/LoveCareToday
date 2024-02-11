@@ -37,7 +37,7 @@ const CausesList: React.FC<CausesListProps> = ({ open, causes, onClose }) => {
             onClick={() => {
               if (onClose) {
                 onClose();
-                navigate(cause.cause);
+                navigate(`/cause/${cause.cause}`);
               }
             }}
           >
@@ -74,6 +74,7 @@ const LeftDrawer: React.FC = () => {
           left: 22,
           ':hover': { bgcolor: 'transparent' },
           bgcolor: 'transparent',
+          zIndex: 1,
         }}
       >
         <VolunteerActivismIcon fontSize='large' />

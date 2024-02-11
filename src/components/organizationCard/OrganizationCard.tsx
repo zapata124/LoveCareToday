@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Grid,
   Card,
@@ -26,6 +26,16 @@ interface HoverCardProps {
   description: string;
   websiteUrl?: string;
 }
+
+const getShortDescription = (description: string) => {
+  for (let i = 0; i < description.length; i++) {
+    if (description[i] === '.' && description[i + 1] === '.') {
+      return i;
+    }
+  }
+  return description.length;
+};
+
 const HoverCard: React.FC<HoverCardProps> = ({
   children,
   name,
@@ -35,7 +45,8 @@ const HoverCard: React.FC<HoverCardProps> = ({
   description,
   websiteUrl,
 }) => {
-  const [hover, setHover] = React.useState(false);
+  const [hover, setHover] = useState(false);
+
   const handleMouseEnter = () => {
     setHover(!hover);
   };
@@ -55,14 +66,15 @@ const HoverCard: React.FC<HoverCardProps> = ({
   setTimeout(() => {
     createWidget(slug);
   }, 0);
+  console.log('render');
   return (
     <Card
-      onMouseEnter={() => {
-        handleMouseEnter();
-      }}
-      onMouseLeave={() => {
-        handleMouseEnter();
-      }}
+      // onMouseEnter={() => {
+      //   handleMouseEnter();
+      // }}
+      // onMouseLeave={() => {
+      //   handleMouseEnter();
+      // }}
       sx={{ position: 'relative', height: 400 }}
     >
       <CardMedia
@@ -77,7 +89,12 @@ const HoverCard: React.FC<HoverCardProps> = ({
         sx={{ height: 32 }}
       />
       <CardContent sx={{ overflowY: 'auto', height: 114 }}>
-        <Typography>{description}</Typography>
+        {description && (
+          <Typography>{`${description.substring(
+            0,
+            getShortDescription(description),
+          )}.`}</Typography>
+        )}
       </CardContent>
       <CardActions sx={{ height: 40, justifyContent: websiteUrl ? 'space-between' : 'flex-end' }}>
         {websiteUrl && (
@@ -85,7 +102,7 @@ const HoverCard: React.FC<HoverCardProps> = ({
             <Typography variant='body2'>Learn More</Typography>
           </Link>
         )}
-        {hover && children}
+        {children}
       </CardActions>
     </Card>
   );
