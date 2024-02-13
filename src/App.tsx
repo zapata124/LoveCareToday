@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { AppBar, Box, Container } from '@mui/material';
+import { AppBar, Box, Container, Typography } from '@mui/material';
 import { Outlet, useNavigate } from 'react-router-dom';
 import SearchBar from './components/searchbar/SearchBar';
 import { BottomDrawer, LeftDrawer } from './components/drawers';
@@ -52,6 +52,19 @@ const App: React.FC = () => {
             <Outlet />
           </Container>
         </PageProvider>
+        y
+        <Typography
+          sx={{
+            color: 'black',
+            fontSize: '10px',
+            fontFamily: 'monospace',
+            position: 'fixed',
+            left: 0,
+            bottom: 0,
+          }}
+        >
+          site under development
+        </Typography>
       </Container>
     </Box>
   );
