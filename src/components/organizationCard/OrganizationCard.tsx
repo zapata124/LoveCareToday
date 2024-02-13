@@ -84,10 +84,7 @@ const HoverCard: React.FC<HoverCardProps> = ({
         sx={{ height: 32 }}
       />
       <CardContent sx={{ overflowY: 'auto', height: 114 }}>
-        {description && (
-          <Typography>{getShortDescription(description)}</Typography>
-          // <Typography>{description}</Typography>
-        )}
+        {description && <Typography>{getShortDescription(description)}</Typography>}
       </CardContent>
       <CardActions sx={{ height: 40, justifyContent: websiteUrl ? 'space-between' : 'flex-end' }}>
         {websiteUrl && (
