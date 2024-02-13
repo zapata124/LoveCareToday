@@ -28,12 +28,7 @@ interface HoverCardProps {
 }
 
 const getShortDescription = (description: string) => {
-  for (let i = 0; i < description.length; i++) {
-    if (description[i] === '.' && description[i + 1] === '.') {
-      return i;
-    }
-  }
-  return description.length;
+  return description.substring(0, description.indexOf('.') + 1);
 };
 
 const HoverCard: React.FC<HoverCardProps> = ({
@@ -90,10 +85,8 @@ const HoverCard: React.FC<HoverCardProps> = ({
       />
       <CardContent sx={{ overflowY: 'auto', height: 114 }}>
         {description && (
-          <Typography>{`${description.substring(
-            0,
-            getShortDescription(description),
-          )}.`}</Typography>
+          <Typography>{getShortDescription(description)}</Typography>
+          // <Typography>{description}</Typography>
         )}
       </CardContent>
       <CardActions sx={{ height: 40, justifyContent: websiteUrl ? 'space-between' : 'flex-end' }}>
