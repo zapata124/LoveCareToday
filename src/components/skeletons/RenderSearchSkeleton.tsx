@@ -1,7 +1,7 @@
 import React from 'react';
 import { Avatar, Box, Grid, Skeleton } from '@mui/material';
 
-const SkeletonCard: React.FC = () => {
+export const SkeletonCard: React.FC = () => {
   return (
     <Box width={1} height={400} sx={{ position: 'relative' }}>
       <Skeleton width={'100%'} height={170} sx={{ position: 'absolute', top: -42 }} />

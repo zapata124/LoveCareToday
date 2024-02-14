@@ -49,6 +49,9 @@ type GetCauses {
 type SearchBar {
   data: String
 }
+type Organization {
+  organization: String
+}
 type Query {
   search(search: String, take: Int): [Search]
 }
@@ -60,6 +63,9 @@ type Query {
 }
 type Query {
   searchBar(arg: String): SearchBar
+}
+type Query {
+  organization(name: String): Organization
 }
 `;
 

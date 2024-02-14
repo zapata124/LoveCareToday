@@ -44,7 +44,14 @@ const resolvers = {
       return {
         data: JSON.stringify(data)
       }
-    }
+    },
+    organization: async (_, { name }) => {
+      const rest = await axios(`https://${URL}/nonprofit/${name}?apiKey=${APIkey}`);
+      const dataToString = JSON.stringify(rest.data.data)
+      return {
+        organization: dataToString 
+      }
+    } 
   },
 };
 

@@ -10,6 +10,7 @@ import {
   Button,
   Grow,
   Link,
+  Stack,
 } from '@mui/material';
 import StockImage from '../../assets/charity-8366471_1280.png';
 import Scrollbars from 'react-custom-scrollbars';
@@ -92,10 +93,12 @@ const HoverCard: React.FC<HoverCardProps> = ({
             <Typography variant='body2'>Learn More</Typography>
           </Link>
         )}
-        <DialogComponent>
-          <SeeMore nonPropfit={name} />
-        </DialogComponent>
-        {children}
+        <Stack direction={'row'} justifyContent={'space-between'} width={1}>
+          <DialogComponent>
+            <SeeMore nonPropfit={name} />
+          </DialogComponent>
+          {children}
+        </Stack>
       </CardActions>
     </Card>
   );

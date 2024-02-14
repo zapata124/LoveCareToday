@@ -65,3 +65,11 @@ export const getSearchBarData = gql`
     }
   }
 `;
+
+export const getOrganization = gql`
+  query Organization($name: String) {
+    organization(name: $name) {
+      organization
+    }
+  }
+`;
