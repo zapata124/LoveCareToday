@@ -39,17 +39,27 @@ const resolvers = {
       }
     },
     searchBar: async (_, { arg }) => {
-      const rest = await axios(`https://${URL}/search/${arg}?apiKey=${APIkey}`);
-      const data = rest.data
-      return {
-        data: JSON.stringify(data)
+      try {
+        const rest = await axios(`https://${URL}/search/${arg}?apiKey=${APIkey}`);
+        const data = rest.data
+        return {
+          data: JSON.stringify(data)
+        }
+      } catch (err) {
+        console.log(err);
+        return err
       }
     },
     organization: async (_, { name }) => {
-      const rest = await axios(`https://${URL}/nonprofit/${name}?apiKey=${APIkey}`);
-      const dataToString = JSON.stringify(rest.data.data)
-      return {
-        organization: dataToString 
+      try {
+        const rest = await axios(`https://${URL}/nonprofit/${name}?apiKey=${APIkey}`);
+        const dataToString = JSON.stringify(rest.data.data)
+        return {
+          organization: dataToString 
+        }
+      } catch (err) {
+        console.log(err);
+        return err
       }
     } 
   },
