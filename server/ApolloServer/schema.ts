@@ -46,6 +46,9 @@ type GetCauses {
   nonprofits: [Cause],
   pagination: Pagination
 }
+type SearchBar {
+  data: String
+}
 type Query {
   search(search: String, take: Int): [Search]
 }
@@ -54,6 +57,9 @@ type Query {
 }
 type Query {
   cause(browse: String, take: Int, page: Int): GetCauses
+}
+type Query {
+  searchBar(arg: String): SearchBar
 }
 `;
 

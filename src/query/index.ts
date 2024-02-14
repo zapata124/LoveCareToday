@@ -57,3 +57,11 @@ export const getNonProfitByCause = gql`
     }
   }
 `;
+
+export const getSearchBarData = gql`
+  query SearchBar($arg: String) {
+    searchBar(arg: $arg) {
+      data
+    }
+  }
+`;

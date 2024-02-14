@@ -2,7 +2,6 @@ import { ApolloServer } from 'apollo-server';
 import dotenv from 'dotenv';
 import typeDef from './schema';
 import axios from 'axios'
-
 const keys = dotenv.config().parsed;
 const { APIkey, URL } = keys;
 
@@ -39,6 +38,13 @@ const resolvers = {
         return err
       }
     },
+    searchBar: async (_, { arg }) => {
+      const rest = await axios(`https://${URL}/search/${arg}?apiKey=${APIkey}`);
+      const data = rest.data
+      return {
+        data: JSON.stringify(data)
+      }
+    }
   },
 };
 

@@ -59,15 +59,7 @@ const SeeMore: React.FC<SeeMoreProp> = ({ nonPropfit }) => {
   const [newData, setNewData] = useState<any>(1);
   const [data, setData] = useState<any>('');
   // we need to change this to use the lambda function and graphql
-  useEffect(() => {
-    fetch(`https://${URL}/nonprofit/${addDash(nonPropfit)}?apiKey=${apiKey}`)
-      .then((res) => res.json())
-      .then((data: any) => {
-        setData(data);
-      })
-      .catch((err) => console.log(err));
-  }, []);
-  console.log(data);
+
   // we need error handlers here
   const avatarSize = 70;
   return (
@@ -111,7 +103,7 @@ const SeeMore: React.FC<SeeMoreProp> = ({ nonPropfit }) => {
                   <Typography>{data.data.nonprofit.descriptionLong}</Typography>
                 </Box>
               </Grid>
-              <Grid xs={5}>
+              <Grid item xs={5}>
                 <Stack direction={'row'} alignItems={'center'} spacing={1}>
                   <Typography sx={{ fontWeight: 600 }}>Location</Typography>
                   <LocationOnIcon />
