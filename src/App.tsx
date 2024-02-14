@@ -52,7 +52,6 @@ const App: React.FC = () => {
             <Outlet />
           </Container>
         </PageProvider>
-        y
         <Typography
           sx={{
             color: 'black',

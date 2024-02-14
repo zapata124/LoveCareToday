@@ -13,6 +13,7 @@ import {
 } from '@mui/material';
 import StockImage from '../../assets/charity-8366471_1280.png';
 import Scrollbars from 'react-custom-scrollbars';
+import SeeMore, { DialogComponent } from '../seemore/SeeMore';
 interface OrganizationCardProps {
   data?: unknown[];
   children?: React.ReactNode;
@@ -61,7 +62,6 @@ const HoverCard: React.FC<HoverCardProps> = ({
   setTimeout(() => {
     createWidget(slug);
   }, 0);
-  console.log('render');
   return (
     <Card
       // onMouseEnter={() => {
@@ -92,6 +92,9 @@ const HoverCard: React.FC<HoverCardProps> = ({
             <Typography variant='body2'>Learn More</Typography>
           </Link>
         )}
+        <DialogComponent>
+          <SeeMore nonPropfit={name} />
+        </DialogComponent>
         {children}
       </CardActions>
     </Card>
