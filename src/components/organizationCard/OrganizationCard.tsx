@@ -11,14 +11,37 @@ import {
   Grow,
   Link,
   Stack,
+  Dialog,
+  DialogContent,
+  Zoom,
 } from '@mui/material';
 import StockImage from '../../assets/charity-8366471_1280.png';
 import Scrollbars from 'react-custom-scrollbars';
-import SeeMore, { DialogComponent } from '../seemore/SeeMore';
-interface OrganizationCardProps {
-  data?: unknown[];
-  children?: React.ReactNode;
-}
+import SeeMore from '../seemore/SeeMore';
+
+export const DialogComponent: React.FC<Children> = ({ children }) => {
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => {
+    setOpen(!open);
+  };
+
+  return (
+    <>
+      <Button onClick={handleOpen}>See more</Button>
+      <Dialog
+        open={open}
+        onClose={handleOpen}
+        aria-labelledby='alert-dialog-title'
+        aria-describedby='alert-dialog-description'
+        maxWidth='lg'
+      >
+        <Zoom in={open}>
+          <DialogContent sx={{ padding: 0 }}>{children}</DialogContent>
+        </Zoom>
+      </Dialog>
+    </>
+  );
+};
 interface HoverCardProps {
   children: React.ReactNode;
   name: string;
@@ -88,11 +111,6 @@ const HoverCard: React.FC<HoverCardProps> = ({
         {description && <Typography>{getShortDescription(description)}</Typography>}
       </CardContent>
       <CardActions sx={{ height: 40, justifyContent: websiteUrl ? 'space-between' : 'flex-end' }}>
-        {websiteUrl && (
-          <Link href={websiteUrl as string} underline='none' sx={{ pl: 1 }}>
-            <Typography variant='body2'>Learn More</Typography>
-          </Link>
-        )}
         <Stack direction={'row'} justifyContent={'space-between'} width={1}>
           <DialogComponent>
             <SeeMore nonPropfit={name} />
@@ -103,6 +121,11 @@ const HoverCard: React.FC<HoverCardProps> = ({
     </Card>
   );
 };
+
+interface OrganizationCardProps {
+  data?: unknown[];
+  children?: React.ReactNode;
+}
 
 const OrganizationCard: React.FC<OrganizationCardProps> = ({ data }) => {
   return (

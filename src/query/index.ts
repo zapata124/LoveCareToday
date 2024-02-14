@@ -73,3 +73,76 @@ export const getOrganization = gql`
     }
   }
 `;
+
+export const getOrgHunterSearchSummary = gql`
+  query Query($tearm: String) {
+    searchSummary(tearm: $tearm) {
+      ein
+      charityName
+      url
+      donationUrl
+      city
+      state
+      zipCode
+      start
+      rows
+      recordCount
+      score
+      acceptingDonations
+      category
+      eligibleCd
+      deductibilityCd
+      statusCd
+      website
+      missionStatement
+      parent_ein
+      latitude
+      longitude
+    }
+  }
+`;
+
+export const getOrgHunterCharityBasic = gql`
+  query Query($ein: Int) {
+    charityBasic(ein: $ein) {
+      ein
+      name
+      inCareOfName 
+      street
+      city
+      state
+      zipCode
+      country
+      groupExemption
+      subsection
+      classification
+      affiliation
+      rullingDate
+      deductibility
+      deductibilityStatus
+      foundation
+      activity1
+      activity2
+      activity3
+      organization
+      exemptStatus
+      taxPeriod
+      assetCodeDesc
+      incomeCodeDesc
+      filingRequirementCodeDesc
+      pfFilingRequirementCodeDesc
+      accountingPeriod
+      assetAmount
+      incomeAmount
+      form990
+      nteeCd
+      nteeClass
+      nteeType
+      sortName
+      revocationDt
+      revPostingDt
+      irsRevocationStatus
+      acceptingDonations
+    }
+  }
+`;

@@ -12,8 +12,16 @@ const OrgHunterResolvers = {
   searchSummary: async (_, { tearm }) => {
     try {
       const res = await axios(`http://data.orghunter.com/v1/charitysearch?user_key=${HunterAPIKey}&searchTerm=${tearm}`);
-      console.log(res.data.data)
       return res.data.data
+    } catch (err) {
+      console.log(err);
+      return err
+    }
+  },
+  charityBasic: async (_, { ein }) => {
+    try {
+      const test = await axios(`http://data.orghunter.com/v1/charitybasic?user_key=${HunterAPIKey}&ein=${ein}`);
+      return test.data.data
     } catch (err) {
       console.log(err);
       return err

@@ -94,8 +94,51 @@ type SearchSummary {
   latitude: String
   longitude: String 
 }
+type CharityBasic {
+  ein: Int
+  name: String        
+  inCareOfName: String
+  street: String
+  city: String
+  state: String
+  zipCode: String
+  country: String
+  groupExemption: String
+  subsection: String
+  classification: String
+  affiliation: String
+  rullingDate: String
+  deductibility: String
+  deductibilityStatus: String
+  foundation: String
+  activity1: String
+  activity2: String
+  activity3: String
+  organization: String
+  exemptStatus: String
+  taxPeriod: String
+  assetCodeDesc: String
+  incomeCodeDesc: String
+  filingRequirementCodeDesc: String
+  pfFilingRequirementCodeDesc: String
+  accountingPeriod: String
+  assetAmount: String
+  incomeAmount: String
+  form990: String
+  nteeCd: String
+  nteeClass: String
+  nteeType: String
+  sortName: String
+  revocationDt: String
+  revPostingDt: String
+  irsRevocationStatus: String
+  acceptingDonations: Int
+}
 type Query {
   searchSummary(tearm: String): [SearchSummary]
+}
+type Query {
+  charityBasic(ein: Int): CharityBasic
 }
 `;
 
