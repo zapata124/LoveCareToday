@@ -17,9 +17,12 @@ import {
   CardMedia,
   Grid,
   Box,
+  Link,
 } from '@mui/material';
+import { Link as RouterLink } from 'react-router-dom';
 import Scrollbars from 'react-custom-scrollbars';
-
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import LinkIcon from '@mui/icons-material/Link';
 const apiKey = import.meta.env.VITE_APIkey;
 const URL = import.meta.env.VITE_URL;
 
@@ -109,11 +112,19 @@ const SeeMore: React.FC<SeeMoreProp> = ({ nonPropfit }) => {
                 </Box>
               </Grid>
               <Grid xs={5}>
-                <Typography sx={{ fontWeight: 500 }}>Location</Typography>
+                <Stack direction={'row'} alignItems={'center'} spacing={1}>
+                  <Typography sx={{ fontWeight: 600 }}>Location</Typography>
+                  <LocationOnIcon />
+                </Stack>
                 <Typography sx={{ mb: 2 }}>{data.data.nonprofit.locationAddress}</Typography>
                 {/* {data.data.nonprofit.name} */}
-                <Typography sx={{ fontWeight: 500 }}>URL</Typography>
-                {data.data.nonprofit.websiteUrl}
+                <Stack direction={'row'} alignItems={'center'} spacing={1}>
+                  <Typography sx={{ fontWeight: 600 }}>URL</Typography>
+                  <LinkIcon />
+                </Stack>
+                <Link component={RouterLink} to={data.data.nonprofit.websiteUrl}>
+                  {data.data.nonprofit.websiteUrl}
+                </Link>
               </Grid>
             </Grid>
           </CardContent>
