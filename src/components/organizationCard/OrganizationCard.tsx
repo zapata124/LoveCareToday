@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   Grid,
   Card,
@@ -9,7 +9,6 @@ import {
   Typography,
   Button,
   Grow,
-  Link,
   Stack,
   Dialog,
   DialogContent,
@@ -24,7 +23,6 @@ export const DialogComponent: React.FC<Children> = ({ children }) => {
   const handleOpen = () => {
     setOpen(!open);
   };
-
   return (
     <>
       <Button onClick={handleOpen}>See more</Button>
@@ -56,6 +54,19 @@ const getShortDescription = (description: string) => {
   return description.substring(0, description.indexOf('.') + 1);
 };
 
+export const createWidget = (slug: string) => {
+  /* tslint:disable-next-line */
+  // @ts-expect-error this will work once loaded
+  everyDotOrgDonateButton?.createButton({
+    selector: `#every-donate-${slug}`,
+  });
+  /* tslint:disable-next-line */
+  // @ts-expect-error this will work once loaded
+  everyDotOrgDonateButton?.createWidget({
+    selector: `#every-donate-${slug}`,
+    nonprofitSlug: slug,
+  });
+};
 const HoverCard: React.FC<HoverCardProps> = ({
   children,
   name,
@@ -70,19 +81,7 @@ const HoverCard: React.FC<HoverCardProps> = ({
   const handleMouseEnter = () => {
     setHover(!hover);
   };
-  function createWidget(slug: string) {
-    /* tslint:disable-next-line */
-    // @ts-expect-error this will work once loaded
-    everyDotOrgDonateButton?.createButton({
-      selector: `#every-donate-${slug}`,
-    });
-    /* tslint:disable-next-line */
-    // @ts-expect-error this will work once loaded
-    everyDotOrgDonateButton?.createWidget({
-      selector: `#every-donate-${slug}`,
-      nonprofitSlug: slug,
-    });
-  }
+
   setTimeout(() => {
     createWidget(slug);
   }, 0);
@@ -113,7 +112,7 @@ const HoverCard: React.FC<HoverCardProps> = ({
       <CardActions sx={{ height: 40, justifyContent: websiteUrl ? 'space-between' : 'flex-end' }}>
         <Stack direction={'row'} justifyContent={'space-between'} width={1}>
           <DialogComponent>
-            <SeeMore nonPropfit={name} />
+            <SeeMore nonPropfit={name} slug={slug} />
           </DialogComponent>
           {children}
         </Stack>

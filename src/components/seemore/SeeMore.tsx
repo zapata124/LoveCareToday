@@ -18,6 +18,7 @@ import {
   Grid,
   Box,
   Link,
+  Divider,
 } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
@@ -26,6 +27,7 @@ import { useLazyQuery, useQuery } from '@apollo/client';
 import { getOrgHunterCharityBasic, getOrganization } from '../../query';
 import NoDataSVG from '../svgs/NoDataSVG';
 import { SkeletonCard } from '../skeletons/RenderSearchSkeleton';
+import { createWidget } from '../organizationCard/OrganizationCard';
 
 const FallBackState: React.FC<Children> = ({ children }) => {
   return (
@@ -44,6 +46,7 @@ interface SeeMoreCardProps {
   longDescription: string;
   address: string;
   url: string;
+  slug: string;
 }
 
 const SeeMoreCard: React.FC<SeeMoreCardProps> = ({
@@ -55,7 +58,11 @@ const SeeMoreCard: React.FC<SeeMoreCardProps> = ({
   longDescription,
   address,
   url,
+  slug,
 }) => {
+  setTimeout(() => {
+    createWidget(slug);
+  }, 0);
   return (
     <Card sx={{ position: 'relative' }}>
       <CardHeader
@@ -86,12 +93,29 @@ const SeeMoreCard: React.FC<SeeMoreCardProps> = ({
         <Grid container sx={{ width: 1, height: 1 }}>
           <Grid item xs={7} width={1} height={1}>
             <Typography sx={{ fontSize: '24px', fontWeight: 600, mb: 2 }}>Description</Typography>
-            <Box width={1} height={300} overflow={'auto'}>
-              <Typography>{shortDescription}</Typography>
-              <Typography>{longDescription}</Typography>
+            <Box
+              width={1}
+              height={300}
+              overflow={'auto'}
+              sx={{
+                '&::-webkit-scrollbar': {
+                  width: '0.4em',
+                },
+                '&::-webkit-scrollbar-track': {
+                  WebkitBoxShadow: 'inset 0 0 6px rgba(0,0,0,0.00)',
+                },
+                '&::-webkit-scrollbar-thumb': {
+                  backgroundColor: 'rgba(0,0,0,.1)',
+                  outline: '1px solid slategrey',
+                },
+              }}
+            >
+              <Typography pr={2}>{shortDescription}</Typography>
+              <Typography pr={2}>{longDescription}</Typography>
             </Box>
           </Grid>
           <Grid item xs={5}>
+            {/* <Divider orientation='horizontal' variant='middle' /> */}
             <Stack direction={'row'} alignItems={'center'} spacing={1}>
               <Typography sx={{ fontWeight: 600 }}>Location</Typography>
               <LocationOnIcon />
@@ -107,29 +131,12 @@ const SeeMoreCard: React.FC<SeeMoreCardProps> = ({
           </Grid>
         </Grid>
       </CardContent>
+      <CardActions sx={{ position: 'absolute', bottom: '2%', right: '2%' }}>
+        <Button id={`every-donate-${slug}`} href={`https://www.every.org/${slug}#/donate`}>
+          Love Care Donate
+        </Button>
+      </CardActions>
     </Card>
-  );
-};
-
-export const DialogComponent: React.FC<Children> = ({ children }) => {
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => {
-    setOpen(!open);
-  };
-
-  return (
-    <>
-      <Button onClick={handleOpen}>See more</Button>
-      <Dialog
-        open={open}
-        onClose={handleOpen}
-        aria-labelledby='alert-dialog-title'
-        aria-describedby='alert-dialog-description'
-        maxWidth='lg'
-      >
-        <DialogContent sx={{ padding: 0 }}>{children}</DialogContent>
-      </Dialog>
-    </>
   );
 };
 
@@ -138,9 +145,10 @@ const addDash = (str: string) => {
 };
 interface SeeMoreProp {
   nonPropfit: string;
+  slug: string;
 }
 
-const SeeMore: React.FC<SeeMoreProp> = ({ nonPropfit }) => {
+const SeeMore: React.FC<SeeMoreProp> = ({ nonPropfit, slug }) => {
   const { loading, error, data } = useQuery(getOrganization, {
     variables: { name: addDash(nonPropfit) },
   });
@@ -158,7 +166,6 @@ const SeeMore: React.FC<SeeMoreProp> = ({ nonPropfit }) => {
   }, [loading]);
 
   // we need error handlers here
-
   return (
     <>
       {!loading ? (
@@ -172,6 +179,7 @@ const SeeMore: React.FC<SeeMoreProp> = ({ nonPropfit }) => {
             longDescription={parsedData.nonprofit.descriptionLong}
             address={parsedData.nonprofit.locationAddress}
             url={parsedData.nonprofit.websiteUrl}
+            slug={slug}
           />
         ) : (
           <FallBackState>
