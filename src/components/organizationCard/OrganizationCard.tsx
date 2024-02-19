@@ -12,7 +12,6 @@ import {
   Stack,
   Dialog,
   DialogContent,
-  Zoom,
 } from '@mui/material';
 import StockImage from '../../assets/charity-8366471_1280.png';
 import Scrollbars from 'react-custom-scrollbars';
@@ -33,9 +32,7 @@ export const DialogComponent: React.FC<Children> = ({ children }) => {
         aria-describedby='alert-dialog-description'
         maxWidth='lg'
       >
-        <Zoom in={open}>
-          <DialogContent sx={{ padding: 0 }}>{children}</DialogContent>
-        </Zoom>
+        <DialogContent sx={{ padding: 0 }}>{children}</DialogContent>
       </Dialog>
     </>
   );

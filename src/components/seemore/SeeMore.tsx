@@ -89,13 +89,13 @@ const SeeMoreCard: React.FC<SeeMoreCardProps> = ({
         }
       />
       <CardMedia image={coverImageUrl} sx={{ height: 273 }} />
-      <CardContent sx={{ width: 1, height: 300 }}>
+      <CardContent>
         <Grid container sx={{ width: 1, height: 1 }}>
-          <Grid item xs={7} width={1} height={1}>
+          <Grid item xs={7} width={1} height={1} pr={2}>
             <Typography sx={{ fontSize: '24px', fontWeight: 600, mb: 2 }}>Description</Typography>
             <Box
               width={1}
-              height={300}
+              height={250}
               overflow={'auto'}
               sx={{
                 '&::-webkit-scrollbar': {
@@ -106,16 +106,15 @@ const SeeMoreCard: React.FC<SeeMoreCardProps> = ({
                 },
                 '&::-webkit-scrollbar-thumb': {
                   backgroundColor: 'rgba(0,0,0,.1)',
-                  outline: '1px solid slategrey',
+                  borderRadius: '8px',
                 },
               }}
             >
-              <Typography pr={2}>{shortDescription}</Typography>
-              <Typography pr={2}>{longDescription}</Typography>
+              <Typography>{shortDescription}</Typography>
+              <Typography>{longDescription}</Typography>
             </Box>
           </Grid>
-          <Grid item xs={5}>
-            {/* <Divider orientation='horizontal' variant='middle' /> */}
+          <Grid item xs={5} pr={4}>
             <Stack direction={'row'} alignItems={'center'} spacing={1}>
               <Typography sx={{ fontWeight: 600 }}>Location</Typography>
               <LocationOnIcon />
@@ -125,7 +124,7 @@ const SeeMoreCard: React.FC<SeeMoreCardProps> = ({
               <Typography sx={{ fontWeight: 600 }}>URL</Typography>
               <LinkIcon />
             </Stack>
-            <Link component={RouterLink} to={url}>
+            <Link component={RouterLink} to={url} target='_blank'>
               {url}
             </Link>
           </Grid>
@@ -133,7 +132,7 @@ const SeeMoreCard: React.FC<SeeMoreCardProps> = ({
       </CardContent>
       <CardActions sx={{ position: 'absolute', bottom: '2%', right: '2%' }}>
         <Button id={`every-donate-${slug}`} href={`https://www.every.org/${slug}#/donate`}>
-          Love Care Donate
+          Donate
         </Button>
       </CardActions>
     </Card>
