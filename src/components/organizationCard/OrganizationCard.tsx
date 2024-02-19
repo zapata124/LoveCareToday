@@ -31,6 +31,8 @@ export const DialogComponent: React.FC<Children> = ({ children }) => {
         aria-labelledby='alert-dialog-title'
         aria-describedby='alert-dialog-description'
         maxWidth='lg'
+        // zIndex = 99 allows to render the donate dialog on top of this current dialog
+        sx={{ zIndex: 99 }}
       >
         <DialogContent sx={{ padding: 0 }}>{children}</DialogContent>
       </Dialog>

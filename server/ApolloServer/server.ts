@@ -64,8 +64,6 @@ const EveryOrgResolvers = {
   searchBar: async (_, { arg }) => {
     try {
       const rest = await axios(`https://${URL}/search/${arg}?apiKey=${APIkey}`);
-      const test = await axios('http://data.orghunter.com/v1/charitysearch?user_key=d7b8060c6422bd63ac22bb80b862da76&searchTerm=treasure%20coast%20humane')
-      console.log(test.data.data)
       const data = rest.data
       return {
         data: JSON.stringify(data)
