@@ -12,28 +12,41 @@ import {
   Stack,
   Dialog,
   DialogContent,
+  useTheme,
+  useMediaQuery,
+  Box,
 } from '@mui/material';
 import StockImage from '../../assets/charity-8366471_1280.png';
 import Scrollbars from 'react-custom-scrollbars';
 import SeeMore from '../seemore/SeeMore';
+import CloseIcon from '@mui/icons-material/Close';
 
 export const DialogComponent: React.FC<Children> = ({ children }) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => {
     setOpen(!open);
   };
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
+
   return (
     <>
       <Button onClick={handleOpen}>See more</Button>
       <Dialog
+        fullScreen={fullScreen}
         open={open}
         onClose={handleOpen}
         aria-labelledby='alert-dialog-title'
         aria-describedby='alert-dialog-description'
         maxWidth='lg'
         // zIndex = 99 allows to render the donate dialog on top of this current dialog
-        sx={{ zIndex: 99 }}
+        sx={{ zIndex: 99, postion: 'relative' }}
       >
+        {fullScreen && (
+          <Box sx={{ position: 'absolute', zIndex: 1, top: 0, right: 0 }}>
+            <CloseIcon onClick={handleOpen} />
+          </Box>
+        )}
         <DialogContent sx={{ padding: 0 }}>{children}</DialogContent>
       </Dialog>
     </>
