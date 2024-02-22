@@ -43,7 +43,16 @@ export const DialogComponent: React.FC<Children> = ({ children }) => {
         sx={{ zIndex: 99, postion: 'relative' }}
       >
         {fullScreen && (
-          <Box sx={{ position: 'absolute', zIndex: 1, top: 0, right: 0 }}>
+          <Box
+            sx={{
+              position: 'absolute',
+              zIndex: 1,
+              top: 0,
+              right: 0,
+              bgcolor: 'white',
+              borderRadius: '8px 0 8px',
+            }}
+          >
             <CloseIcon onClick={handleOpen} />
           </Box>
         )}

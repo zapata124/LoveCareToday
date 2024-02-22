@@ -91,7 +91,7 @@ const FullLocation: React.FC<Omit<FullLocationProps, 'assetAmount' | 'form990'>>
   return (
     <Grid container>
       <Grid container item xs={12} sm={6}>
-        <Grid item xs={12}>
+        <Grid item xs={12} pr={1}>
           <Typography sx={{ fontWeight: 600, fontSize: '16px' }}>Street</Typography>
           <Typography>{street}</Typography>
         </Grid>
@@ -232,7 +232,7 @@ const SeeMoreCard: React.FC<SeeMoreCardProps> = ({
                   />
                 </>
               ) : (
-                <PartialLocation address={'No Data'} />
+                <PartialLocation address={'Not available'} />
               )}
             </SeemoreTabs>
             {/* <Stack direction={'row'} alignItems={'center'} spacing={1}>
