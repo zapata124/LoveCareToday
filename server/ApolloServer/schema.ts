@@ -70,7 +70,6 @@ type Query {
 
 
 
-
 type SearchSummary {
   ein: String
   charityName: String
