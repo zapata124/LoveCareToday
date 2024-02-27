@@ -70,8 +70,8 @@ interface FullLocationProps {
   state: string;
   zipCode: string;
   country: string;
-  assetAmount: string;
-  form990: string;
+  assetAmount: string | number;
+  form990: string | number;
 }
 const Finance: React.FC<Partial<Pick<FullLocationProps, 'assetAmount' | 'form990'>> & subTitle> = ({
   assetAmount,
@@ -153,14 +153,14 @@ const SeemoreTabs: React.FC<FullLocationProps> = ({
       ) : null}
       {value === 2 ? (
         assetAmount ? (
-          <Finance assetAmount={assetAmount} str={'Asset Amount'} />
+          <Finance assetAmount={Number(assetAmount).toLocaleString()} str={'Asset Amount'} />
         ) : (
           <NotAvailable />
         )
       ) : null}
       {value === 3 ? (
         assetAmount ? (
-          <Finance form990={form990} str={'Form 990'} />
+          <Finance form990={Number(form990).toLocaleString()} str={'Form 990'} />
         ) : (
           <NotAvailable />
         )
