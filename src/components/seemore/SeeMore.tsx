@@ -30,6 +30,7 @@ import { getOrgHunterCharityBasic, getOrganization } from '../../query';
 import NoDataSVG from '../svgs/NoDataSVG';
 import { SkeletonCard } from '../skeletons/RenderSearchSkeleton';
 import { createWidget } from '../organizationCard/OrganizationCard';
+import SeeMoreTabsSkeleton from '../skeletons/SeeMoreTabsSkeleton';
 
 const FallBackState: React.FC<Children> = ({ children }) => {
   return (
@@ -271,7 +272,7 @@ const SeeMoreCard: React.FC<SeeMoreCardProps> = ({
           </Grid>
           <Grid item xs={12} md={5} pr={4}>
             {loading ? (
-              <div>Loading</div>
+              <SeeMoreTabsSkeleton />
             ) : (
               <SeemoreTabs
                 street={street}
@@ -281,31 +282,7 @@ const SeeMoreCard: React.FC<SeeMoreCardProps> = ({
                 country={country}
                 assetAmount={assetAmount}
                 form990={form990}
-              >
-                {/* {loading ? (
-                <div>Loading</div>
-              ) : (
-                <>
-                  [
-                  <FullLocation
-                    street={street}
-                    city={city}
-                    state={state}
-                    zipCode={zipCode}
-                    country={country}
-                  />
-                  ,
-                  <FullLocation
-                    street={'fdsf'}
-                    city={'fdsfsf'}
-                    state={'fdsff'}
-                    zipCode={'fdsfs'}
-                    country={'fsdfsf'}
-                  />
-                  ]
-                </>
-              )} */}
-              </SeemoreTabs>
+              />
             )}
             {/* <Stack direction={'row'} alignItems={'center'} spacing={1}>
               <Typography sx={{ fontWeight: 600 }}>URL</Typography>
