@@ -39,23 +39,13 @@ const FallBackState: React.FC<Children> = ({ children }) => {
   );
 };
 
-const SeemoreTabs: React.FC<Children> = ({ children }) => {
-  const [value, setValue] = React.useState(0);
+type subTitle = { str: string };
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue);
-  };
-
-  return (
-    <Box sx={{ width: '100%' }}>
-      <Tabs value={value} onChange={handleChange} aria-label='secondary tabs example'>
-        <Tab value={0} label='Location' />
-        <Tab value={1} label='Finance' />
-        <Tab value={2} label='IRS' />
-      </Tabs>
-      {Children.toArray(children)[value]}
-    </Box>
-  );
+const Subtitle: React.FC<subTitle> = ({ str }) => {
+  return <Typography sx={{ fontWeight: 600, fontSize: '16px' }}>{str}</Typography>;
+};
+const NotAvailable: React.ElementType = () => {
+  return <Typography>Not Available</Typography>;
 };
 
 interface PartialLocationProp {
@@ -72,6 +62,7 @@ const PartialLocation: React.FC<PartialLocationProp> = ({ address }) => {
     </Stack>
   );
 };
+
 interface FullLocationProps {
   street: string;
   city: string;
@@ -81,6 +72,18 @@ interface FullLocationProps {
   assetAmount: string;
   form990: string;
 }
+const Finance: React.FC<Partial<Pick<FullLocationProps, 'assetAmount' | 'form990'>> & subTitle> = ({
+  assetAmount,
+  form990,
+  str,
+}) => {
+  return (
+    <>
+      <Subtitle str={str} />
+      <Typography>$ {assetAmount || form990}</Typography>
+    </>
+  );
+};
 const FullLocation: React.FC<Omit<FullLocationProps, 'assetAmount' | 'form990'>> = ({
   street,
   city,
@@ -90,31 +93,78 @@ const FullLocation: React.FC<Omit<FullLocationProps, 'assetAmount' | 'form990'>>
 }) => {
   return (
     <Grid container>
-      <Grid container item xs={12} sm={6}>
-        <Grid item xs={12} pr={1}>
-          <Typography sx={{ fontWeight: 600, fontSize: '16px' }}>Street</Typography>
+      <Grid item xs={12} sm={6} pr={2}>
+        <Stack>
+          <Subtitle str={'Street'} />
           <Typography>{street}</Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <Typography sx={{ fontWeight: 600, fontSize: '16px' }}>City</Typography>
+          <Subtitle str={'City'} />
           <Typography>{city}</Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <Typography sx={{ fontWeight: 600, fontSize: '16px' }}>State</Typography>
+          <Subtitle str={'Sate'} />
           <Typography>{state}</Typography>
-        </Grid>
+        </Stack>
       </Grid>
-      <Grid container item xs={12} sm={6}>
-        <Grid item xs={12}>
-          <Typography sx={{ fontWeight: 600, fontSize: '16px' }}>ZipCode</Typography>
+      <Grid item xs={12} sm={6}>
+        <Stack>
+          <Subtitle str={'ZipCode'} />
           <Typography>{zipCode}</Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <Typography sx={{ fontWeight: 600, fontSize: '16px' }}>Country</Typography>
+          <Subtitle str={'Country'} />
           <Typography>{country}</Typography>
-        </Grid>
+        </Stack>
       </Grid>
     </Grid>
+  );
+};
+
+const SeemoreTabs: React.FC<FullLocationProps> = ({
+  street,
+  city,
+  state,
+  zipCode,
+  country,
+  assetAmount,
+  form990,
+}) => {
+  const [value, setValue] = React.useState(1);
+
+  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    setValue(newValue);
+  };
+
+  return (
+    <Box sx={{ width: '100%' }}>
+      <Tabs value={value} onChange={handleChange} aria-label='secondary tabs example'>
+        <Tab value={1} label='Location' />
+        <Tab value={2} label='Finance' />
+        <Tab value={3} label='IRS' />
+      </Tabs>
+      {value === 1 ? (
+        street ? (
+          <FullLocation
+            street={street}
+            city={city}
+            state={state}
+            zipCode={zipCode}
+            country={country}
+          />
+        ) : (
+          <NotAvailable />
+        )
+      ) : null}
+      {value === 2 ? (
+        assetAmount ? (
+          <Finance assetAmount={assetAmount} str={'Asset Amount'} />
+        ) : (
+          <NotAvailable />
+        )
+      ) : null}
+      {value === 3 ? (
+        assetAmount ? (
+          <Finance form990={form990} str={'Form 990'} />
+        ) : (
+          <NotAvailable />
+        )
+      ) : null}
+    </Box>
   );
 };
 
@@ -151,7 +201,9 @@ const SeeMoreCard: React.FC<SeeMoreCardProps> = ({
   ein,
 }) => {
   const [getHunterData, { data, loading }] = useLazyQuery(getOrgHunterCharityBasic);
-  const { street, city, state, zipCode, country } = data ? data.charityBasic : defaultData;
+  const { street, city, state, zipCode, country, assetAmount, form990 } = data
+    ? data.charityBasic
+    : defaultData;
 
   useEffect(() => {
     if (ein) {
@@ -218,11 +270,23 @@ const SeeMoreCard: React.FC<SeeMoreCardProps> = ({
             </Box>
           </Grid>
           <Grid item xs={12} md={5} pr={4}>
-            <SeemoreTabs>
-              {loading ? (
+            {loading ? (
+              <div>Loading</div>
+            ) : (
+              <SeemoreTabs
+                street={street}
+                city={city}
+                state={state}
+                zipCode={zipCode}
+                country={country}
+                assetAmount={assetAmount}
+                form990={form990}
+              >
+                {/* {loading ? (
                 <div>Loading</div>
-              ) : data ? (
+              ) : (
                 <>
+                  [
                   <FullLocation
                     street={street}
                     city={city}
@@ -230,11 +294,19 @@ const SeeMoreCard: React.FC<SeeMoreCardProps> = ({
                     zipCode={zipCode}
                     country={country}
                   />
+                  ,
+                  <FullLocation
+                    street={'fdsf'}
+                    city={'fdsfsf'}
+                    state={'fdsff'}
+                    zipCode={'fdsfs'}
+                    country={'fsdfsf'}
+                  />
+                  ]
                 </>
-              ) : (
-                <PartialLocation address={'Not available'} />
-              )}
-            </SeemoreTabs>
+              )} */}
+              </SeemoreTabs>
+            )}
             {/* <Stack direction={'row'} alignItems={'center'} spacing={1}>
               <Typography sx={{ fontWeight: 600 }}>URL</Typography>
               <LinkIcon />
