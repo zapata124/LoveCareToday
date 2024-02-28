@@ -19,15 +19,15 @@ const App: React.FC = () => {
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-          // zIndex: (theme) => theme.zIndex.drawer + 1,
           height: 71,
           boxShadow: 'none',
+          zIndex: 1,
         }}
       >
         <SearchBar />
       </AppBar>
       <LeftDrawer />
-      <BottomDrawer />
+      {/* <BottomDrawer /> */}
       <Container
         maxWidth='lg'
         sx={{

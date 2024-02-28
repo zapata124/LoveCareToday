@@ -45,9 +45,9 @@ const BottomDrawer: React.FC = () => {
 
   return (
     <div style={{ position: 'absolute' }}>
-      <Button onClick={toggleDrawer} sx={{ postion: 'relative', bottom: '0px', float: 'right' }}>
+      {/* <Button onClick={toggleDrawer} sx={{ postion: 'relative', bottom: '0px', float: 'right' }}>
         Bottom
-      </Button>
+      </Button> */}
       <Drawer anchor={'bottom'} open={open} onClose={toggleDrawer}>
         {list()}
       </Drawer>
