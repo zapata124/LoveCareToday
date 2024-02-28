@@ -42,8 +42,14 @@ const CausesList: React.FC<CausesListProps> = ({ open, causes, onClose }) => {
             }}
           >
             <ListItemButton>
-              <ListItemIcon sx={{ justifyContent: 'center' }}>
-                {cause.image ? <img src={cause.image} alt='adoptionImage' /> : <InboxIcon />}
+              <ListItemIcon sx={{ justifyContent: 'center', marginRight: 1 }}>
+                {cause.image ? (
+                  <Box width={'2rem'}>
+                    <img src={cause.image} alt='adoptionImage' />
+                  </Box>
+                ) : (
+                  <InboxIcon />
+                )}
               </ListItemIcon>
               {open && <ListItemText primary={cause.cause} />}
             </ListItemButton>

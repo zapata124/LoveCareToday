@@ -1,12 +1,21 @@
-import Adoptation from '../../assets/heart2121clear2.png'
-import People from '../../assets/people2121clear.png'
-import Lion from '../../assets/lion1919clear.png'
-import Art from '../../assets/art1919clear.png'
-import Athelete from '../../assets/athlete1919clear.png'
-import Autism from '../../assets/autism1919clear.png'
-import Buddha from '../../assets/buddha1919clear.png'
-import Awareness from '../../assets/awareness1919clear.png'
-import Cat from '../../assets/cat1919clear.png'
+import Adoption from '../../assets/adoption.svg'
+import People from '../../assets/afghanistan.svg'
+import Art from '../../assets/art.svg'
+import Athelete from '../../assets/sport.svg'
+import Autism from '../../assets/autism.svg'
+import Buddha from '../../assets/buddhism.svg'
+import Awareness from '../../assets/cancer.svg'
+import Cat from '../../assets/cat.svg'
+import Lion from '../../assets/lion.svg';
+import Christianity from '../../assets/christianity.svg';
+import Climate from '../../assets/climate.svg'
+import Recycle from '../../assets/recycle.svg';
+import Virus from '../../assets/virus.svg';
+import Culture from '../../assets/culture.svg'
+import Dance from '../../assets/dance.svg';
+import Disability from '../../assets/disability.svg';
+import Disease from '../../assets/disease.svg'
+import Dog from '../../assets/dog.svg'
 export type TypeCauses = {
     cause: string,
     image: any
@@ -14,7 +23,7 @@ export type TypeCauses = {
 export const causes: TypeCauses[] = [
     {
         'cause': 'Adoption',
-        'image': Adoptation
+        'image': Adoption
     },
     {
         'cause': 'Afghanistan',
@@ -50,39 +59,39 @@ export const causes: TypeCauses[] = [
     },
     {
         'cause': 'Christianity',
-        'image': null
+        'image': Christianity
     },
     {
         'cause': 'Climate',
-        'image': null
+        'image':  Climate
     },
     {
         'cause': 'Conservation',
-        'image': null
+        'image': Recycle
     },
     {
         'cause': 'Coronavirus',
-        'image': null
+        'image': Virus
     },
     {
         'cause': 'Culture',
-        'image': null
+        'image': Culture
     },
     {
         'cause': 'Dance',
-        'image': null
+        'image': Dance
     },
     {
         'cause': 'Disabilities',
-        'image': null
+        'image': Disability
     },
     {
         'cause': 'Disease',
-        'image': null
+        'image': Disease
     },
     {
         'cause': 'Dogs',
-        'image': null
+        'image': Dog
     },
     {
         'cause': 'Education',
