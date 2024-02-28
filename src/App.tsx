@@ -22,7 +22,6 @@ const App: React.FC = () => {
           // zIndex: (theme) => theme.zIndex.drawer + 1,
           height: 71,
           boxShadow: 'none',
-          zIndex: 1,
         }}
       >
         <SearchBar />

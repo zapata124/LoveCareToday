@@ -74,12 +74,12 @@ const LeftDrawer: React.FC = () => {
       <Button
         onClick={() => handleDrawer()}
         sx={{
-          pt: 10,
           position: 'fixed',
-          top: -5,
+          top: 69,
           left: 22,
           ':hover': { bgcolor: 'transparent' },
           bgcolor: 'transparent',
+          zIndex: 1,
         }}
       >
         <VolunteerActivismIcon fontSize='large' />
