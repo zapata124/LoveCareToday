@@ -15,7 +15,14 @@ import Culture from '../../assets/culture.svg'
 import Dance from '../../assets/dance.svg';
 import Disability from '../../assets/disability.svg';
 import Disease from '../../assets/disease.svg'
-import Dog from '../../assets/dog.svg'
+import Dog from '../../assets/dog.svg';
+import Education from '../../assets/education.svg';
+import Environment from '../../assets/environment.svg'
+import LiveTV from '../../assets/livetv.svg'
+import Freepress from '../../assets/freepress.svg'
+import Health from '../../assets/health.svg';
+import Housing from '../../assets/housing.svg';
+import Humans from '../../assets/humans.svg'
 export type TypeCauses = {
     cause: string,
     image: any
@@ -95,47 +102,47 @@ export const causes: TypeCauses[] = [
     },
     {
         'cause': 'Education',
-        'image': null
+        'image': Education
     },
     {
         'cause': 'Environment',
-        'image': null
+        'image': Environment
     },
     {
         'cause': 'Filmandtv',
-        'image': null
+        'image': LiveTV
     },
     {
         'cause': 'Freepress',
-        'image': null
+        'image': Freepress
     },
     {
         'cause': 'Health',
-        'image': null
+        'image': Health
     },
     {
         'cause': 'Hinduism',
-        'image': null
+        'image': Buddha
     },
     {
         'cause': 'Housing',
-        'image': null
+        'image': Housing
     },
     {
         'cause': 'Humans',
-        'image': null
+        'image': Humans
     },
     {
         'cause': 'Immigrants',
-        'image': null
+        'image': Culture
     },
     {
         'cause': 'Islam',
-        'image': null
+        'image': Buddha
     },
     {
         'cause': 'Judaism',
-        'image': null
+        'image': Buddha
     },
     {
         'cause': 'Justice',
