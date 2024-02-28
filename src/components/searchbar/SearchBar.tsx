@@ -12,6 +12,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { getSearchBarData } from '../../query';
+import { useChangeZIndex } from '../../providers/ChangeZIndexProvider';
 
 const convertToLabeldOptions = (options: string[]) => {
   const parced = options.map((option: any) => ({ label: option.name, logoUrl: option.logoUrl }));
@@ -19,6 +20,7 @@ const convertToLabeldOptions = (options: string[]) => {
 };
 
 const SearchBar: React.FC = () => {
+  const { change, changeIndex } = useChangeZIndex();
   const [search, setSearch] = React.useState<string | undefined>('');
   const [searchOptions, setSearchqOptions] = React.useState<any[]>([]);
   // temp solution until we can use fetch with gql
@@ -29,6 +31,9 @@ const SearchBar: React.FC = () => {
   const navigate = useNavigate();
   // temp solution until we can use fetch with gql
   useEffect(() => {
+    if (search && !change) {
+      changeIndex();
+    }
     if (data) {
       setSearchqOptions(convertToLabeldOptions(JSON.parse(data.searchBar.data).nonprofits));
     }
@@ -38,6 +43,11 @@ const SearchBar: React.FC = () => {
     event.preventDefault();
     setSearch('');
     setSearchqOptions([]);
+    changeIndex();
+    console.log('dddddd', search);
+    // this is returning the search item
+    // is also giving error when closing the popper
+    // internal server error!!!!!
     navigate(`/search/${event.type === 'click' ? event.target.outerText : search}`);
   };
 
@@ -59,6 +69,7 @@ const SearchBar: React.FC = () => {
             autoComplete
             autoSelect
             onChange={(event: any, newValue: string | null | undefined | any) => {
+              console.log(event, newValue);
               if (newValue === null || newValue === undefined) return;
               handleSubmit(event);
             }}
@@ -66,9 +77,14 @@ const SearchBar: React.FC = () => {
             onInputChange={(event, newInputValue, reason) => {
               setSearch(reason === 'reset' ? '' : newInputValue);
             }}
-            PopperComponent={(props) => (
-              <Popper {...props} sx={{ display: 'flex', justifyContent: 'center' }} />
-            )}
+            PopperComponent={(props: any) => {
+              if (props.open === false && change) {
+                setTimeout(() => {
+                  changeIndex();
+                }, 0);
+              }
+              return <Popper {...props} sx={{ display: 'flex', justifyContent: 'center' }} />;
+            }}
             isOptionEqualToValue={(option, value) => option.title === value.title}
             loading={searchOptions.length === 0}
             open={search !== ''}

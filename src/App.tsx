@@ -5,6 +5,7 @@ import SearchBar from './components/searchbar/SearchBar';
 import { BottomDrawer, LeftDrawer } from './components/drawers';
 import PaginationApp from './components/pagination';
 import PageProvider from './providers/PageProvider';
+import ChangeZIndex from './providers/ChangeZIndexProvider';
 
 const App: React.FC = () => {
   const navigate = useNavigate();
@@ -13,20 +14,23 @@ const App: React.FC = () => {
   }, []);
   return (
     <Box sx={{ height: '100vh', psotion: 'relative' }}>
-      <AppBar
-        sx={{
-          bgcolor: 'white',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          height: 71,
-          boxShadow: 'none',
-          zIndex: 1,
-        }}
-      >
-        <SearchBar />
-      </AppBar>
-      <LeftDrawer />
+      <ChangeZIndex>
+        <AppBar
+          sx={{
+            bgcolor: 'white',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            // zIndex: (theme) => theme.zIndex.drawer + 1,
+            height: 71,
+            boxShadow: 'none',
+            zIndex: 1,
+          }}
+        >
+          <SearchBar />
+        </AppBar>
+        <LeftDrawer />
+      </ChangeZIndex>
       {/* <BottomDrawer /> */}
       <Container
         maxWidth='lg'

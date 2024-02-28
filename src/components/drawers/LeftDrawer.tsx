@@ -18,6 +18,7 @@ import Scrollbars from 'react-custom-scrollbars';
 import { useNavigate } from 'react-router-dom';
 import { useSwipeable } from 'react-swipeable';
 import { SwipeCallback } from 'react-swipeable/es/types';
+import { useChangeZIndex } from '../../providers/ChangeZIndexProvider';
 interface CausesListProps {
   open: boolean;
   causes: TypeCauses[];
@@ -61,6 +62,7 @@ const CausesList: React.FC<CausesListProps> = ({ open, causes, onClose }) => {
 };
 
 const LeftDrawer: React.FC = () => {
+  const { change } = useChangeZIndex();
   const [open, setOpen] = React.useState(false);
   const handleDrawer = () => {
     setOpen(!open);
@@ -79,7 +81,7 @@ const LeftDrawer: React.FC = () => {
           left: 22,
           ':hover': { bgcolor: 'transparent' },
           bgcolor: 'transparent',
-          zIndex: 1,
+          zIndex: change ? 0 : 1,
         }}
       >
         <VolunteerActivismIcon fontSize='large' />
