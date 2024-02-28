@@ -145,11 +145,13 @@ const HoverCard: React.FC<HoverCardProps> = ({
 interface OrganizationCardProps {
   data?: unknown[];
   children?: React.ReactNode;
+  Featured?: React.ReactNode;
 }
 
-const OrganizationCard: React.FC<OrganizationCardProps> = ({ data }) => {
+const OrganizationCard: React.FC<OrganizationCardProps> = ({ data, Featured }) => {
   return (
     <Scrollbars style={{ width: '100%', height: '100%' }}>
+      {Featured}
       <Grid container spacing={2} sx={{ pt: 2, pb: 2, pr: 1 }}>
         {data?.map((item: any, index: number) => {
           return (

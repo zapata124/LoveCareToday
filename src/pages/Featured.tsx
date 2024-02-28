@@ -70,11 +70,16 @@ const Featured: React.FC = () => {
   }, [id]);
   return (
     <>
-      <MemoFeatured />
       {loading ? (
         <RenderSearchSkeleton />
       ) : (
-        <>{data ? <OrganizationCard data={data.cause.nonprofits} /> : <NoDataSVG />}</>
+        <>
+          {data ? (
+            <OrganizationCard data={data.cause.nonprofits} Featured={<MemoFeatured />} />
+          ) : (
+            <NoDataSVG />
+          )}
+        </>
       )}
     </>
   );

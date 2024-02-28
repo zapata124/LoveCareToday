@@ -21,6 +21,7 @@ import {
   Divider,
   Tabs,
   Tab,
+  Tooltip,
 } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
@@ -246,14 +247,14 @@ const SeeMoreCard: React.FC<SeeMoreCardProps> = ({
       <CardContent>
         <Grid container sx={{ width: 1, height: 1 }}>
           <Grid item xs={12} md={7} width={1} height={1} pr={2}>
-            <Typography sx={{ fontSize: '24px', fontWeight: 600, mb: 2 }}>Description</Typography>
-            <Stack direction={'row'} alignItems={'center'} spacing={1}>
-              <Typography sx={{ fontWeight: 600 }}>URL</Typography>
-              <LinkIcon />
+            <Stack direction={'row'} alignItems={'center'} mb={2} spacing={2}>
+              <Typography sx={{ fontSize: '24px', fontWeight: 600 }}>Description</Typography>
+              <Tooltip title={url} placement='top-start'>
+                <Link component={RouterLink} to={url} target='_blank'>
+                  <LinkIcon />
+                </Link>
+              </Tooltip>
             </Stack>
-            <Link component={RouterLink} to={url} target='_blank'>
-              {url}
-            </Link>
             <Box
               width={1}
               height={250}
@@ -289,13 +290,6 @@ const SeeMoreCard: React.FC<SeeMoreCardProps> = ({
                 form990={form990}
               />
             )}
-            {/* <Stack direction={'row'} alignItems={'center'} spacing={1}>
-              <Typography sx={{ fontWeight: 600 }}>URL</Typography>
-              <LinkIcon />
-            </Stack>
-            <Link component={RouterLink} to={url} target='_blank'>
-              {url}
-            </Link> */}
           </Grid>
         </Grid>
       </CardContent>
