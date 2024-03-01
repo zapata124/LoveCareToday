@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useId } from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import {
@@ -41,14 +41,13 @@ const SearchBar: React.FC = () => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setSearch('');
     setSearchqOptions([]);
     changeIndex();
-    console.log('dddddd', search);
     // this is returning the search item
     // is also giving error when closing the popper
     // internal server error!!!!!
     navigate(`/search/${event.type === 'click' ? event.target.outerText : search}`);
+    setSearch('');
   };
 
   return (
@@ -67,7 +66,6 @@ const SearchBar: React.FC = () => {
               '.MuiAutocomplete-inputRoot': { borderRadius: 500, padding: 0, pl: 2 },
             }}
             autoComplete
-            autoSelect
             onChange={(event: any, newValue: string | null | undefined | any) => {
               console.log(event, newValue);
               if (newValue === null || newValue === undefined) return;
@@ -78,14 +76,13 @@ const SearchBar: React.FC = () => {
               setSearch(reason === 'reset' ? '' : newInputValue);
             }}
             PopperComponent={(props: any) => {
-              if (props.open === false && change) {
-                setTimeout(() => {
-                  changeIndex();
-                }, 0);
-              }
+              // if (props.open === false && change) {
+              //   setTimeout(() => {
+              //     changeIndex();
+              //   }, 0);
+              // }
               return <Popper {...props} sx={{ display: 'flex', justifyContent: 'center' }} />;
             }}
-            isOptionEqualToValue={(option, value) => option.title === value.title}
             loading={searchOptions.length === 0}
             open={search !== ''}
             PaperComponent={({ children }) => <Paper style={{ width: '92%' }}>{children}</Paper>}
