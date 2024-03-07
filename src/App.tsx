@@ -6,7 +6,9 @@ import { BottomDrawer, LeftDrawer } from './components/drawers';
 import PaginationApp from './components/pagination';
 import PageProvider from './providers/PageProvider';
 import ChangeZIndex from './providers/ChangeZIndexProvider';
-import LoveCareTodayLogo from './assets/lovecaretodayLogoSVG.svg';
+import SignUpButton from './components/button/SignUpButton';
+import SignInButton from './components/button/SignInButton';
+
 const App: React.FC = () => {
   const navigate = useNavigate();
   useEffect(() => {
@@ -37,11 +39,19 @@ const App: React.FC = () => {
             }}
           >
             <Stack direction={'row'} sx={{ width: 1 }} justifyContent={'space-between'}>
-              <Button>Logo</Button>
+              <Typography
+                variant='h6'
+                color={'blue'}
+                fontFamily={'Courgette-Regular'}
+                // fontWeight={800}
+                ml={4}
+              >
+                Love Care Today
+              </Typography>
               <SearchBar />
               <Stack direction={'row'} sx={{ mr: 8 }}>
-                <Button onClick={() => navigate('/signup')}>Sign up</Button>
-                <Button>Sign in</Button>
+                <SignUpButton />
+                <SignInButton />
               </Stack>
             </Stack>
           </AppBar>

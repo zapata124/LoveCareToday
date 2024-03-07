@@ -14,7 +14,7 @@ def getUser_resolver(obj, info):
 def authenticateUser_resolver(obj, info, email, password):
     try:
         print(email, password, obj, info)
-        current_user= collection.find_one({"name":"Eddy"})
+        current_user= collection.find_one({"email": email, "password": password})
         return current_user
     except Exception as error:  # todo not found
         return error

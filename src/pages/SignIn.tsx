@@ -18,8 +18,7 @@ import { createUser } from '../query';
 import { useMutation } from '@apollo/client';
 import { clientPY } from '../client';
 import BackButton from '../components/button/BackButton';
-import SignInButton from '../components/button/SignInButton';
-import { useNavigate } from 'react-router-dom';
+import SignUpButton from '../components/button/SignUpButton';
 interface InputCompProps {
   label: string;
   type: string;
@@ -73,24 +72,12 @@ const InputComp: React.FC<InputCompProps> = ({ label, type }) => {
     </Stack>
   );
 };
-const SignUp: React.FC = () => {
-  const [createNewUser, { loading, error, data }] = useMutation(createUser, { client: clientPY });
-  const navigate = useNavigate();
+const SignIn: React.FC = () => {
   const methods = useForm();
-  console.log(data);
   const onSubmit = (data: any) => {
-    const { Firstname, Lastname, Email, Password, Confirmpassword } = data;
+    const { Email, Password } = data;
     event?.preventDefault();
     console.log(data);
-    createNewUser({
-      variables: {
-        name: Firstname,
-        lastname: Lastname,
-        email: Email,
-        password: Password,
-        confirmpassword: Confirmpassword,
-      },
-    });
   };
   return (
     <Box
@@ -117,20 +104,17 @@ const SignUp: React.FC = () => {
                       width={'110rem'}
                     />
                   </Box>
-                  <Typography variant={'h5'}>Join Love Care Today</Typography>
+                  <Typography variant={'h5'}>Welcome to Love Care Today</Typography>
                 </Stack>
               </Box>
-              <InputComp label={'Firstname'} type={'text'} />
-              <InputComp label={'Lastname'} type={'text'} />
               <InputComp label={'Email'} type={'email'} />
               <InputComp label={'Password'} type={'password'} />
-              <InputComp label={'Confirmpassword'} type={'password'} />
             </Stack>
             <Stack direction={'row'} justifyContent={'space-between'} pt={2}>
-              <Button onClick={() => navigate('/signin')}> Take me to Sign in</Button>
-              <Button type='submit'>Sign up</Button>
+              <SignUpButton />
+              <Button type='submit'>Sign in</Button>
             </Stack>
-            <Box sx={{ display: 'flex', justifyContent: 'flex-end', pt: 1 }}></Box>
+            {/* <Box sx={{ display: 'flex', justifyContent: 'flex-end', pt: 1 }}></Box> */}
           </form>
         </FormProvider>
       </Paper>
@@ -138,15 +122,4 @@ const SignUp: React.FC = () => {
   );
 };
 
-export default SignUp;
-
-// <InputAdornment position='end'>
-// <IconButton
-//   aria-label='toggle password visibility'
-//   onClick={handleClickShowPassword}
-//   onMouseDown={handleClickShowPassword}
-//   edge='end'
-// >
-//   {showPassword ? <VisibilityOff /> : <Visibility />}
-// </IconButton>
-// </InputAdornment>
+export default SignIn;

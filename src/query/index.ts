@@ -107,7 +107,7 @@ export const getOrgHunterCharityBasic = gql`
     charityBasic(ein: $ein) {
       ein
       name
-      inCareOfName 
+      inCareOfName
       street
       city
       state
@@ -145,4 +145,15 @@ export const getOrgHunterCharityBasic = gql`
       acceptingDonations
     }
   }
+`;
+
+export const createUser = gql`
+mutation Mutation($name: String, $lastname: String, $email: String, $password: String, $confirmpassword: String) {
+  createUser(name: $name, lastname: $lastname, email: $email, password: $password, confirmpassword: $confirmpassword) {
+    email
+    id
+    lastname
+    name
+  }
+}
 `;
