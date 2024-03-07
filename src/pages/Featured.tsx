@@ -42,7 +42,7 @@ const Featured: React.FC = () => {
   // the code in this component is duplicated in Organization component !!!!!
   const { id } = useParams();
 
-  const { page, handleUpdatePage, handleTotalPages } = useUpdatePage();
+  const { page, totalPages, handleUpdatePage, handleTotalPages } = useUpdatePage();
 
   const { loading, error, data } = useQuery(getNonProfitByCause, {
     variables: { browse: featuredCause.toLowerCase(), take: 20, page: page },
@@ -53,7 +53,7 @@ const Featured: React.FC = () => {
   // pre fetch for the next page
   // we can do this loggig with apollo suspence and pre fetch feature !!!!!!!!!!!!!!!!!!!
   useEffect(() => {
-    if (page) {
+    if (page && page !== totalPages) {
       client.query({
         query: getNonProfitByCause,
         variables: { browse: featuredCause.toLowerCase(), take: 20, page: page + 1 },
