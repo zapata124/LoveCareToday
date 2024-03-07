@@ -1,75 +1,92 @@
 import React, { useEffect } from 'react';
-import { AppBar, Box, Container, Typography } from '@mui/material';
+import { AppBar, Box, Button, Container, Stack, Typography } from '@mui/material';
 import { Outlet, useNavigate } from 'react-router-dom';
 import SearchBar from './components/searchbar/SearchBar';
 import { BottomDrawer, LeftDrawer } from './components/drawers';
 import PaginationApp from './components/pagination';
 import PageProvider from './providers/PageProvider';
 import ChangeZIndex from './providers/ChangeZIndexProvider';
-
+import LoveCareTodayLogo from './assets/lovecaretodayLogoSVG.svg';
 const App: React.FC = () => {
   const navigate = useNavigate();
   useEffect(() => {
     navigate('/featured');
   }, []);
   return (
-    <Box sx={{ height: '100vh', psotion: 'relative' }}>
-      <ChangeZIndex>
-        <AppBar
-          sx={{
-            bgcolor: 'white',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            // zIndex: (theme) => theme.zIndex.drawer + 1,
-            height: 71,
-            boxShadow: 'none',
-            zIndex: 1,
-          }}
-        >
-          <SearchBar />
-        </AppBar>
-        <LeftDrawer />
-      </ChangeZIndex>
-      {/* <BottomDrawer /> */}
-      <Container
-        maxWidth='lg'
-        sx={{
-          height: '100vh',
-          position: 'relative',
-        }}
-        disableGutters
-      >
-        <PageProvider>
-          <PaginationApp />
-          <Container
-            maxWidth='lg'
+    <>
+      <Box sx={{ height: '100vh', psotion: 'relative' }}>
+        {/* <Box sx={{ position: 'fixed', left: 146, top: 16, zIndex: -111111111111 }}>
+                <img
+                  src={LoveCareTodayLogo.toString()}
+                  alt='lovecaretoday-logo'
+                  width={'200rem'}
+                  style={{ borderRadius: '20rem', zIndex: -111111111 }}
+                />
+              </Box> */}
+        <ChangeZIndex>
+          <AppBar
             sx={{
-              height: '82vh',
-              bgcolor: '#f5f5f5',
-              borderRadius: '24px',
-              overflow: 'hidden',
-              position: 'relative',
-              top: 127,
+              bgcolor: 'white',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              // zIndex: (theme) => theme.zIndex.drawer + 1,
+              height: 71,
+              boxShadow: 'none',
+              zIndex: 1,
             }}
           >
-            <Outlet />
-          </Container>
-        </PageProvider>
-        <Typography
+            <Stack direction={'row'} sx={{ width: 1 }} justifyContent={'space-between'}>
+              <Button>Logo</Button>
+              <SearchBar />
+              <Stack direction={'row'} sx={{ mr: 8 }}>
+                <Button onClick={() => navigate('/signup')}>Sign up</Button>
+                <Button>Sign in</Button>
+              </Stack>
+            </Stack>
+          </AppBar>
+          <LeftDrawer />
+        </ChangeZIndex>
+        {/* <BottomDrawer /> */}
+        <Container
+          maxWidth='lg'
           sx={{
-            color: 'black',
-            fontSize: '10px',
-            fontFamily: 'monospace',
-            position: 'fixed',
-            left: 0,
-            bottom: 0,
+            height: '100vh',
+            position: 'relative',
           }}
+          disableGutters
         >
-          site under development
-        </Typography>
-      </Container>
-    </Box>
+          <PageProvider>
+            <PaginationApp />
+            <Container
+              maxWidth='lg'
+              sx={{
+                height: '82vh',
+                bgcolor: '#f5f5f5',
+                borderRadius: '24px',
+                overflow: 'hidden',
+                position: 'relative',
+                top: 127,
+              }}
+            >
+              <Outlet />
+            </Container>
+          </PageProvider>
+          <Typography
+            sx={{
+              color: 'black',
+              fontSize: '10px',
+              fontFamily: 'monospace',
+              position: 'fixed',
+              left: 0,
+              bottom: 0,
+            }}
+          >
+            site under development
+          </Typography>
+        </Container>
+      </Box>
+    </>
   );
 };
 
