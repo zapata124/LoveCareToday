@@ -46,7 +46,8 @@ const InputComp: React.FC<InputCompProps> = ({ label, type }) => {
   return (
     <Stack>
       <TextField
-        error={false}
+        // error={false}
+        required
         InputProps={{
           endAdornment: (
             <RenderAdorment
