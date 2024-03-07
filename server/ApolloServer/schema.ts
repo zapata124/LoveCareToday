@@ -46,6 +46,12 @@ type GetCauses {
   nonprofits: [Cause],
   pagination: Pagination
 }
+type SearchBar {
+  data: String
+}
+type Organization {
+  organization: String
+}
 type Query {
   search(search: String, take: Int): [Search]
 }
@@ -54,6 +60,84 @@ type Query {
 }
 type Query {
   cause(browse: String, take: Int, page: Int): GetCauses
+}
+type Query {
+  searchBar(arg: String): SearchBar
+}
+type Query {
+  organization(name: String): Organization
+}
+
+
+
+type SearchSummary {
+  ein: String
+  charityName: String
+  url: String
+  donationUrl: String
+  city: String
+  state: String
+  zipCode: String
+  start: Int
+  rows: Int
+  recordCount: Int
+  score: Int
+  acceptingDonations: Int
+  category: String
+  eligibleCd: Int
+  deductibilityCd: Int
+  statusCd: Int
+  website: String
+  missionStatement: String
+  parent_ein: Int
+  latitude: String
+  longitude: String 
+}
+type CharityBasic {
+  ein: Int
+  name: String        
+  inCareOfName: String
+  street: String
+  city: String
+  state: String
+  zipCode: String
+  country: String
+  groupExemption: String
+  subsection: String
+  classification: String
+  affiliation: String
+  rullingDate: String
+  deductibility: String
+  deductibilityStatus: String
+  foundation: String
+  activity1: String
+  activity2: String
+  activity3: String
+  organization: String
+  exemptStatus: String
+  taxPeriod: String
+  assetCodeDesc: String
+  incomeCodeDesc: String
+  filingRequirementCodeDesc: String
+  pfFilingRequirementCodeDesc: String
+  accountingPeriod: String
+  assetAmount: String
+  incomeAmount: String
+  form990: String
+  nteeCd: String
+  nteeClass: String
+  nteeType: String
+  sortName: String
+  revocationDt: String
+  revPostingDt: String
+  irsRevocationStatus: String
+  acceptingDonations: Int
+}
+type Query {
+  searchSummary(tearm: String): [SearchSummary]
+}
+type Query {
+  charityBasic(ein: Int): CharityBasic
 }
 `;
 

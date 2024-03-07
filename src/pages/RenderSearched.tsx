@@ -16,7 +16,11 @@ const RenderSearch: React.FC = () => {
   const { loading, error, data } = useQuery(getNonProfitByTitle, {
     variables: { search: parsedId, take: 20 },
   });
-  return <>{loading ? <RenderSearchSkeleton /> : <OrganizationCard data={data.search} />}</>;
+  return (
+    <>
+      {loading ? <RenderSearchSkeleton /> : <> {data && <OrganizationCard data={data.search} />}</>}
+    </>
+  );
 };
 
 export default RenderSearch;

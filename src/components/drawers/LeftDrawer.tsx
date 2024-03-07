@@ -18,6 +18,7 @@ import Scrollbars from 'react-custom-scrollbars';
 import { useNavigate } from 'react-router-dom';
 import { useSwipeable } from 'react-swipeable';
 import { SwipeCallback } from 'react-swipeable/es/types';
+import { useChangeZIndex } from '../../providers/ChangeZIndexProvider';
 interface CausesListProps {
   open: boolean;
   causes: TypeCauses[];
@@ -42,8 +43,14 @@ const CausesList: React.FC<CausesListProps> = ({ open, causes, onClose }) => {
             }}
           >
             <ListItemButton>
-              <ListItemIcon sx={{ justifyContent: 'center' }}>
-                {cause.image ? <img src={cause.image} alt='adoptionImage' /> : <InboxIcon />}
+              <ListItemIcon sx={{ justifyContent: 'center', marginRight: 1 }}>
+                {cause.image ? (
+                  <Box width={'2rem'}>
+                    <img src={cause.image} alt='adoptionImage' />
+                  </Box>
+                ) : (
+                  <InboxIcon />
+                )}
               </ListItemIcon>
               {open && <ListItemText primary={cause.cause} />}
             </ListItemButton>
@@ -55,6 +62,7 @@ const CausesList: React.FC<CausesListProps> = ({ open, causes, onClose }) => {
 };
 
 const LeftDrawer: React.FC = () => {
+  const { change } = useChangeZIndex();
   const [open, setOpen] = React.useState(false);
   const handleDrawer = () => {
     setOpen(!open);
@@ -68,13 +76,12 @@ const LeftDrawer: React.FC = () => {
       <Button
         onClick={() => handleDrawer()}
         sx={{
-          pt: 10,
           position: 'fixed',
-          top: -5,
+          top: 69,
           left: 22,
           ':hover': { bgcolor: 'transparent' },
           bgcolor: 'transparent',
-          zIndex: 1,
+          zIndex: change ? 0 : 1,
         }}
       >
         <VolunteerActivismIcon fontSize='large' />

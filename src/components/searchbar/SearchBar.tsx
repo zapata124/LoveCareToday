@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useId } from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import {
@@ -10,34 +10,44 @@ import {
   Typography,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-
-const apiKey = import.meta.env.VITE_APIkey;
-const URL = import.meta.env.VITE_URL;
+import { useQuery } from '@apollo/client';
+import { getSearchBarData } from '../../query';
+import { useChangeZIndex } from '../../providers/ChangeZIndexProvider';
 
 const convertToLabeldOptions = (options: string[]) => {
   const parced = options.map((option: any) => ({ label: option.name, logoUrl: option.logoUrl }));
   return parced;
 };
+
 const SearchBar: React.FC = () => {
+  const { change, changeIndex } = useChangeZIndex();
   const [search, setSearch] = React.useState<string | undefined>('');
   const [searchOptions, setSearchqOptions] = React.useState<any[]>([]);
+  // temp solution until we can use fetch with gql
+  const { data } = useQuery(getSearchBarData, {
+    variables: { arg: search },
+  });
 
   const navigate = useNavigate();
-
+  // temp solution until we can use fetch with gql
   useEffect(() => {
-    fetch(`https://${URL}/search/${search}?apiKey=${apiKey}`)
-      .then((res) => res.json())
-      .then((data: any) => {
-        setSearchqOptions(convertToLabeldOptions(data.nonprofits));
-      })
-      .catch((err) => console.log(err));
-  }, [search]);
+    if (search && !change) {
+      changeIndex();
+    }
+    if (data) {
+      setSearchqOptions(convertToLabeldOptions(JSON.parse(data.searchBar.data).nonprofits));
+    }
+  }, [search, data]);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setSearch('');
     setSearchqOptions([]);
+    changeIndex();
+    // this is returning the search item
+    // is also giving error when closing the popper
+    // internal server error!!!!!
     navigate(`/search/${event.type === 'click' ? event.target.outerText : search}`);
+    setSearch('');
   };
 
   return (
@@ -56,8 +66,8 @@ const SearchBar: React.FC = () => {
               '.MuiAutocomplete-inputRoot': { borderRadius: 500, padding: 0, pl: 2 },
             }}
             autoComplete
-            autoSelect
             onChange={(event: any, newValue: string | null | undefined | any) => {
+              console.log(event, newValue);
               if (newValue === null || newValue === undefined) return;
               handleSubmit(event);
             }}
@@ -65,10 +75,14 @@ const SearchBar: React.FC = () => {
             onInputChange={(event, newInputValue, reason) => {
               setSearch(reason === 'reset' ? '' : newInputValue);
             }}
-            PopperComponent={(props) => (
-              <Popper {...props} sx={{ display: 'flex', justifyContent: 'center' }} />
-            )}
-            isOptionEqualToValue={(option, value) => option.title === value.title}
+            PopperComponent={(props: any) => {
+              // if (props.open === false && change) {
+              //   setTimeout(() => {
+              //     changeIndex();
+              //   }, 0);
+              // }
+              return <Popper {...props} sx={{ display: 'flex', justifyContent: 'center' }} />;
+            }}
             loading={searchOptions.length === 0}
             open={search !== ''}
             PaperComponent={({ children }) => <Paper style={{ width: '92%' }}>{children}</Paper>}

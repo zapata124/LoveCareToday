@@ -18,7 +18,7 @@ const Organization: React.FC = () => {
   const { loading, error, data } = useQuery(getNonProfitByCause, {
     variables: { browse: parsedId, take: 20, page: page },
   });
-  console.log(data, 'organization');
+  // pre fetch for the next page
   useEffect(() => {
     if (page && page !== totalPages) {
       client.query({
@@ -36,7 +36,13 @@ const Organization: React.FC = () => {
     handleUpdatePage(1);
   }, [id]);
   return (
-    <>{loading ? <RenderSearchSkeleton /> : <OrganizationCard data={data.cause.nonprofits} />}</>
+    <>
+      {loading ? (
+        <RenderSearchSkeleton />
+      ) : (
+        <>{data && <OrganizationCard data={data.cause.nonprofits} />} </>
+      )}
+    </>
   );
 };
 

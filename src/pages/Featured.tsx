@@ -8,6 +8,7 @@ import { RenderSearchSkeleton } from '../components/skeletons';
 import { Typography, useMediaQuery, useTheme } from '@mui/material';
 import { causes } from '../components/drawers/causes';
 import { client } from '../client';
+import NoDataSVG from '../components/svgs/NoDataSVG';
 const date = new Date().getDate();
 const featuredCause = causes[date].cause;
 
@@ -38,6 +39,7 @@ const FeatureTypography: React.FC = () => {
 const MemoFeatured = React.memo(FeatureTypography);
 
 const Featured: React.FC = () => {
+  // the code in this component is duplicated in Organization component !!!!!
   const { id } = useParams();
 
   const { page, totalPages, handleUpdatePage, handleTotalPages } = useUpdatePage();
@@ -47,6 +49,9 @@ const Featured: React.FC = () => {
   });
   // we need to write why this is here same for the other useEffects
   // allows render of MemoFeatured component
+
+  // pre fetch for the next page
+  // we can do this loggig with apollo suspence and pre fetch feature !!!!!!!!!!!!!!!!!!!
   useEffect(() => {
     if (page && page !== totalPages) {
       client.query({
@@ -65,12 +70,15 @@ const Featured: React.FC = () => {
   }, [id]);
   return (
     <>
-      <MemoFeatured />
       {loading ? (
         <RenderSearchSkeleton />
       ) : (
         <>
-          <OrganizationCard data={data.cause.nonprofits} />
+          {data ? (
+            <OrganizationCard data={data.cause.nonprofits} Featured={<MemoFeatured />} />
+          ) : (
+            <NoDataSVG />
+          )}
         </>
       )}
     </>

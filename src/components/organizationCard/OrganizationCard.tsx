@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   Grid,
   Card,
@@ -9,14 +9,58 @@ import {
   Typography,
   Button,
   Grow,
-  Link,
+  Stack,
+  Dialog,
+  DialogContent,
+  useTheme,
+  useMediaQuery,
+  Box,
 } from '@mui/material';
 import StockImage from '../../assets/charity-8366471_1280.png';
 import Scrollbars from 'react-custom-scrollbars';
-interface OrganizationCardProps {
-  data?: unknown[];
-  children?: React.ReactNode;
-}
+import SeeMore from '../seemore/SeeMore';
+import CloseIcon from '@mui/icons-material/Close';
+
+export const DialogComponent: React.FC<Children> = ({ children }) => {
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => {
+    setOpen(!open);
+  };
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
+
+  return (
+    <>
+      <Button onClick={handleOpen}>See more</Button>
+      <Dialog
+        fullScreen={fullScreen}
+        open={open}
+        onClose={handleOpen}
+        aria-labelledby='alert-dialog-title'
+        aria-describedby='alert-dialog-description'
+        maxWidth='lg'
+        // zIndex = 99 allows to render the donate dialog on top of this current dialog
+        sx={{ zIndex: 99, postion: 'relative' }}
+      >
+        {fullScreen && (
+          <Box
+            sx={{
+              position: 'absolute',
+              zIndex: 1,
+              top: 0,
+              right: 0,
+              bgcolor: 'white',
+              borderRadius: '8px 0 8px',
+            }}
+          >
+            <CloseIcon onClick={handleOpen} />
+          </Box>
+        )}
+        <DialogContent sx={{ padding: 0 }}>{children}</DialogContent>
+      </Dialog>
+    </>
+  );
+};
 interface HoverCardProps {
   children: React.ReactNode;
   name: string;
@@ -28,14 +72,22 @@ interface HoverCardProps {
 }
 
 const getShortDescription = (description: string) => {
-  for (let i = 0; i < description.length; i++) {
-    if (description[i] === '.' && description[i + 1] === '.') {
-      return i;
-    }
-  }
-  return description.length;
+  return description.substring(0, description.indexOf('.') + 1);
 };
 
+export const createWidget = (slug: string) => {
+  /* tslint:disable-next-line */
+  // @ts-expect-error this will work once loaded
+  everyDotOrgDonateButton?.createButton({
+    selector: `#every-donate-${slug}`,
+  });
+  /* tslint:disable-next-line */
+  // @ts-expect-error this will work once loaded
+  everyDotOrgDonateButton?.createWidget({
+    selector: `#every-donate-${slug}`,
+    nonprofitSlug: slug,
+  });
+};
 const HoverCard: React.FC<HoverCardProps> = ({
   children,
   name,
@@ -50,23 +102,10 @@ const HoverCard: React.FC<HoverCardProps> = ({
   const handleMouseEnter = () => {
     setHover(!hover);
   };
-  function createWidget(slug: string) {
-    /* tslint:disable-next-line */
-    // @ts-expect-error this will work once loaded
-    everyDotOrgDonateButton?.createButton({
-      selector: `#every-donate-${slug}`,
-    });
-    /* tslint:disable-next-line */
-    // @ts-expect-error this will work once loaded
-    everyDotOrgDonateButton?.createWidget({
-      selector: `#every-donate-${slug}`,
-      nonprofitSlug: slug,
-    });
-  }
+
   setTimeout(() => {
     createWidget(slug);
   }, 0);
-  console.log('render');
   return (
     <Card
       // onMouseEnter={() => {
@@ -89,28 +128,30 @@ const HoverCard: React.FC<HoverCardProps> = ({
         sx={{ height: 32 }}
       />
       <CardContent sx={{ overflowY: 'auto', height: 114 }}>
-        {description && (
-          <Typography>{`${description.substring(
-            0,
-            getShortDescription(description),
-          )}.`}</Typography>
-        )}
+        {description && <Typography>{getShortDescription(description)}</Typography>}
       </CardContent>
       <CardActions sx={{ height: 40, justifyContent: websiteUrl ? 'space-between' : 'flex-end' }}>
-        {websiteUrl && (
-          <Link href={websiteUrl as string} underline='none' sx={{ pl: 1 }}>
-            <Typography variant='body2'>Learn More</Typography>
-          </Link>
-        )}
-        {children}
+        <Stack direction={'row'} justifyContent={'space-between'} width={1}>
+          <DialogComponent>
+            <SeeMore nonPropfit={name} slug={slug} />
+          </DialogComponent>
+          {children}
+        </Stack>
       </CardActions>
     </Card>
   );
 };
 
-const OrganizationCard: React.FC<OrganizationCardProps> = ({ data }) => {
+interface OrganizationCardProps {
+  data?: unknown[];
+  children?: React.ReactNode;
+  Featured?: React.ReactNode;
+}
+
+const OrganizationCard: React.FC<OrganizationCardProps> = ({ data, Featured }) => {
   return (
     <Scrollbars style={{ width: '100%', height: '100%' }}>
+      {Featured}
       <Grid container spacing={2} sx={{ pt: 2, pb: 2, pr: 1 }}>
         {data?.map((item: any, index: number) => {
           return (

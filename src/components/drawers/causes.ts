@@ -1,12 +1,28 @@
-import Adoptation from '../../assets/heart2121clear2.png'
-import People from '../../assets/people2121clear.png'
-import Lion from '../../assets/lion1919clear.png'
-import Art from '../../assets/art1919clear.png'
-import Athelete from '../../assets/athlete1919clear.png'
-import Autism from '../../assets/autism1919clear.png'
-import Buddha from '../../assets/buddha1919clear.png'
-import Awareness from '../../assets/awareness1919clear.png'
-import Cat from '../../assets/cat1919clear.png'
+import Adoption from '../../assets/adoption.svg'
+import People from '../../assets/afghanistan.svg'
+import Art from '../../assets/art.svg'
+import Athelete from '../../assets/sport.svg'
+import Autism from '../../assets/autism.svg'
+import Buddha from '../../assets/buddhism.svg'
+import Awareness from '../../assets/cancer.svg'
+import Cat from '../../assets/cat.svg'
+import Lion from '../../assets/lion.svg';
+import Christianity from '../../assets/christianity.svg';
+import Climate from '../../assets/climate.svg'
+import Recycle from '../../assets/recycle.svg';
+import Virus from '../../assets/virus.svg';
+import Culture from '../../assets/culture.svg'
+import Dance from '../../assets/dance.svg';
+import Disability from '../../assets/disability.svg';
+import Disease from '../../assets/disease.svg'
+import Dog from '../../assets/dog.svg';
+import Education from '../../assets/education.svg';
+import Environment from '../../assets/environment.svg'
+import LiveTV from '../../assets/livetv.svg'
+import Freepress from '../../assets/freepress.svg'
+import Health from '../../assets/health.svg';
+import Housing from '../../assets/housing.svg';
+import Humans from '../../assets/humans.svg'
 export type TypeCauses = {
     cause: string,
     image: any
@@ -14,7 +30,7 @@ export type TypeCauses = {
 export const causes: TypeCauses[] = [
     {
         'cause': 'Adoption',
-        'image': Adoptation
+        'image': Adoption
     },
     {
         'cause': 'Afghanistan',
@@ -50,83 +66,83 @@ export const causes: TypeCauses[] = [
     },
     {
         'cause': 'Christianity',
-        'image': null
+        'image': Christianity
     },
     {
         'cause': 'Climate',
-        'image': null
+        'image':  Climate
     },
     {
         'cause': 'Conservation',
-        'image': null
+        'image': Recycle
     },
     {
         'cause': 'Coronavirus',
-        'image': null
+        'image': Virus
     },
     {
         'cause': 'Culture',
-        'image': null
+        'image': Culture
     },
     {
         'cause': 'Dance',
-        'image': null
+        'image': Dance
     },
     {
         'cause': 'Disabilities',
-        'image': null
+        'image': Disability
     },
     {
         'cause': 'Disease',
-        'image': null
+        'image': Disease
     },
     {
         'cause': 'Dogs',
-        'image': null
+        'image': Dog
     },
     {
         'cause': 'Education',
-        'image': null
+        'image': Education
     },
     {
         'cause': 'Environment',
-        'image': null
+        'image': Environment
     },
     {
         'cause': 'Filmandtv',
-        'image': null
+        'image': LiveTV
     },
     {
         'cause': 'Freepress',
-        'image': null
+        'image': Freepress
     },
     {
         'cause': 'Health',
-        'image': null
+        'image': Health
     },
     {
         'cause': 'Hinduism',
-        'image': null
+        'image': Buddha
     },
     {
         'cause': 'Housing',
-        'image': null
+        'image': Housing
     },
     {
         'cause': 'Humans',
-        'image': null
+        'image': Humans
     },
     {
         'cause': 'Immigrants',
-        'image': null
+        'image': Culture
     },
     {
         'cause': 'Islam',
-        'image': null
+        'image': Buddha
     },
     {
         'cause': 'Judaism',
-        'image': null
+        'image': Buddha
     },
     {
         'cause': 'Justice',
