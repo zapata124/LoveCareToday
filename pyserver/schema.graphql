@@ -1,7 +1,7 @@
 type User {
   id: String
   name: String
-  lastName: String
+  lastname: String
   email: String
 }
 
@@ -11,5 +11,11 @@ type Query {
 }
 
 type Mutation {
-  createUser(name: String, lastname: String, email: String, password: String): User
+  createUser(
+    name: String
+    lastname: String
+    email: String
+    password: String
+    confirmpassword: String
+  ): User
 }
