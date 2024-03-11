@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { AppBar, Box, Button, Container, Stack, Typography } from '@mui/material';
+import { AppBar, Avatar, Box, Button, Container, Stack, Typography } from '@mui/material';
 import { Outlet, useNavigate } from 'react-router-dom';
 import SearchBar from './components/searchbar/SearchBar';
 import { BottomDrawer, LeftDrawer } from './components/drawers';
@@ -9,6 +9,20 @@ import ChangeZIndex from './providers/ChangeZIndexProvider';
 import SignUpButton from './components/button/SignUpButton';
 import SignInButton from './components/button/SignInButton';
 
+type AppBarUserAppsType = {
+  type?: 'userIsloggedIn';
+};
+const AppBarUserApps: React.FC<AppBarUserAppsType> = ({ type }: any) => {
+  if (type === 'userIsloggedIn') {
+    return <Avatar src='/broken-image.jpg' />;
+  }
+  return (
+    <>
+      <SignUpButton />
+      <SignInButton />
+    </>
+  );
+};
 const App: React.FC = () => {
   const navigate = useNavigate();
   useEffect(() => {
@@ -50,8 +64,7 @@ const App: React.FC = () => {
               </Typography>
               <SearchBar />
               <Stack direction={'row'} sx={{ mr: 8 }}>
-                <SignUpButton />
-                <SignInButton />
+                <AppBarUserApps />
               </Stack>
             </Stack>
           </AppBar>

@@ -147,13 +147,36 @@ export const getOrgHunterCharityBasic = gql`
   }
 `;
 
-export const createUser = gql`
-mutation Mutation($name: String, $lastname: String, $email: String, $password: String, $confirmpassword: String) {
-  createUser(name: $name, lastname: $lastname, email: $email, password: $password, confirmpassword: $confirmpassword) {
-    email
-    id
-    lastname
-    name
+export const authenticateUser = gql`
+  query AuthenticateUser($email: String, $password: String) {
+    authenticateUser(email: $email, password: $password) {
+      email
+      id
+      lastname
+      name
+    }
   }
-}
+`;
+
+export const createUser = gql`
+  mutation Mutation(
+    $name: String
+    $lastname: String
+    $email: String
+    $password: String
+    $confirmpassword: String
+  ) {
+    createUser(
+      name: $name
+      lastname: $lastname
+      email: $email
+      password: $password
+      confirmpassword: $confirmpassword
+    ) {
+      email
+      id
+      lastname
+      name
+    }
+  }
 `;

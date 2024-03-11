@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import {
   Box,
   Button,
+  CircularProgress,
   Grid,
   IconButton,
   InputAdornment,
@@ -14,11 +15,12 @@ import { useForm, FormProvider, useFormContext } from 'react-hook-form';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import LoveCareTodayLogo from '../assets/lovecaretodayLogoSVG.svg';
-import { createUser } from '../query';
-import { useMutation } from '@apollo/client';
+import { authenticateUser } from '../query';
+import { useLazyQuery, useMutation } from '@apollo/client';
 import { clientPY } from '../client';
 import BackButton from '../components/button/BackButton';
 import SignUpButton from '../components/button/SignUpButton';
+import { useNavigate } from 'react-router-dom';
 interface InputCompProps {
   label: string;
   type: string;
@@ -73,12 +75,21 @@ const InputComp: React.FC<InputCompProps> = ({ label, type }) => {
   );
 };
 const SignIn: React.FC = () => {
+  const navigate = useNavigate();
+  const [authenticate, { loading, error, data }] = useLazyQuery(authenticateUser, {
+    client: clientPY,
+  });
   const methods = useForm();
-  const onSubmit = (data: any) => {
-    const { Email, Password } = data;
+  const onSubmit = (formData: any) => {
+    const { Email, Password } = formData;
     event?.preventDefault();
-    console.log(data);
+    // this is possible to fail in production
+    const user = authenticate({ variables: { email: Email, password: Password } });
   };
+  console.log(data);
+  if (data?.authenticateUser) {
+    navigate('/featured');
+  }
   return (
     <Box
       sx={{
@@ -112,7 +123,9 @@ const SignIn: React.FC = () => {
             </Stack>
             <Stack direction={'row'} justifyContent={'space-between'} pt={2}>
               <SignUpButton />
-              <Button type='submit'>Sign in</Button>
+              <Button type='submit'>
+                {loading ? <CircularProgress size={'1rem'} /> : <Typography>Sign in</Typography>}
+              </Button>
             </Stack>
             {/* <Box sx={{ display: 'flex', justifyContent: 'flex-end', pt: 1 }}></Box> */}
           </form>

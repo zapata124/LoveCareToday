@@ -1,5 +1,5 @@
 from ariadne import convert_kwargs_to_snake_case
-from db import (client, collection)
+from db import (collection)
 from bson.json_util import dumps
 
 def getUser_resolver(obj, info):
@@ -13,8 +13,8 @@ def getUser_resolver(obj, info):
 @convert_kwargs_to_snake_case
 def authenticateUser_resolver(obj, info, email, password):
     try:
-        print(email, password, obj, info)
         current_user= collection.find_one({"email": email, "password": password})
+        print(email, password, current_user)
         return current_user
     except Exception as error:  # todo not found
         return error
