@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AppBar, Avatar, Box, Button, Container, Stack, Typography } from '@mui/material';
 import { Outlet, useNavigate } from 'react-router-dom';
 import SearchBar from './components/searchbar/SearchBar';
@@ -8,12 +8,24 @@ import PageProvider from './providers/PageProvider';
 import ChangeZIndex from './providers/ChangeZIndexProvider';
 import SignUpButton from './components/button/SignUpButton';
 import SignInButton from './components/button/SignInButton';
+import { useAuthenticatedUser } from './providers/AuthenticatedUserProvider';
 
 type AppBarUserAppsType = {
   type?: 'userIsloggedIn';
 };
+
 const AppBarUserApps: React.FC<AppBarUserAppsType> = ({ type }: any) => {
-  if (type === 'userIsloggedIn') {
+  const { cookie } = useAuthenticatedUser();
+  const [ip, setIp] = useState<any>();
+  useEffect(() => {
+    fetch('https://api.ipify.org/?format=json')
+      .then((data) => data.json())
+      .then((data) => setIp(data))
+      .catch((err) => console.log(err));
+  }, []);
+  console.log(ip, cookie, 'this');
+  // const { cookie } = useCookies(['user']);
+  if (cookie?.user) {
     return <Avatar src='/broken-image.jpg' />;
   }
   return (
@@ -30,7 +42,7 @@ const App: React.FC = () => {
   }, []);
   return (
     <>
-      <Box sx={{ height: '100vh', psotion: 'relative' }}>
+      <Box sx={{ height: '100vh' }}>
         {/* <Box sx={{ position: 'fixed', left: 146, top: 16, zIndex: -111111111111 }}>
                 <img
                   src={LoveCareTodayLogo.toString()}

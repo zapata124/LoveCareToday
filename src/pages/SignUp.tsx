@@ -24,12 +24,16 @@ interface InputCompProps {
   label: string;
   type: string;
 }
-interface RenderAdormentProps {
+interface RenderAdornmentProps {
   type: string;
   showPassword: boolean;
   handleFunction: () => void;
 }
-const RenderAdorment: React.FC<RenderAdormentProps> = ({ type, showPassword, handleFunction }) => {
+const RenderAdornment: React.FC<RenderAdornmentProps> = ({
+  type,
+  showPassword,
+  handleFunction,
+}) => {
   if (type !== 'password') return null;
   return (
     <InputAdornment position='end'>
@@ -57,7 +61,7 @@ const InputComp: React.FC<InputCompProps> = ({ label, type }) => {
         required
         InputProps={{
           endAdornment: (
-            <RenderAdorment
+            <RenderAdornment
               type={type}
               showPassword={showPassword}
               handleFunction={handleClickShowPassword}
@@ -139,14 +143,3 @@ const SignUp: React.FC = () => {
 };
 
 export default SignUp;
-
-// <InputAdornment position='end'>
-// <IconButton
-//   aria-label='toggle password visibility'
-//   onClick={handleClickShowPassword}
-//   onMouseDown={handleClickShowPassword}
-//   edge='end'
-// >
-//   {showPassword ? <VisibilityOff /> : <Visibility />}
-// </IconButton>
-// </InputAdornment>

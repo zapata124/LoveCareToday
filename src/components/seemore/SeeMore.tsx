@@ -313,13 +313,13 @@ const addDash = (str: string) => {
   return str.replace(/\s+/g, '-');
 };
 interface SeeMoreProp {
-  nonPropfit: string;
+  nonProfit: string;
   slug: string;
 }
 
-const SeeMore: React.FC<SeeMoreProp> = ({ nonPropfit, slug }) => {
+const SeeMore: React.FC<SeeMoreProp> = ({ nonProfit, slug }) => {
   const { loading, error, data } = useQuery(getOrganization, {
-    variables: { name: addDash(nonPropfit) },
+    variables: { name: addDash(nonProfit) },
   });
 
   const parsedData = data ? JSON.parse(data?.organization?.organization) : undefined;

@@ -40,7 +40,7 @@ export const DialogComponent: React.FC<Children> = ({ children }) => {
         aria-describedby='alert-dialog-description'
         maxWidth='lg'
         // zIndex = 99 allows to render the donate dialog on top of this current dialog
-        sx={{ zIndex: 99, postion: 'relative' }}
+        sx={{ zIndex: 99 }}
       >
         {fullScreen && (
           <Box
@@ -133,7 +133,7 @@ const HoverCard: React.FC<HoverCardProps> = ({
       <CardActions sx={{ height: 40, justifyContent: websiteUrl ? 'space-between' : 'flex-end' }}>
         <Stack direction={'row'} justifyContent={'space-between'} width={1}>
           <DialogComponent>
-            <SeeMore nonPropfit={name} slug={slug} />
+            <SeeMore nonProfit={name} slug={slug} />
           </DialogComponent>
           {children}
         </Stack>

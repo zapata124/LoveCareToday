@@ -21,16 +21,22 @@ import { clientPY } from '../client';
 import BackButton from '../components/button/BackButton';
 import SignUpButton from '../components/button/SignUpButton';
 import { useNavigate } from 'react-router-dom';
+import { useAuthenticatedUser } from '../providers/AuthenticatedUserProvider';
+
 interface InputCompProps {
   label: string;
   type: string;
 }
-interface RenderAdormentProps {
+interface RenderAdornmentProps {
   type: string;
   showPassword: boolean;
   handleFunction: () => void;
 }
-const RenderAdorment: React.FC<RenderAdormentProps> = ({ type, showPassword, handleFunction }) => {
+const RenderAdornment: React.FC<RenderAdornmentProps> = ({
+  type,
+  showPassword,
+  handleFunction,
+}) => {
   if (type !== 'password') return null;
   return (
     <InputAdornment position='end'>
@@ -58,7 +64,7 @@ const InputComp: React.FC<InputCompProps> = ({ label, type }) => {
         required
         InputProps={{
           endAdornment: (
-            <RenderAdorment
+            <RenderAdornment
               type={type}
               showPassword={showPassword}
               handleFunction={handleClickShowPassword}
@@ -79,6 +85,7 @@ const SignIn: React.FC = () => {
   const [authenticate, { loading, error, data }] = useLazyQuery(authenticateUser, {
     client: clientPY,
   });
+  const { setAuthenticatedUser } = useAuthenticatedUser();
   const methods = useForm();
   const onSubmit = (formData: any) => {
     const { Email, Password } = formData;
@@ -88,6 +95,7 @@ const SignIn: React.FC = () => {
   };
   console.log(data);
   if (data?.authenticateUser) {
+    setAuthenticatedUser(data?.authenticateUser);
     navigate('/featured');
   }
   return (
