@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { AppBar, Avatar, Box, Button, Container, Stack, Typography } from '@mui/material';
+import { AppBar, Avatar, Box, Button, Container, Popover, Stack, Typography } from '@mui/material';
 import { Outlet, useNavigate } from 'react-router-dom';
 import SearchBar from './components/searchbar/SearchBar';
 import { BottomDrawer, LeftDrawer } from './components/drawers';
@@ -9,11 +9,45 @@ import ChangeZIndex from './providers/ChangeZIndexProvider';
 import SignUpButton from './components/button/SignUpButton';
 import SignInButton from './components/button/SignInButton';
 import { useAuthenticatedUser } from './providers/AuthenticatedUserProvider';
-
+import CryptoJS from 'crypto-js';
+import SingOutButton from './components/button/SignOutButton';
 type AppBarUserAppsType = {
   type?: 'userIsloggedIn';
 };
 
+const UserAvatar: React.FC = () => {
+  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
+  const id = open ? 'simple-popover' : undefined;
+  return (
+    <>
+      {/* { we need to add functionality here} */}
+      <Avatar src='/broken-image.jpg' onClick={(e) => handleClick(e)} />
+      <Popover
+        id={id}
+        open={open}
+        anchorEl={anchorEl}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+      >
+        <Typography sx={{ p: 2 }}>The content of the Popover.</Typography>
+        <SingOutButton />
+      </Popover>
+    </>
+  );
+};
 const AppBarUserApps: React.FC<AppBarUserAppsType> = ({ type }: any) => {
   const { cookie } = useAuthenticatedUser();
   const [ip, setIp] = useState<any>();
@@ -23,10 +57,11 @@ const AppBarUserApps: React.FC<AppBarUserAppsType> = ({ type }: any) => {
       .then((data) => setIp(data))
       .catch((err) => console.log(err));
   }, []);
-  console.log(ip, cookie, 'this');
+  const hash = CryptoJS.SHA1('Message');
+  console.log(ip, cookie, 'this', hash);
   // const { cookie } = useCookies(['user']);
   if (cookie?.user) {
-    return <Avatar src='/broken-image.jpg' />;
+    return <UserAvatar />;
   }
   return (
     <>
