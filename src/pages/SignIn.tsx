@@ -3,7 +3,6 @@ import {
   Box,
   Button,
   CircularProgress,
-  Grid,
   IconButton,
   InputAdornment,
   Paper,
@@ -11,16 +10,16 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { useForm, FormProvider, useFormContext } from 'react-hook-form';
+import { useForm, FormProvider, useFormContext, FieldValues } from 'react-hook-form';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import LoveCareTodayLogo from '../assets/lovecaretodayLogoSVG.svg';
 import { authenticateUser, startAuthentication } from '../query';
-import { useLazyQuery, useMutation } from '@apollo/client';
+import { useLazyQuery } from '@apollo/client';
 import { clientPY } from '../client';
 import BackButton from '../components/button/BackButton';
 import SignUpButton from '../components/button/SignUpButton';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAuthenticatedUser } from '../providers/AuthenticatedUserProvider';
 
 interface InputCompProps {
@@ -51,6 +50,7 @@ const RenderAdornment: React.FC<RenderAdornmentProps> = ({
     </InputAdornment>
   );
 };
+
 const InputComp: React.FC<InputCompProps> = ({ label, type }) => {
   const { register } = useFormContext();
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -80,21 +80,34 @@ const InputComp: React.FC<InputCompProps> = ({ label, type }) => {
     />
   );
 };
+
+type AuthenticationButtonProps = { loading: boolean; label: string };
+
+const AuthenticationButton: React.FC<AuthenticationButtonProps> = ({ loading, label }) => {
+  return (
+    <Stack direction={'row'} justifyContent={'space-between'} pt={2}>
+      <SignUpButton />
+      <Button type='submit'>
+        {loading ? <CircularProgress size={'1rem'} /> : <Typography>{label}</Typography>}
+      </Button>
+    </Stack>
+  );
+};
+
 type FormData = { Email: string; Password: string };
+
 type EmailFormProp = { updateEmail: (formEmail: string) => void };
+
 const EmailForm: React.FC<EmailFormProp> = ({ updateEmail }) => {
-  const location = useLocation();
-  const navigate = useNavigate();
   const [sendPasscode, { loading, error, data }] = useLazyQuery(startAuthentication, {
     client: clientPY,
     fetchPolicy: 'no-cache',
   });
 
   const methods = useForm();
-  const onSubmit = (formData: any) => {
+  const onSubmit = (formData: FieldValues) => {
     const { Email } = formData;
     event?.preventDefault();
-    location.state = Email;
     sendPasscode({ variables: { email: Email } });
     updateEmail(Email);
   };
@@ -105,17 +118,14 @@ const EmailForm: React.FC<EmailFormProp> = ({ updateEmail }) => {
           <Typography fontSize={14}>Please enter your email to receive a login passcode</Typography>
           <InputComp label={'Email'} type={'email'} />
         </Stack>
-        <Stack direction={'row'} justifyContent={'space-between'} pt={2}>
-          <SignUpButton />
-          <Button type='submit'>
-            {loading ? <CircularProgress size={'1rem'} /> : <Typography>Send passcode</Typography>}
-          </Button>
-        </Stack>
+        <AuthenticationButton loading={loading} label={'Send passcode'} />
       </form>
     </FormProvider>
   );
 };
+
 type PasscodeFormProp = { formEmail: string | null };
+
 const PasscodeForm: React.FC<PasscodeFormProp> = ({ formEmail }) => {
   const navigate = useNavigate();
   const [authenticate, { loading, error, data }] = useLazyQuery(authenticateUser, {
@@ -124,7 +134,7 @@ const PasscodeForm: React.FC<PasscodeFormProp> = ({ formEmail }) => {
   const { setAuthenticatedUser } = useAuthenticatedUser();
   console.log({ formEmail });
   const methods = useForm();
-  const onSubmit = (formData: any) => {
+  const onSubmit = (formData: FieldValues) => {
     const { Password } = formData;
     event?.preventDefault();
     return authenticate({ variables: { email: formEmail, password: Password } });
@@ -140,16 +150,12 @@ const PasscodeForm: React.FC<PasscodeFormProp> = ({ formEmail }) => {
           <Typography fontSize={14}>Please enter passcode sent to your email</Typography>
           <InputComp label={'Password'} type={'password'} />
         </Stack>
-        <Stack direction={'row'} justifyContent={'space-between'} pt={2}>
-          <SignUpButton />
-          <Button type='submit'>
-            {loading ? <CircularProgress size={'1rem'} /> : <Typography>Sign in</Typography>}
-          </Button>
-        </Stack>
+        <AuthenticationButton loading={loading} label={'Sign in'} />
       </form>
     </FormProvider>
   );
 };
+
 const AuthenticationForms: React.FC = () => {
   const [formEmail, setFormEmail] = useState<string | null>(null);
 
@@ -163,6 +169,7 @@ const AuthenticationForms: React.FC = () => {
     </>
   );
 };
+
 const SignIn: React.FC = () => {
   return (
     <Box
