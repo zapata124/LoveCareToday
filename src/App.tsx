@@ -29,13 +29,16 @@ import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import Scrollbars from 'react-custom-scrollbars';
+import { useUpdateBookmarks } from './hooks';
+import { customScrollBar } from './style';
 type AppBarUserAppsType = {
   type?: 'userIsloggedIn';
 };
 
 const Bookmarks: React.FC = () => {
+  const { handleAddBookmark, handleDeleteBookmark } = useUpdateBookmarks();
   const { cookie } = useAuthenticatedUser();
-  const arrBookmarks = Object.keys(cookie?.user.bookmarks);
+  const arrBookmarks = Object.keys(cookie?.user.bookmarks).sort();
   const [open, setOpen] = useState(false);
   const handleCollapse = () => {
     setOpen(!open);
@@ -46,21 +49,29 @@ const Bookmarks: React.FC = () => {
         <ListItemText sx={{ padding: 0 }}>Saved Charities</ListItemText>
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
-      <Collapse in={open} timeout='auto' unmountOnExit sx={{ maxHeight: 600, bgcolor: '#f0f0f0' }}>
-        <Scrollbars style={{ width: '100%', height: 600 }}>
-          {arrBookmarks.map((bookmark: string) => {
-            return (
-              <List component='div' disablePadding key={bookmark}>
-                <ListItemButton sx={{ pl: 4 }}>
-                  <ListItemText primary={bookmark} />
-                  <ListItemIcon>
-                    <BookmarkIcon sx={{ ml: 2 }} />
-                  </ListItemIcon>
-                </ListItemButton>
-              </List>
-            );
-          })}
-        </Scrollbars>
+      <Collapse
+        in={open}
+        timeout='auto'
+        unmountOnExit
+        sx={{
+          maxHeight: 600,
+          bgcolor: '#f0f0f0',
+          overflowY: 'scroll',
+          ...customScrollBar,
+        }}
+      >
+        {arrBookmarks.map((bookmark: string) => {
+          return (
+            <List component='div' disablePadding key={bookmark}>
+              <ListItemButton sx={{ pl: 4 }}>
+                <ListItemText primary={bookmark} />
+                <ListItemIcon>
+                  <BookmarkIcon sx={{ ml: 2 }} onClick={() => handleDeleteBookmark(bookmark)} />
+                </ListItemIcon>
+              </ListItemButton>
+            </List>
+          );
+        })}
       </Collapse>
     </>
   );

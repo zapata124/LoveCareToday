@@ -32,6 +32,7 @@ import NoDataSVG from '../svgs/NoDataSVG';
 import { SkeletonCard } from '../skeletons/RenderSearchSkeleton';
 import { createWidget } from '../organizationCard/OrganizationCard';
 import SeeMoreTabsSkeleton from '../skeletons/SeeMoreTabsSkeleton';
+import { customScrollBar } from '../../style';
 
 const FallBackState: React.FC<Children> = ({ children }) => {
   return (
@@ -260,16 +261,7 @@ const SeeMoreCard: React.FC<SeeMoreCardProps> = ({
               height={250}
               overflow={'auto'}
               sx={{
-                '&::-webkit-scrollbar': {
-                  width: '0.4em',
-                },
-                '&::-webkit-scrollbar-track': {
-                  WebkitBoxShadow: 'inset 0 0 6px rgba(0,0,0,0.00)',
-                },
-                '&::-webkit-scrollbar-thumb': {
-                  backgroundColor: 'rgba(0,0,0,.1)',
-                  borderRadius: '8px',
-                },
+                ...customScrollBar,
               }}
             >
               <Typography>{shortDescription}</Typography>
