@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Grid,
   Card,
@@ -20,7 +20,12 @@ import StockImage from '../../assets/charity-8366471_1280.png';
 import Scrollbars from 'react-custom-scrollbars';
 import SeeMore from '../seemore/SeeMore';
 import CloseIcon from '@mui/icons-material/Close';
-
+import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
+import BookmarkIcon from '@mui/icons-material/Bookmark';
+import { useAuthenticatedUser } from '../../providers/AuthenticatedUserProvider';
+import { useLazyQuery, useMutation } from '@apollo/client';
+import { clientPY } from '../../client';
+import { addBookmark, deleteBookmark } from '../../query';
 export const DialogComponent: React.FC<Children> = ({ children }) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => {
@@ -88,6 +93,62 @@ export const createWidget = (slug: string) => {
     nonprofitSlug: slug,
   });
 };
+
+type BookmarkAppProp = { name: string };
+const BookmarkApp: React.FC<BookmarkAppProp> = ({ name }) => {
+  const [addUserBookmark, { loading, error, data }] = useMutation(addBookmark, {
+    client: clientPY,
+  });
+  const [deleteUserBookmark, { data: deleteData }] = useMutation(deleteBookmark, {
+    client: clientPY,
+  });
+  const { cookie, setAuthenticatedUser } = useAuthenticatedUser();
+  const bookmarks = cookie?.user?.bookmarks;
+  const checkBookmark = bookmarks ? (bookmarks[name] ? true : false) : null;
+  const fontSize = 26;
+
+  const handleAddBookmark = () => {
+    addUserBookmark({
+      variables: {
+        bookmark: name,
+        email: cookie?.user?.email,
+      },
+    });
+  };
+
+  const handleDeleteBookmark = () => {
+    deleteUserBookmark({
+      variables: {
+        bookmark: name,
+        email: cookie?.user?.email,
+      },
+    });
+  };
+
+  useEffect(() => {
+    if (data) {
+      console.log(data);
+      setAuthenticatedUser(data?.add_bookmark);
+    }
+    if (deleteData) {
+      setAuthenticatedUser(deleteData?.delete_bookmark);
+    }
+  }, [data, deleteData]);
+
+  if (!bookmarks) {
+    return null;
+  }
+  return (
+    <Box sx={{ pr: 2 }}>
+      {checkBookmark ? (
+        <BookmarkIcon sx={{ fontSize: fontSize }} onClick={handleDeleteBookmark} />
+      ) : (
+        <BookmarkBorderIcon sx={{ fontSize: fontSize }} onClick={handleAddBookmark} />
+      )}
+    </Box>
+  );
+};
+
 const HoverCard: React.FC<HoverCardProps> = ({
   children,
   name,
@@ -121,12 +182,15 @@ const HoverCard: React.FC<HoverCardProps> = ({
         height={140}
         image={coverImageUrl ? coverImageUrl : StockImage}
       />
-      <CardHeader
-        title={name}
-        subheader={slug}
-        avatar={<img src={logoUrl} />}
-        sx={{ height: 32 }}
-      />
+      <Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'}>
+        <CardHeader
+          title={name}
+          subheader={slug}
+          avatar={<img src={logoUrl} />}
+          sx={{ height: 32 }}
+        />
+        <BookmarkApp name={name} />
+      </Stack>
       <CardContent sx={{ overflowY: 'auto', height: 114 }}>
         {description && <Typography>{getShortDescription(description)}</Typography>}
       </CardContent>

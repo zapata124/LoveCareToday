@@ -14,7 +14,7 @@ import { useQuery } from '@apollo/client';
 import { getSearchBarData } from '../../query';
 import { useChangeZIndex } from '../../providers/ChangeZIndexProvider';
 
-const convertToLabeldOptions = (options: string[]) => {
+const convertToLabelOptions = (options: string[]) => {
   const parced = options.map((option: any) => ({ label: option.name, logoUrl: option.logoUrl }));
   return parced;
 };
@@ -22,7 +22,7 @@ const convertToLabeldOptions = (options: string[]) => {
 const SearchBar: React.FC = () => {
   const { change, changeIndex } = useChangeZIndex();
   const [search, setSearch] = React.useState<string | undefined>('');
-  const [searchOptions, setSearchqOptions] = React.useState<any[]>([]);
+  const [searchOptions, setSearchOptions] = React.useState<any[]>([]);
   // temp solution until we can use fetch with gql
   const { data } = useQuery(getSearchBarData, {
     variables: { arg: search },
@@ -35,13 +35,13 @@ const SearchBar: React.FC = () => {
       changeIndex();
     }
     if (data) {
-      setSearchqOptions(convertToLabeldOptions(JSON.parse(data.searchBar.data).nonprofits));
+      setSearchOptions(convertToLabelOptions(JSON.parse(data.searchBar.data).nonprofits));
     }
   }, [search, data]);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setSearchqOptions([]);
+    setSearchOptions([]);
     changeIndex();
     // this is returning the search item
     // is also giving error when closing the popper

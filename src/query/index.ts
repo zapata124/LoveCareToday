@@ -154,6 +154,17 @@ export const authenticateUser = gql`
       id
       lastname
       name
+      bookmarks {
+        label
+      }
+    }
+  }
+`;
+
+export const startAuthentication = gql`
+  query Query($email: String) {
+    startAuthentication(email: $email) {
+      passcode
     }
   }
 `;
@@ -173,6 +184,34 @@ export const createUser = gql`
       password: $password
       confirmpassword: $confirmpassword
     ) {
+      email
+      id
+      lastname
+      name
+    }
+  }
+`;
+// make fragment to reuse email, lastname, name, id
+export const addBookmark = gql`
+  mutation Mutation($email: String, $bookmark: String) {
+    add_bookmark(email: $email, bookmark: $bookmark) {
+      bookmarks {
+        label
+      }
+      email
+      id
+      lastname
+      name
+    }
+  }
+`;
+
+export const deleteBookmark = gql`
+  mutation Mutation($bookmark: String, $email: String) {
+    delete_bookmark(bookmark: $bookmark, email: $email) {
+      bookmarks {
+        label
+      }
       email
       id
       lastname

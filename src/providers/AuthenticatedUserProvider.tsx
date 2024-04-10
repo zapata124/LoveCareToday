@@ -1,10 +1,11 @@
+import { DocumentNode } from 'graphql';
 import React, { useContext, useState, createContext } from 'react';
 import { useCookies } from 'react-cookie';
 
 interface AuthenticatedUserProviderTypes {
   isAuthenticated: boolean;
   cookie: any;
-  setAuthenticatedUser: (user: string) => void;
+  setAuthenticatedUser: (user: DocumentNode) => void;
   clearUserCookie: () => void;
 }
 
@@ -23,8 +24,18 @@ const AuthenticatedUserProvider: React.FC<Children> = ({ children }) => {
     removeCookie('user');
     setIsAuthenticated(false);
   };
-  const setAuthenticatedUser = (user: string) => {
-    setCookie('user', user, { path: '/' });
+  // fix all types here
+  const setAuthenticatedUser = (user: any) => {
+    const formatUserData = {
+      ...user,
+      bookmarks: user?.bookmarks.reduce((currentBookmark: any, newBookmarks: any) => {
+        currentBookmark[newBookmarks.label] = newBookmarks.label;
+        return currentBookmark;
+      }, {}),
+    };
+    // keep this the same for max age until we get it to work 100%
+    setCookie('user', formatUserData, { path: '/', maxAge: 2400000 });
+    // i don not think we need this here any more
     setIsAuthenticated(true);
   };
   return (

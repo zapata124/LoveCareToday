@@ -21,6 +21,7 @@ import BackButton from '../components/button/BackButton';
 import SignUpButton from '../components/button/SignUpButton';
 import { useNavigate } from 'react-router-dom';
 import { useAuthenticatedUser } from '../providers/AuthenticatedUserProvider';
+import Bookmark from '@mui/icons-material/Bookmark';
 
 interface InputCompProps {
   label: string;
@@ -139,8 +140,20 @@ const PasscodeForm: React.FC<PasscodeFormProp> = ({ formEmail }) => {
     event?.preventDefault();
     return authenticate({ variables: { email: formEmail, password: Password } });
   };
+
+  // need to add query types here for the bookmarks type
   if (data?.authenticateUser) {
-    setAuthenticatedUser(data?.authenticateUser);
+    const { authenticateUser } = data;
+    const { bookmarks } = authenticateUser;
+    const formatData = {
+      ...authenticateUser,
+      bookmarks: bookmarks.reduce((currentBookmark: any, newBookmarks: any) => {
+        currentBookmark[newBookmarks.label] = newBookmarks.label;
+        return currentBookmark;
+      }, {}),
+    };
+
+    setAuthenticatedUser(authenticateUser);
     navigate('/featured');
   }
   return (

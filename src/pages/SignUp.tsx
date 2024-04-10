@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Box,
   Button,
@@ -81,7 +81,6 @@ const SignUp: React.FC = () => {
   const [createNewUser, { loading, error, data }] = useMutation(createUser, { client: clientPY });
   const navigate = useNavigate();
   const methods = useForm();
-  console.log(data);
   const onSubmit = (data: any) => {
     const { Firstname, Lastname, Email, Password, Confirmpassword } = data;
     event?.preventDefault();
@@ -96,6 +95,11 @@ const SignUp: React.FC = () => {
       },
     });
   };
+  useEffect(() => {
+    if (data) {
+      navigate('/signin');
+    }
+  });
   return (
     <Box
       sx={{

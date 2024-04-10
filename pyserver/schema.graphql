@@ -1,12 +1,22 @@
+type Bookmark {
+  label: String
+}
+
 type User {
   id: String
   name: String
   lastname: String
   email: String
+  bookmarks: [Bookmark]
+}
+
+type Passcode {
+  passcode: String
 }
 
 type Query {
   getUser: User
+  startAuthentication(email: String): Passcode
   authenticateUser(email: String, password: String): User
 }
 
@@ -18,4 +28,6 @@ type Mutation {
     password: String
     confirmpassword: String
   ): User
+  add_bookmark(email: String, bookmark: String): User
+  delete_bookmark(email: String, bookmark: String): User
 }

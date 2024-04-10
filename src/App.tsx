@@ -11,13 +11,18 @@ import SignInButton from './components/button/SignInButton';
 import { useAuthenticatedUser } from './providers/AuthenticatedUserProvider';
 import CryptoJS from 'crypto-js';
 import SingOutButton from './components/button/SignOutButton';
+
 type AppBarUserAppsType = {
   type?: 'userIsloggedIn';
 };
 
 const UserAvatar: React.FC = () => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+  const { cookie } = useAuthenticatedUser();
+  const { user } = cookie;
+  const { name, lastname: lastName } = user;
 
+  console.log(cookie);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -27,11 +32,22 @@ const UserAvatar: React.FC = () => {
   };
 
   const open = Boolean(anchorEl);
+  console.log(open, 'open');
   const id = open ? 'simple-popover' : undefined;
   return (
-    <>
+    <Box
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        mr: { sx: 2, sm: 4, lg: 8 },
+      }}
+    >
       {/* { we need to add functionality here} */}
-      <Avatar src='/broken-image.jpg' onClick={(e) => handleClick(e)} />
+      <Avatar
+        src='/broken-image.jpg'
+        onClick={(e) => handleClick(e as unknown as React.MouseEvent<HTMLButtonElement>)}
+      />
       <Popover
         id={id}
         open={open}
@@ -39,13 +55,36 @@ const UserAvatar: React.FC = () => {
         onClose={handleClose}
         anchorOrigin={{
           vertical: 'bottom',
-          horizontal: 'left',
+          horizontal: 'right',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+        slotProps={{
+          paper: {
+            style: {
+              width: 400,
+              padding: 20,
+            },
+          },
         }}
       >
-        <Typography sx={{ p: 2 }}>The content of the Popover.</Typography>
-        <SingOutButton />
+        <Stack direction={'row'} spacing={2} alignItems={'center'}>
+          <Avatar src='/broken-image.jpg' sx={{ width: 56, height: 56 }} />
+          <Typography fontWeight={600} fontSize={20}>{`${name} ${lastName}`}</Typography>
+        </Stack>
+        <Stack padding={2}>
+          <Typography>Total Donations</Typography>
+          <Typography>All Donations</Typography>
+          <Typography>Saved Charities</Typography>
+          <Typography>Registered Date</Typography>
+        </Stack>
+        <Box width={1} sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <SingOutButton />
+        </Box>
       </Popover>
-    </>
+    </Box>
   );
 };
 const AppBarUserApps: React.FC<AppBarUserAppsType> = ({ type }: any) => {
@@ -64,10 +103,10 @@ const AppBarUserApps: React.FC<AppBarUserAppsType> = ({ type }: any) => {
     return <UserAvatar />;
   }
   return (
-    <>
+    <Box sx={{ mr: 4 }}>
       <SignUpButton />
       <SignInButton />
-    </>
+    </Box>
   );
 };
 const App: React.FC = () => {
@@ -110,7 +149,7 @@ const App: React.FC = () => {
                 Love Care Today
               </Typography>
               <SearchBar />
-              <Stack direction={'row'} sx={{ mr: 8 }}>
+              <Stack direction={'row'}>
                 <AppBarUserApps />
               </Stack>
             </Stack>

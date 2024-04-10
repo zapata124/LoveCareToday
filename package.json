@@ -30,6 +30,7 @@
     "@rtk-query/graphql-request-base-query": "^2.2.0",
     "@types/react-swipeable-views": "^0.13.2",
     "cross-env": "^7.0.3",
+    "crypto-js": "^4.2.0",
     "dotenv": "^16.3.1",
     "google-maps-react": "^2.0.6",
     "graphql": "^16.6.0",
@@ -60,6 +61,7 @@
     "xml-js": "^1.6.11"
   },
   "devDependencies": {
+    "@types/crypto-js": "^4.2.2",
     "@types/mui-image": "^1.0.3",
     "@types/node": "^18.14.0",
     "@types/react": "^18.0.26",
