@@ -17,7 +17,6 @@ import {
   Box,
 } from '@mui/material';
 import StockImage from '../../assets/charity-8366471_1280.png';
-import Scrollbars from 'react-custom-scrollbars';
 import SeeMore from '../seemore/SeeMore';
 import CloseIcon from '@mui/icons-material/Close';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
@@ -27,6 +26,7 @@ import { useLazyQuery, useMutation } from '@apollo/client';
 import { clientPY } from '../../client';
 import { addBookmark, deleteBookmark } from '../../query';
 import { useUpdateBookmarks } from '../../hooks';
+import { customScrollBar } from '../../style';
 
 export const DialogComponent: React.FC<Children> = ({ children }) => {
   const [open, setOpen] = useState(false);
@@ -183,7 +183,7 @@ interface OrganizationCardProps {
 
 const OrganizationCard: React.FC<OrganizationCardProps> = ({ data, Featured }) => {
   return (
-    <Scrollbars style={{ width: '100%', height: '100%' }}>
+    <Box width={1} height={1} sx={{ overflowY: 'scroll', ...customScrollBar }}>
       {Featured}
       <Grid container spacing={2} sx={{ pt: 2, pb: 2, pr: 1 }}>
         {data?.map((item: any, index: number) => {
@@ -219,7 +219,7 @@ const OrganizationCard: React.FC<OrganizationCardProps> = ({ data, Featured }) =
           );
         })}
       </Grid>
-    </Scrollbars>
+    </Box>
   );
 };
 
