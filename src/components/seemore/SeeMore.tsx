@@ -207,7 +207,7 @@ const SeeMoreCard: React.FC<SeeMoreCardProps> = ({
   const { street, city, state, zipCode, country, assetAmount, form990 } = data
     ? data.charityBasic
     : defaultData;
-  console.log({ data });
+
   useEffect(() => {
     if (ein) {
       getHunterData({
@@ -317,6 +317,7 @@ const SeeMore: React.FC<SeeMoreProp> = ({ nonProfit, slug }) => {
   const parsedData = data ? JSON.parse(data?.organization?.organization) : undefined;
 
   // we need error handlers here
+
   return (
     <>
       {!loading ? (

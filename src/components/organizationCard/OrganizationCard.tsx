@@ -187,6 +187,9 @@ const OrganizationCard: React.FC<OrganizationCardProps> = ({ data, Featured }) =
       {Featured}
       <Grid container spacing={2} sx={{ pt: 2, pb: 2, pr: 1 }}>
         {data?.map((item: any, index: number) => {
+          if (!item.coverImageUrl) {
+            return null;
+          }
           return (
             <Grow
               in={true}
