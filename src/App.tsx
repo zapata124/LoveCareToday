@@ -31,6 +31,8 @@ import BookmarkIcon from '@mui/icons-material/Bookmark';
 import Scrollbars from 'react-custom-scrollbars';
 import { useUpdateBookmarks } from './hooks';
 import { customScrollBar } from './style';
+import { DialogComponent } from './components/organizationCard/OrganizationCard';
+import SeeMore from './components/seemore';
 type AppBarUserAppsType = {
   type?: 'userIsloggedIn';
 };
@@ -63,12 +65,23 @@ const Bookmarks: React.FC = () => {
         {arrBookmarks.map((bookmark: string) => {
           return (
             <List component='div' disablePadding key={bookmark}>
-              <ListItemButton sx={{ pl: 4 }}>
+              <DialogComponent
+                contentComponent={<SeeMore nonProfit={bookmark} slug={bookmark} />}
+                actionComponent={
+                  <ListItemButton sx={{ pl: 4 }}>
+                    <ListItemText primary={bookmark} />
+                    <ListItemIcon>
+                      <BookmarkIcon sx={{ ml: 2 }} onClick={() => handleDeleteBookmark(bookmark)} />
+                    </ListItemIcon>
+                  </ListItemButton>
+                }
+              />
+              {/* <ListItemButton sx={{ pl: 4 }}>
                 <ListItemText primary={bookmark} />
                 <ListItemIcon>
                   <BookmarkIcon sx={{ ml: 2 }} onClick={() => handleDeleteBookmark(bookmark)} />
                 </ListItemIcon>
-              </ListItemButton>
+              </ListItemButton> */}
             </List>
           );
         })}

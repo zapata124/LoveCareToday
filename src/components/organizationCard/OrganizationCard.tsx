@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { ReactElement, ReactNode, useEffect, useState } from 'react';
 import {
   Grid,
   Card,
@@ -28,7 +28,11 @@ import { addBookmark, deleteBookmark } from '../../query';
 import { useUpdateBookmarks } from '../../hooks';
 import { customScrollBar } from '../../style';
 
-export const DialogComponent: React.FC<Children> = ({ children }) => {
+interface TestProps {
+  contentComponent: ReactNode;
+  actionComponent: ReactElement;
+}
+export const DialogComponent: React.FC<TestProps> = ({ contentComponent, actionComponent }) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => {
     setOpen(!open);
@@ -36,9 +40,10 @@ export const DialogComponent: React.FC<Children> = ({ children }) => {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
+  const onClickComponent = React.cloneElement(actionComponent, { onClick: () => handleOpen() });
   return (
     <>
-      <Button onClick={handleOpen}>See more</Button>
+      {onClickComponent}
       <Dialog
         fullScreen={fullScreen}
         open={open}
@@ -63,7 +68,7 @@ export const DialogComponent: React.FC<Children> = ({ children }) => {
             <CloseIcon onClick={handleOpen} />
           </Box>
         )}
-        <DialogContent sx={{ padding: 0 }}>{children}</DialogContent>
+        <DialogContent sx={{ padding: 0 }}>{contentComponent}</DialogContent>
       </Dialog>
     </>
   );
@@ -119,6 +124,13 @@ const BookmarkApp: React.FC<BookmarkAppProp> = ({ name }) => {
     // allows for a quick update of the bookmark visually
     setBookmarked(false);
   };
+
+  useEffect(() => {
+    if (bookmarked) {
+      setBookmarked(false);
+    }
+  }, [cookie]);
+
   return (
     <Box sx={{ pr: 2 }}>
       {checkBookmark || bookmarked ? (
@@ -177,9 +189,12 @@ const HoverCard: React.FC<HoverCardProps> = ({
       </CardContent>
       <CardActions sx={{ height: 40, justifyContent: websiteUrl ? 'space-between' : 'flex-end' }}>
         <Stack direction={'row'} justifyContent={'space-between'} width={1}>
-          <DialogComponent>
-            <SeeMore nonProfit={name} slug={slug} />
-          </DialogComponent>
+          <DialogComponent
+            contentComponent={<SeeMore nonProfit={name} slug={slug} />}
+            actionComponent={<Button>See more</Button>}
+          />
+          {/* <SeeMore nonProfit={name} slug={slug} />
+          </DialogComponent> */}
           {children}
         </Stack>
       </CardActions>
