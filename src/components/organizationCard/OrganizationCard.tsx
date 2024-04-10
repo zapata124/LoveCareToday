@@ -26,6 +26,8 @@ import { useAuthenticatedUser } from '../../providers/AuthenticatedUserProvider'
 import { useLazyQuery, useMutation } from '@apollo/client';
 import { clientPY } from '../../client';
 import { addBookmark, deleteBookmark } from '../../query';
+import { useUpdateBookmarks } from '../../hooks';
+
 export const DialogComponent: React.FC<Children> = ({ children }) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => {
@@ -96,47 +98,11 @@ export const createWidget = (slug: string) => {
 
 type BookmarkAppProp = { name: string };
 const BookmarkApp: React.FC<BookmarkAppProp> = ({ name }) => {
-  const [addUserBookmark, { loading, error, data }] = useMutation(addBookmark, {
-    client: clientPY,
-  });
-  const [deleteUserBookmark, { data: deleteData }] = useMutation(deleteBookmark, {
-    client: clientPY,
-  });
-  const { cookie, setAuthenticatedUser } = useAuthenticatedUser();
+  const { handleAddBookmark, handleDeleteBookmark } = useUpdateBookmarks();
+  const { cookie } = useAuthenticatedUser();
   const bookmarks = cookie?.user?.bookmarks;
   const checkBookmark = bookmarks ? (bookmarks[name] ? true : false) : null;
   const fontSize = 26;
-
-  const handleAddBookmark = () => {
-    addUserBookmark({
-      variables: {
-        bookmark: name,
-        email: cookie?.user?.email,
-      },
-    });
-  };
-
-  const handleDeleteBookmark = () => {
-    deleteUserBookmark({
-      variables: {
-        bookmark: name,
-        email: cookie?.user?.email,
-      },
-    });
-  };
-
-  useEffect(() => {
-    if (data) {
-      console.log(data);
-      setAuthenticatedUser(data?.add_bookmark);
-    }
-  }, [data]);
-
-  useEffect(() => {
-    if (deleteData) {
-      setAuthenticatedUser(deleteData?.delete_bookmark);
-    }
-  }, [deleteData]);
 
   if (!bookmarks) {
     return null;
@@ -144,9 +110,9 @@ const BookmarkApp: React.FC<BookmarkAppProp> = ({ name }) => {
   return (
     <Box sx={{ pr: 2 }}>
       {checkBookmark ? (
-        <BookmarkIcon sx={{ fontSize: fontSize }} onClick={handleDeleteBookmark} />
+        <BookmarkIcon sx={{ fontSize: fontSize }} onClick={() => handleDeleteBookmark(name)} />
       ) : (
-        <BookmarkBorderIcon sx={{ fontSize: fontSize }} onClick={handleAddBookmark} />
+        <BookmarkBorderIcon sx={{ fontSize: fontSize }} onClick={() => handleAddBookmark(name)} />
       )}
     </Box>
   );
