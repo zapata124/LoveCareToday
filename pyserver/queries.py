@@ -4,9 +4,9 @@ from db import (collection)
 import mailtrap as mt
 import random
 
-def getUser_resolver(obj, info):
+def getUser_resolver(obj, info, email):
     try:
-        current_user= collection.find_one({"name":"Eddy"})
+        current_user= collection.find_one({"email":email})
         # print(obj, info)
         return current_user
     except Exception as error:

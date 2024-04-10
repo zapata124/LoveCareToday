@@ -15,7 +15,7 @@ type Passcode {
 }
 
 type Query {
-  getUser: User
+  getUser(email: String): User
   startAuthentication(email: String): Passcode
   authenticateUser(email: String, password: String): User
 }

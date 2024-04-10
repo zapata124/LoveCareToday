@@ -147,18 +147,39 @@ export const getOrgHunterCharityBasic = gql`
   }
 `;
 
-export const authenticateUser = gql`
-  query AuthenticateUser($email: String, $password: String) {
-    authenticateUser(email: $email, password: $password) {
+export const getUser = gql`
+  query Query($email: String) {
+    getUser(email: $email) {
+      bookmarks {
+        label
+      }
       email
       id
       lastname
       name
-      bookmarks {
-        label
-      }
     }
   }
+`;
+
+const userFragment = gql`
+  fragment UserInput on User {
+    email
+    id
+    lastname
+    name
+    bookmarks {
+      label
+    }
+  }
+`;
+
+export const authenticateUser = gql`
+  query AuthenticateUser($email: String, $password: String) {
+    authenticateUser(email: $email, password: $password) {
+      ...UserInput
+    }
+  }
+  ${userFragment}
 `;
 
 export const startAuthentication = gql`
@@ -195,27 +216,17 @@ export const createUser = gql`
 export const addBookmark = gql`
   mutation Mutation($email: String, $bookmark: String) {
     add_bookmark(email: $email, bookmark: $bookmark) {
-      bookmarks {
-        label
-      }
-      email
-      id
-      lastname
-      name
+      ...UserInput
     }
   }
+  ${userFragment}
 `;
 
 export const deleteBookmark = gql`
   mutation Mutation($bookmark: String, $email: String) {
     delete_bookmark(bookmark: $bookmark, email: $email) {
-      bookmarks {
-        label
-      }
-      email
-      id
-      lastname
-      name
+      ...UserInput
     }
   }
+  ${userFragment}
 `;
