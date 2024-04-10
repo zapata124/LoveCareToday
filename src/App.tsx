@@ -46,14 +46,16 @@ const Bookmarks: React.FC = () => {
         <ListItemText sx={{ padding: 0 }}>Saved Charities</ListItemText>
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
-      <Collapse in={open} timeout='auto' unmountOnExit sx={{ maxHeight: 600 }}>
+      <Collapse in={open} timeout='auto' unmountOnExit sx={{ maxHeight: 600, bgcolor: '#f0f0f0' }}>
         <Scrollbars style={{ width: '100%', height: 600 }}>
           {arrBookmarks.map((bookmark: string) => {
             return (
               <List component='div' disablePadding key={bookmark}>
                 <ListItemButton sx={{ pl: 4 }}>
                   <ListItemText primary={bookmark} />
-                  {/* <ListItemIcon></ListItemIcon> */}
+                  <ListItemIcon>
+                    <BookmarkIcon sx={{ ml: 2 }} />
+                  </ListItemIcon>
                 </ListItemButton>
               </List>
             );
