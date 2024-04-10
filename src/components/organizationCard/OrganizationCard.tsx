@@ -130,10 +130,13 @@ const BookmarkApp: React.FC<BookmarkAppProp> = ({ name }) => {
       console.log(data);
       setAuthenticatedUser(data?.add_bookmark);
     }
+  }, [data]);
+
+  useEffect(() => {
     if (deleteData) {
       setAuthenticatedUser(deleteData?.delete_bookmark);
     }
-  }, [data, deleteData]);
+  }, [deleteData]);
 
   if (!bookmarks) {
     return null;
