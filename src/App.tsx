@@ -1,5 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { AppBar, Avatar, Box, Button, Container, Popover, Stack, Typography } from '@mui/material';
+import {
+  AppBar,
+  Avatar,
+  Box,
+  Button,
+  Container,
+  List,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Popover,
+  Stack,
+  Typography,
+  Collapse,
+} from '@mui/material';
 import { Outlet, useNavigate } from 'react-router-dom';
 import SearchBar from './components/searchbar/SearchBar';
 import { BottomDrawer, LeftDrawer } from './components/drawers';
@@ -11,11 +25,44 @@ import SignInButton from './components/button/SignInButton';
 import { useAuthenticatedUser } from './providers/AuthenticatedUserProvider';
 import CryptoJS from 'crypto-js';
 import SingOutButton from './components/button/SignOutButton';
-
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
+import BookmarkIcon from '@mui/icons-material/Bookmark';
+import Scrollbars from 'react-custom-scrollbars';
 type AppBarUserAppsType = {
   type?: 'userIsloggedIn';
 };
 
+const Bookmarks: React.FC = () => {
+  const { cookie } = useAuthenticatedUser();
+  const arrBookmarks = Object.keys(cookie?.user.bookmarks);
+  const [open, setOpen] = useState(false);
+  const handleCollapse = () => {
+    setOpen(!open);
+  };
+  return (
+    <>
+      <ListItemButton onClick={handleCollapse} sx={{ padding: 0 }}>
+        <ListItemText sx={{ padding: 0 }}>Saved Charities</ListItemText>
+        {open ? <ExpandLess /> : <ExpandMore />}
+      </ListItemButton>
+      <Collapse in={open} timeout='auto' unmountOnExit sx={{ maxHeight: 600 }}>
+        <Scrollbars style={{ width: '100%', height: 600 }}>
+          {arrBookmarks.map((bookmark: string) => {
+            return (
+              <List component='div' disablePadding key={bookmark}>
+                <ListItemButton sx={{ pl: 4 }}>
+                  <ListItemText primary={bookmark} />
+                  {/* <ListItemIcon></ListItemIcon> */}
+                </ListItemButton>
+              </List>
+            );
+          })}
+        </Scrollbars>
+      </Collapse>
+    </>
+  );
+};
 const UserAvatar: React.FC = () => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const { cookie } = useAuthenticatedUser();
@@ -77,7 +124,7 @@ const UserAvatar: React.FC = () => {
         <Stack padding={2}>
           <Typography>Total Donations</Typography>
           <Typography>All Donations</Typography>
-          <Typography>Saved Charities</Typography>
+          <Bookmarks />
           <Typography>Registered Date</Typography>
         </Stack>
         <Box width={1} sx={{ display: 'flex', justifyContent: 'flex-end' }}>
