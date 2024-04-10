@@ -98,6 +98,7 @@ export const createWidget = (slug: string) => {
 
 type BookmarkAppProp = { name: string };
 const BookmarkApp: React.FC<BookmarkAppProp> = ({ name }) => {
+  const [bookmarked, setBookmarked] = useState(false);
   const { handleAddBookmark, handleDeleteBookmark } = useUpdateBookmarks();
   const { cookie } = useAuthenticatedUser();
   const bookmarks = cookie?.user?.bookmarks;
@@ -107,12 +108,23 @@ const BookmarkApp: React.FC<BookmarkAppProp> = ({ name }) => {
   if (!bookmarks) {
     return null;
   }
+  const setBookmark = () => {
+    handleAddBookmark(name);
+    // allows for a quick update of the bookmark visually
+    setBookmarked(true);
+  };
+
+  const removeBookmark = () => {
+    handleDeleteBookmark(name);
+    // allows for a quick update of the bookmark visually
+    setBookmarked(false);
+  };
   return (
     <Box sx={{ pr: 2 }}>
-      {checkBookmark ? (
-        <BookmarkIcon sx={{ fontSize: fontSize }} onClick={() => handleDeleteBookmark(name)} />
+      {checkBookmark || bookmarked ? (
+        <BookmarkIcon sx={{ fontSize: fontSize }} onClick={removeBookmark} />
       ) : (
-        <BookmarkBorderIcon sx={{ fontSize: fontSize }} onClick={() => handleAddBookmark(name)} />
+        <BookmarkBorderIcon sx={{ fontSize: fontSize }} onClick={setBookmark} />
       )}
     </Box>
   );
