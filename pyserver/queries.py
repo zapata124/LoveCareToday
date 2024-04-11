@@ -54,9 +54,9 @@ def createUser_resolver(obj, info, name, lastname, email, password, confirmpassw
         return error
     
 @convert_kwargs_to_snake_case
-def add_bookmark(obj, info, email, bookmark):
+def add_bookmark(obj, info, email, bookmark, slug):
     try:
-        collection.update_one({ "email": email }, { "$push" : { "bookmarks": { "label" : bookmark}}})
+        collection.update_one({ "email": email }, { "$push" : { "bookmarks": { "label" : bookmark, "slug": slug}}})
         updated_user= collection.find_one({"email": email })
         return updated_user
     except Exception as error:

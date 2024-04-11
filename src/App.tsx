@@ -28,7 +28,6 @@ import SingOutButton from './components/button/SignOutButton';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
-import Scrollbars from 'react-custom-scrollbars';
 import { useUpdateBookmarks } from './hooks';
 import { customScrollBar } from './style';
 import { DialogComponent } from './components/organizationCard/OrganizationCard';
@@ -40,7 +39,7 @@ type AppBarUserAppsType = {
 const Bookmarks: React.FC = () => {
   const { handleAddBookmark, handleDeleteBookmark } = useUpdateBookmarks();
   const { cookie } = useAuthenticatedUser();
-  const arrBookmarks = Object.keys(cookie?.user.bookmarks).sort();
+  const arrBookmarks = Object.entries(cookie?.user.bookmarks).sort();
   const [open, setOpen] = useState(false);
   const handleCollapse = () => {
     setOpen(!open);
@@ -64,12 +63,12 @@ const Bookmarks: React.FC = () => {
           mb: 2,
         }}
       >
-        {arrBookmarks.map((bookmark: string) => {
+        {arrBookmarks.map(([bookmark, slug]) => {
           return (
             <List disablePadding key={bookmark}>
               <Stack direction={'row'} alignItems={'center'}>
                 <DialogComponent
-                  contentComponent={<SeeMore nonProfit={bookmark} slug={bookmark} />}
+                  contentComponent={<SeeMore nonProfit={bookmark} slug={slug as string} />}
                   actionComponent={
                     <ListItemButton sx={{ pl: 4 }}>
                       <ListItemText primary={bookmark} />
@@ -128,6 +127,7 @@ const UserAvatar: React.FC = () => {
         open={open}
         anchorEl={anchorEl}
         onClose={handleClose}
+        sx={{ zIndex: 1 }}
         anchorOrigin={{
           vertical: 'bottom',
           horizontal: 'right',

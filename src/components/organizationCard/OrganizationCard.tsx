@@ -101,8 +101,8 @@ export const createWidget = (slug: string) => {
   });
 };
 
-type BookmarkAppProp = { name: string };
-const BookmarkApp: React.FC<BookmarkAppProp> = ({ name }) => {
+type BookmarkAppProp = { name: string; slug: string };
+export const BookmarkApp: React.FC<BookmarkAppProp> = ({ name, slug }) => {
   const [bookmarked, setBookmarked] = useState(false);
   const { handleAddBookmark, handleDeleteBookmark } = useUpdateBookmarks();
   const { cookie } = useAuthenticatedUser();
@@ -114,7 +114,7 @@ const BookmarkApp: React.FC<BookmarkAppProp> = ({ name }) => {
     return null;
   }
   const setBookmark = () => {
-    handleAddBookmark(name);
+    handleAddBookmark(name, slug);
     // allows for a quick update of the bookmark visually
     setBookmarked(true);
   };
@@ -134,9 +134,15 @@ const BookmarkApp: React.FC<BookmarkAppProp> = ({ name }) => {
   return (
     <Box sx={{ pr: 2 }}>
       {checkBookmark || bookmarked ? (
-        <BookmarkIcon sx={{ fontSize: fontSize, color: '#FFA500' }} onClick={removeBookmark} />
+        <BookmarkIcon
+          sx={{ fontSize: fontSize, color: '#FFA500', ':hover': { cursor: 'pointer' } }}
+          onClick={removeBookmark}
+        />
       ) : (
-        <BookmarkBorderIcon sx={{ fontSize: fontSize }} onClick={setBookmark} />
+        <BookmarkBorderIcon
+          sx={{ fontSize: fontSize, ':hover': { cursor: 'pointer' } }}
+          onClick={setBookmark}
+        />
       )}
     </Box>
   );
@@ -182,7 +188,7 @@ const HoverCard: React.FC<HoverCardProps> = ({
           avatar={<img src={logoUrl} />}
           sx={{ height: 32 }}
         />
-        <BookmarkApp name={name} />
+        <BookmarkApp name={name} slug={slug} />
       </Stack>
       <CardContent sx={{ overflowY: 'auto', height: 114 }}>
         {description && <Typography>{getShortDescription(description)}</Typography>}

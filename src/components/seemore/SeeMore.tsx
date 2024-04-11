@@ -30,7 +30,7 @@ import { useLazyQuery, useQuery } from '@apollo/client';
 import { getOrgHunterCharityBasic, getOrganization } from '../../query';
 import NoDataSVG from '../svgs/NoDataSVG';
 import { SkeletonCard } from '../skeletons/RenderSearchSkeleton';
-import { createWidget } from '../organizationCard/OrganizationCard';
+import { BookmarkApp, createWidget } from '../organizationCard/OrganizationCard';
 import SeeMoreTabsSkeleton from '../skeletons/SeeMoreTabsSkeleton';
 import { customScrollBar } from '../../style';
 
@@ -219,6 +219,7 @@ const SeeMoreCard: React.FC<SeeMoreCardProps> = ({
   setTimeout(() => {
     createWidget(slug);
   }, 0);
+  console.log({ slug }, '&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&');
   return (
     <Card sx={{ position: 'relative' }}>
       <CardHeader
@@ -255,6 +256,7 @@ const SeeMoreCard: React.FC<SeeMoreCardProps> = ({
                   <LinkIcon />
                 </Link>
               </Tooltip>
+              <BookmarkApp name={name} />
             </Stack>
             <Box
               width={1}

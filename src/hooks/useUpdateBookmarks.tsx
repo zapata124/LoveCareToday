@@ -13,10 +13,11 @@ const useUpdateBookmarks = () => {
     client: clientPY,
   });
 
-  const handleAddBookmark = (name: string) => {
+  const handleAddBookmark = (name: string, slug: string) => {
     addUserBookmark({
       variables: {
         bookmark: name,
+        slug: slug,
         email: cookie?.user?.email,
       },
     });

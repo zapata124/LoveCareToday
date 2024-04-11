@@ -152,6 +152,7 @@ export const getUser = gql`
     getUser(email: $email) {
       bookmarks {
         label
+        slug
       }
       email
       id
@@ -169,6 +170,7 @@ const userFragment = gql`
     name
     bookmarks {
       label
+      slug
     }
   }
 `;
@@ -214,8 +216,8 @@ export const createUser = gql`
 `;
 // make fragment to reuse email, lastname, name, id
 export const addBookmark = gql`
-  mutation Mutation($email: String, $bookmark: String) {
-    add_bookmark(email: $email, bookmark: $bookmark) {
+  mutation Mutation($email: String, $bookmark: String, $slug: String) {
+    add_bookmark(email: $email, bookmark: $bookmark, slug: $slug) {
       ...UserInput
     }
   }

@@ -29,7 +29,7 @@ const AuthenticatedUserProvider: React.FC<Children> = ({ children }) => {
     const formatUserData = {
       ...user,
       bookmarks: user?.bookmarks.reduce((currentBookmark: any, newBookmarks: any) => {
-        currentBookmark[newBookmarks.label] = newBookmarks.label;
+        currentBookmark[newBookmarks.label] = newBookmarks.slug;
         return currentBookmark;
       }, {}),
     };
