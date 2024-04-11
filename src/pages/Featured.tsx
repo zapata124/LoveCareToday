@@ -51,7 +51,7 @@ const Featured: React.FC = () => {
   // allows render of MemoFeatured component
 
   // pre fetch for the next page
-  // we can do this logging with apollo suspense and pre fetch feature !!!!!!!!!!!!!!!!!!!
+  // we can do this loggig with apollo suspence and pre fetch feature !!!!!!!!!!!!!!!!!!!
   useEffect(() => {
     if (page && page !== totalPages) {
       client.query({

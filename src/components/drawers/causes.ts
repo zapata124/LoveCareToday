@@ -1,7 +1,7 @@
 import Adoption from '../../assets/adoption.svg'
 import People from '../../assets/afghanistan.svg'
 import Art from '../../assets/art.svg'
-import Athlete from '../../assets/sport.svg'
+import Athelete from '../../assets/sport.svg'
 import Autism from '../../assets/autism.svg'
 import Buddha from '../../assets/buddhism.svg'
 import Awareness from '../../assets/cancer.svg'
@@ -46,7 +46,7 @@ export const causes: TypeCauses[] = [
     },
     {
         'cause': 'Athletics',
-        'image': Athlete
+        'image': Athelete
     },
     {
         'cause': 'Autism',

@@ -21,10 +21,10 @@ user = {
 }
 
 try:
-    # client.admin.command('ping')
+    client.admin.command('ping')
     print("Pinged your deployment. You successfully connected to MongoDB!")
     # add_user=collection.insert_one(user)
-    # current_user= collection.find_one({"name":"Eddy"})
-    # print(current_user)
+    current_user= collection.find_one({"name":"Eddy"})
+    print(current_user)
 except Exception as e:
     print(e)
