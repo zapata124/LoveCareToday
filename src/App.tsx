@@ -97,8 +97,8 @@ const Bookmarks: React.FC = () => {
 };
 
 // Set your cloud name and unsigned upload preset here:
-const CLOUD_NAME = 'dvoxqcwxj';
-const UPLOAD_PRESET = 'igagaag9';
+const CLOUD_NAME = '';
+const UPLOAD_PRESET = '';
 
 const useUpload = () => {
   // const [file, setFile] = useState<any>(null);
