@@ -11,7 +11,7 @@ interface PageProviderContext {
 interface PageProviderProp {
   children: ReactNode;
 }
-const PageProvicerContext = createContext<PageProviderContext>({
+const PageProviderContext = createContext<PageProviderContext>({
   page: 1,
   totalPages: 1,
   show: true,
@@ -36,16 +36,16 @@ const PageProvider: React.FC<PageProviderProp> = ({ children }) => {
     setShow(true);
   };
   return (
-    <PageProvicerContext.Provider
+    <PageProviderContext.Provider
       value={{ page, totalPages, show, handleShow, handleUpdatePage, handleTotalPages }}
     >
       {children}
-    </PageProvicerContext.Provider>
+    </PageProviderContext.Provider>
   );
 };
 
 export const useUpdatePage = () => {
-  const updatePage = useContext(PageProvicerContext);
+  const updatePage = useContext(PageProviderContext);
   return updatePage;
 };
 

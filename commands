@@ -1,0 +1,7 @@
+$env:FLASK_APP = "./pyserver/server.py"  
+flask run 
+flask --app ./pyserver/server run    
+ flask --app server run   
+ run flask
+ flask start
+ pip freeze > requirements.txt 

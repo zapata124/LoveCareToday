@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
-import Button from '@mui/material/Button';
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
@@ -45,7 +44,7 @@ const BottomDrawer: React.FC = () => {
 
   return (
     <div style={{ position: 'absolute' }}>
-      {/* <Button onClick={toggleDrawer} sx={{ postion: 'relative', bottom: '0px', float: 'right' }}>
+      {/* <Button onClick={toggleDrawer} sx={{ position: 'relative', bottom: '0px', float: 'right' }}>
         Bottom
       </Button> */}
       <Drawer anchor={'bottom'} open={open} onClose={toggleDrawer}>
