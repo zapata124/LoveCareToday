@@ -1,7 +1,7 @@
 from flask import (Flask, request, jsonify)
 from flask_cors import CORS
 from ariadne.explorer import ExplorerApollo
-from queries import getUser_resolver, authenticateUser_resolver, createUser_resolver, start_authentication_resolver, add_bookmark, delete_bookmark
+from queries import getUser_resolver, authenticateUser_resolver, createUser_resolver, start_authentication_resolver, add_bookmark, delete_bookmark, add_user_profile_image
 from ariadne import load_schema_from_path, make_executable_schema, \
     graphql_sync, snake_case_fallback_resolvers, ObjectType
 
@@ -23,6 +23,7 @@ query.set_field("startAuthentication", start_authentication_resolver)
 mutation.set_field("createUser", createUser_resolver)
 mutation.set_field("add_bookmark", add_bookmark)
 mutation.set_field("delete_bookmark", delete_bookmark)
+mutation.set_field("add_user_profile_image", add_user_profile_image)
 
 type_defs = load_schema_from_path("./pyserver/schema.graphql")
 schema = make_executable_schema(

@@ -45,7 +45,7 @@ def authenticateUser_resolver(obj, info, email, password):
 @convert_kwargs_to_snake_case
 def createUser_resolver(obj, info, name, lastname, email, password, confirmpassword):
     try:
-        create_new_user = {"name": name, "lastname": lastname, "email": email, "password": password, "confirmpassword": confirmpassword, "bookmarks": [] }
+        create_new_user = {"name": name, "lastname": lastname, "email": email, "password": password, "confirmpassword": confirmpassword, "avatar": None, "bookmarks": [] }
         new_user= collection.insert_one(create_new_user)
         get_new_user = collection.find_one(create_new_user)
         print(get_new_user)
@@ -57,6 +57,15 @@ def createUser_resolver(obj, info, name, lastname, email, password, confirmpassw
 def add_bookmark(obj, info, email, bookmark, slug):
     try:
         collection.update_one({ "email": email }, { "$push" : { "bookmarks": { "label" : bookmark, "slug": slug}}})
+        updated_user= collection.find_one({"email": email })
+        return updated_user
+    except Exception as error:
+        return error
+    
+@convert_kwargs_to_snake_case
+def add_user_profile_image(obj, info, email, avatar):
+    try:
+        collection.update_one({ "email": email }, { "$set" : { "avatar": avatar}})
         updated_user= collection.find_one({"email": email })
         return updated_user
     except Exception as error:

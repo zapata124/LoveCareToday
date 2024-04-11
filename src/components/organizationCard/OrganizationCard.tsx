@@ -109,6 +109,11 @@ export const BookmarkApp: React.FC<BookmarkAppProp> = ({ name, slug }) => {
   const bookmarks = cookie?.user?.bookmarks;
   const checkBookmark = bookmarks ? (bookmarks[name] ? true : false) : null;
   const fontSize = 26;
+  useEffect(() => {
+    if (bookmarked) {
+      setBookmarked(false);
+    }
+  }, [cookie]);
 
   if (!bookmarks) {
     return null;
@@ -124,12 +129,7 @@ export const BookmarkApp: React.FC<BookmarkAppProp> = ({ name, slug }) => {
     // allows for a quick update of the bookmark visually
     setBookmarked(false);
   };
-
-  useEffect(() => {
-    if (bookmarked) {
-      setBookmarked(false);
-    }
-  }, [cookie]);
+  // try removing this from here and add this component in the user profile
 
   return (
     <Box sx={{ pr: 2 }}>

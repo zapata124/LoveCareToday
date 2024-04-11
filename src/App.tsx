@@ -13,6 +13,8 @@ import {
   Stack,
   Typography,
   Collapse,
+  IconButton,
+  Input,
 } from '@mui/material';
 import { Outlet, useNavigate } from 'react-router-dom';
 import SearchBar from './components/searchbar/SearchBar';
@@ -28,10 +30,13 @@ import SingOutButton from './components/button/SignOutButton';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
-import { useUpdateBookmarks } from './hooks';
+import { useUpdateBookmarks, useAddUserImage } from './hooks';
 import { customScrollBar } from './style';
 import { DialogComponent } from './components/organizationCard/OrganizationCard';
 import SeeMore from './components/seemore';
+import { Cloudinary } from '@cloudinary/url-gen';
+import { AdvancedImage } from '@cloudinary/react';
+import { fill } from '@cloudinary/url-gen/actions/resize';
 type AppBarUserAppsType = {
   type?: 'userIsloggedIn';
 };
@@ -90,24 +95,120 @@ const Bookmarks: React.FC = () => {
     </>
   );
 };
+
+// Set your cloud name and unsigned upload preset here:
+const CLOUD_NAME = 'dvoxqcwxj';
+const UPLOAD_PRESET = 'igagaag9';
+
+const useUpload = () => {
+  // const [file, setFile] = useState<any>(null);
+  const [uploading, setUploading] = useState(false);
+  const [uploadComplete, setUploadComplete] = useState(false);
+  const [cldResponse, setCldResponse] = useState(null);
+
+  const uploadFile = async (file: any) => {
+    if (!file) {
+      console.error('Please select a file.');
+      return;
+    }
+
+    const uniqueUploadId = generateUniqueUploadId();
+    const chunkSize = 5 * 1024 * 1024;
+    const totalChunks = Math.ceil(file.size / chunkSize);
+    let currentChunk = 0;
+
+    setUploading(true);
+
+    const uploadChunk = async (start: any, end: any) => {
+      const formData = new FormData();
+      formData.append('file', file.slice(start, end));
+      formData.append('cloud_name', CLOUD_NAME);
+      formData.append('upload_preset', UPLOAD_PRESET);
+      const contentRange = `bytes ${start}-${end - 1}/${file.size}`;
+
+      console.log(
+        `Uploading chunk for uniqueUploadId: ${uniqueUploadId}; start: ${start}, end: ${end - 1}`,
+      );
+
+      try {
+        const response = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/auto/upload`, {
+          method: 'POST',
+          body: formData,
+          headers: {
+            'X-Unique-Upload-Id': uniqueUploadId,
+            'Content-Range': contentRange,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error('Chunk upload failed.');
+        }
+
+        currentChunk++;
+
+        if (currentChunk < totalChunks) {
+          const nextStart = currentChunk * chunkSize;
+          const nextEnd = Math.min(nextStart + chunkSize, file.size);
+          uploadChunk(nextStart, nextEnd);
+        } else {
+          setUploadComplete(true);
+          setUploading(false);
+
+          const fetchResponse = await response.json();
+          setCldResponse(fetchResponse);
+          console.info('File upload complete.');
+        }
+      } catch (error) {
+        console.error('Error uploading chunk:', error);
+        setUploading(false);
+      }
+    };
+
+    const start = 0;
+    const end = Math.min(chunkSize, file?.size);
+    uploadChunk(start, end);
+  };
+
+  const generateUniqueUploadId = () => {
+    return `uqid-${Date.now()}`;
+  };
+  const handleFileChange = async (event: any) => {
+    // await setFile(event.target.files[0]);
+    await uploadFile(event.target.files[0]);
+  };
+
+  return {
+    uploadFile,
+    uploading,
+    response: cldResponse as any,
+    handleFileChange,
+  };
+};
+
 const UserAvatar: React.FC = () => {
+  const { uploadFile, uploading, response, handleFileChange } = useUpload();
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const { cookie } = useAuthenticatedUser();
   const { user } = cookie;
   const { name, lastname: lastName } = user;
-
+  const { handleAddUserImage } = useAddUserImage();
   console.log(cookie);
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
 
   const handleClose = () => {
     setAnchorEl(null);
   };
-
+  useEffect(() => {
+    if (response) {
+      handleAddUserImage(response?.url);
+    }
+  }, [response]);
   const open = Boolean(anchorEl);
   console.log(open, 'open');
   const id = open ? 'simple-popover' : undefined;
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
   return (
     <Box
       sx={{
@@ -119,7 +220,7 @@ const UserAvatar: React.FC = () => {
     >
       {/* { we need to add functionality here} */}
       <Avatar
-        src='/broken-image.jpg'
+        src={cookie?.user?.avatar || '/broken-image.jpg'}
         onClick={(e) => handleClick(e as unknown as React.MouseEvent<HTMLButtonElement>)}
       />
       <Popover
@@ -146,9 +247,46 @@ const UserAvatar: React.FC = () => {
           },
         }}
       >
-        <Stack direction={'row'} spacing={2} alignItems={'center'}>
-          <Avatar src='/broken-image.jpg' sx={{ width: 56, height: 56 }} />
+        <Stack direction={'row'} spacing={5} alignItems={'center'} sx={{ ml: 4 }}>
+          <Button
+            sx={{
+              bgcolor: 'transparent',
+              ':hover': { bgcolor: 'transparent' },
+              width: 0,
+              padding: 0,
+              margin: 0,
+              minWidth: 0,
+            }}
+            component='label'
+            role={undefined}
+            variant='contained'
+            tabIndex={-1}
+            startIcon={
+              <Avatar
+                src={cookie?.user?.avatar || '/broken-image.jpg'}
+                sx={{ width: 56, height: 56 }}
+              />
+            }
+          >
+            <Input
+              type='file'
+              sx={{
+                clip: 'rect(0 0 0 0)',
+                clipPath: 'inset(50%)',
+                height: 1,
+                overflow: 'hidden',
+                position: 'absolute',
+                bottom: 0,
+                left: 0,
+                whiteSpace: 'nowrap',
+                width: 1,
+              }}
+              onChange={(e: any) => handleFileChange(e)}
+            />
+          </Button>
+
           <Typography fontWeight={600} fontSize={20}>{`${name} ${lastName}`}</Typography>
+          {/* <Chunked /> */}
         </Stack>
         <Stack padding={2}>
           <Typography>Total Donations</Typography>

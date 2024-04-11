@@ -8,6 +8,7 @@ type User {
   name: String
   lastname: String
   email: String
+  avatar: String
   bookmarks: [Bookmark]
 }
 
@@ -31,4 +32,5 @@ type Mutation {
   ): User
   add_bookmark(email: String, bookmark: String, slug: String): User
   delete_bookmark(email: String, bookmark: String): User
+  add_user_profile_image(email: String, avatar: String): User
 }

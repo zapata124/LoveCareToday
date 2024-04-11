@@ -158,6 +158,7 @@ export const getUser = gql`
       id
       lastname
       name
+      avatar
     }
   }
 `;
@@ -168,6 +169,7 @@ const userFragment = gql`
     id
     lastname
     name
+    avatar
     bookmarks {
       label
       slug
@@ -227,6 +229,15 @@ export const addBookmark = gql`
 export const deleteBookmark = gql`
   mutation Mutation($bookmark: String, $email: String) {
     delete_bookmark(bookmark: $bookmark, email: $email) {
+      ...UserInput
+    }
+  }
+  ${userFragment}
+`;
+
+export const addUserProfileImage = gql`
+  mutation Mutation($email: String, $avatar: String) {
+    add_user_profile_image(email: $email, avatar: $avatar) {
       ...UserInput
     }
   }
