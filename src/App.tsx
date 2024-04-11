@@ -60,11 +60,13 @@ const Bookmarks: React.FC = () => {
           bgcolor: '#f0f0f0',
           overflowY: 'scroll',
           ...customScrollBar,
+          borderRadius: '12px',
+          mb: 2,
         }}
       >
         {arrBookmarks.map((bookmark: string) => {
           return (
-            <List component='div' disablePadding key={bookmark}>
+            <List disablePadding key={bookmark}>
               <Stack direction={'row'} alignItems={'center'}>
                 <DialogComponent
                   contentComponent={<SeeMore nonProfit={bookmark} slug={bookmark} />}
@@ -139,6 +141,7 @@ const UserAvatar: React.FC = () => {
             style: {
               width: 400,
               padding: 20,
+              borderRadius: '12px',
             },
           },
         }}
