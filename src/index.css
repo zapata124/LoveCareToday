@@ -1,8 +1,3 @@
-:root {
-  /* --font-family: "Courgette-Regular";
-  --font-family: "DancingScript-Regular"; */
-  font-family: "Satisfy-Regular"
-}
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -11,23 +6,9 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow: hidden;
-  /* --font-family: "Satisfy-Regular" */
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
-}
-
-@font-face {
-  font-family: 'Satisfy-Regular';
-  src: local('Satisfy-Regular'), url(./font/Satisfy-Regular.ttf) format('opentype');
-}
-@font-face {
-  font-family: 'DancingScript-Regular';
-  src: local('DancingScript-Regular'), url(./font/DancingScript-Regular.ttf) format('opentype');
-}
-@font-face {
-  font-family: 'Courgette-Regular';
-  src: local('Courgette-Regular'), url(./font/Courgette-Regular.ttf) format('opentype');
 }

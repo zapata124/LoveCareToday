@@ -37,7 +37,7 @@ const MobilePagination: React.FC = () => {
       handleUpdatePage(page - 1);
     }
   };
-  const handleNextPage = () => {
+  const handleNexrPage = () => {
     if (page !== totalPages) {
       handleUpdatePage(page + 1);
     }
@@ -69,7 +69,7 @@ const MobilePagination: React.FC = () => {
           {createMenus(totalPages)}
         </Select>
       </FormControl>
-      <Button size='small' onClick={handleNextPage} disabled={page === totalPages ? true : false}>
+      <Button size='small' onClick={handleNexrPage} disabled={page === totalPages ? true : false}>
         <KeyboardArrowRightIcon />
       </Button>
     </Stack>

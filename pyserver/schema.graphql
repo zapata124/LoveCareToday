@@ -1,36 +1,15 @@
-type Bookmark {
-  label: String
-  slug: String
-}
-
 type User {
   id: String
   name: String
-  lastname: String
+  lastName: String
   email: String
-  avatar: String
-  bookmarks: [Bookmark]
-}
-
-type Passcode {
-  passcode: String
 }
 
 type Query {
-  getUser(email: String): User
-  startAuthentication(email: String): Passcode
+  getUser: User
   authenticateUser(email: String, password: String): User
 }
 
 type Mutation {
-  createUser(
-    name: String
-    lastname: String
-    email: String
-    password: String
-    confirmpassword: String
-  ): User
-  add_bookmark(email: String, bookmark: String, slug: String): User
-  delete_bookmark(email: String, bookmark: String): User
-  add_user_profile_image(email: String, avatar: String): User
+  createUser(name: String, lastname: String, email: String, password: String): User
 }

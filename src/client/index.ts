@@ -8,8 +8,3 @@ export const client = new ApolloClient({
     // uri: 'https://cyq257r5ci.execute-api.us-east-1.amazonaws.com/dev/graphql',
     cache: new InMemoryCache(),
   });
-export const clientPY = new ApolloClient({
-    uri: 'http://127.0.0.1:5000/graphql',
-    // uri: 'https://cyq257r5ci.execute-api.us-east-1.amazonaws.com/dev/graphql',
-    cache: new InMemoryCache(),
-  });

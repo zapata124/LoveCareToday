@@ -115,8 +115,7 @@
                   "Effect": "Allow",
                   "Action": [
                     "logs:CreateLogStream",
-                    "logs:CreateLogGroup",
-                    "logs:TagResource"
+                    "logs:CreateLogGroup"
                   ],
                   "Resource": [
                     {
@@ -162,7 +161,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/apollo-lambda/dev/1710390257368-2024-03-14T04:24:17.368Z/apollo-lambda.zip"
+          "S3Key": "serverless/apollo-lambda/dev/1708969779075-2024-02-26T17:49:39.075Z/apollo-lambda.zip"
         },
         "Handler": "lambda/server.graphqlHandler",
         "Runtime": "nodejs16.x",
@@ -180,14 +179,14 @@
         "GraphqlLogGroup"
       ]
     },
-    "GraphqlLambdaVersion6NXKpdHoc2EttmL6ze66tYcwPMmMZuRB8tssY61AvDE": {
+    "GraphqlLambdaVersionAvP0YSinCKy6olyYKJD7ifbWYBCgL80Zyrp0q51rHE": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "GraphqlLambdaFunction"
         },
-        "CodeSha256": "eUx1AWePuDBuqmIzHnQD0EBY0XTHjYqZCRA4bUGip/Q="
+        "CodeSha256": "cFq2bg4gXgCwmmObzLloQaKU+2aRuWr++ztg/t7Lbs4="
       }
     },
     "ApiGatewayRestApi": {
@@ -354,7 +353,7 @@
         "GraphqlLambdaPermissionApiGateway"
       ]
     },
-    "ApiGatewayDeployment1710389939962": {
+    "ApiGatewayDeployment1708969742785": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -418,7 +417,7 @@
     "GraphqlLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "GraphqlLambdaVersion6NXKpdHoc2EttmL6ze66tYcwPMmMZuRB8tssY61AvDE"
+        "Ref": "GraphqlLambdaVersionAvP0YSinCKy6olyYKJD7ifbWYBCgL80Zyrp0q51rHE"
       },
       "Export": {
         "Name": "sls-apollo-lambda-dev-GraphqlLambdaFunctionQualifiedArn"

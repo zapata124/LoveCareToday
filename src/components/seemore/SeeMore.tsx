@@ -30,9 +30,8 @@ import { useLazyQuery, useQuery } from '@apollo/client';
 import { getOrgHunterCharityBasic, getOrganization } from '../../query';
 import NoDataSVG from '../svgs/NoDataSVG';
 import { SkeletonCard } from '../skeletons/RenderSearchSkeleton';
-import { BookmarkApp, createWidget } from '../organizationCard/OrganizationCard';
+import { createWidget } from '../organizationCard/OrganizationCard';
 import SeeMoreTabsSkeleton from '../skeletons/SeeMoreTabsSkeleton';
-import { customScrollBar } from '../../style';
 
 const FallBackState: React.FC<Children> = ({ children }) => {
   return (
@@ -207,7 +206,7 @@ const SeeMoreCard: React.FC<SeeMoreCardProps> = ({
   const { street, city, state, zipCode, country, assetAmount, form990 } = data
     ? data.charityBasic
     : defaultData;
-
+  console.log({ data });
   useEffect(() => {
     if (ein) {
       getHunterData({
@@ -219,7 +218,6 @@ const SeeMoreCard: React.FC<SeeMoreCardProps> = ({
   setTimeout(() => {
     createWidget(slug);
   }, 0);
-  console.log({ slug }, '&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&');
   return (
     <Card sx={{ position: 'relative' }}>
       <CardHeader
@@ -256,14 +254,22 @@ const SeeMoreCard: React.FC<SeeMoreCardProps> = ({
                   <LinkIcon />
                 </Link>
               </Tooltip>
-              <BookmarkApp name={name} />
             </Stack>
             <Box
               width={1}
               height={250}
               overflow={'auto'}
               sx={{
-                ...customScrollBar,
+                '&::-webkit-scrollbar': {
+                  width: '0.4em',
+                },
+                '&::-webkit-scrollbar-track': {
+                  WebkitBoxShadow: 'inset 0 0 6px rgba(0,0,0,0.00)',
+                },
+                '&::-webkit-scrollbar-thumb': {
+                  backgroundColor: 'rgba(0,0,0,.1)',
+                  borderRadius: '8px',
+                },
               }}
             >
               <Typography>{shortDescription}</Typography>
@@ -307,19 +313,18 @@ const addDash = (str: string) => {
   return str.replace(/\s+/g, '-');
 };
 interface SeeMoreProp {
-  nonProfit: string;
+  nonPropfit: string;
   slug: string;
 }
 
-const SeeMore: React.FC<SeeMoreProp> = ({ nonProfit, slug }) => {
+const SeeMore: React.FC<SeeMoreProp> = ({ nonPropfit, slug }) => {
   const { loading, error, data } = useQuery(getOrganization, {
-    variables: { name: addDash(nonProfit) },
+    variables: { name: addDash(nonPropfit) },
   });
 
   const parsedData = data ? JSON.parse(data?.organization?.organization) : undefined;
 
   // we need error handlers here
-
   return (
     <>
       {!loading ? (
