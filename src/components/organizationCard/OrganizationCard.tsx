@@ -134,7 +134,7 @@ const BookmarkApp: React.FC<BookmarkAppProp> = ({ name }) => {
   return (
     <Box sx={{ pr: 2 }}>
       {checkBookmark || bookmarked ? (
-        <BookmarkIcon sx={{ fontSize: fontSize }} onClick={removeBookmark} />
+        <BookmarkIcon sx={{ fontSize: fontSize, color: '#FFA500' }} onClick={removeBookmark} />
       ) : (
         <BookmarkBorderIcon sx={{ fontSize: fontSize }} onClick={setBookmark} />
       )}
@@ -193,8 +193,6 @@ const HoverCard: React.FC<HoverCardProps> = ({
             contentComponent={<SeeMore nonProfit={name} slug={slug} />}
             actionComponent={<Button>See more</Button>}
           />
-          {/* <SeeMore nonProfit={name} slug={slug} />
-          </DialogComponent> */}
           {children}
         </Stack>
       </CardActions>

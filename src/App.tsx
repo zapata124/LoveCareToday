@@ -65,23 +65,23 @@ const Bookmarks: React.FC = () => {
         {arrBookmarks.map((bookmark: string) => {
           return (
             <List component='div' disablePadding key={bookmark}>
-              <DialogComponent
-                contentComponent={<SeeMore nonProfit={bookmark} slug={bookmark} />}
-                actionComponent={
-                  <ListItemButton sx={{ pl: 4 }}>
-                    <ListItemText primary={bookmark} />
-                    <ListItemIcon>
-                      <BookmarkIcon sx={{ ml: 2 }} onClick={() => handleDeleteBookmark(bookmark)} />
-                    </ListItemIcon>
-                  </ListItemButton>
-                }
-              />
-              {/* <ListItemButton sx={{ pl: 4 }}>
-                <ListItemText primary={bookmark} />
-                <ListItemIcon>
-                  <BookmarkIcon sx={{ ml: 2 }} onClick={() => handleDeleteBookmark(bookmark)} />
+              <Stack direction={'row'} alignItems={'center'}>
+                <DialogComponent
+                  contentComponent={<SeeMore nonProfit={bookmark} slug={bookmark} />}
+                  actionComponent={
+                    <ListItemButton sx={{ pl: 4 }}>
+                      <ListItemText primary={bookmark} />
+                    </ListItemButton>
+                  }
+                />
+
+                <ListItemIcon sx={{ ':hover': { cursor: 'pointer' } }}>
+                  <BookmarkIcon
+                    sx={{ ml: 2, ':hover': { color: '#c70000' }, color: '#FFA500' }}
+                    onClick={() => handleDeleteBookmark(bookmark)}
+                  />
                 </ListItemIcon>
-              </ListItemButton> */}
+              </Stack>
             </List>
           );
         })}
