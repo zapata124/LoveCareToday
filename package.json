@@ -65,7 +65,7 @@
   "devDependencies": {
     "@types/crypto-js": "^4.2.2",
     "@types/mui-image": "^1.0.3",
-    "@types/node": "^18.14.0",
+    "@types/node": "^18.19.31",
     "@types/react": "^18.0.26",
     "@types/react-big-calendar": "^1.6.3",
     "@types/react-custom-scrollbars": "^4.0.13",
