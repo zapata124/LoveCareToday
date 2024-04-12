@@ -1,13 +1,12 @@
 from ariadne import convert_kwargs_to_snake_case
 from db import (collection)
-
+import os
 import mailtrap as mt
 import random
 
 def getUser_resolver(obj, info, email):
     try:
         current_user= collection.find_one({"email":email})
-        # print(obj, info)
         return current_user
     except Exception as error:
         return error
@@ -27,7 +26,7 @@ def start_authentication_resolver(obj, info, email):
         text="This is your pass code:" + str(random_number),
         category="Integration Test",
         )
-        client = mt.MailtrapClient(token="873201b3c771331914e15cec07a6d65c")
+        client = mt.MailtrapClient(token=os.environ.get('MAIL_TOKE'))
         client.send(mail)
 
         return { "passcode": "Passcode sent to email" + email}
