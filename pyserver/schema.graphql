@@ -9,6 +9,7 @@ type User {
   lastname: String
   email: String
   avatar: String
+  created: String
   bookmarks: [Bookmark]
 }
 

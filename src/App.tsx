@@ -203,7 +203,7 @@ const UserAvatar: React.FC = () => {
           <Typography>Total Donations</Typography>
           <Typography>All Donations</Typography>
           <Bookmarks />
-          <Typography>Registered Date</Typography>
+          <Typography>Registered Date: {cookie.user.created}</Typography>
         </Stack>
         <Box width={1} sx={{ display: 'flex', justifyContent: 'flex-end' }}>
           <SingOutButton />

@@ -3,6 +3,7 @@ from db import (collection)
 import os
 import mailtrap as mt
 import random
+from datetime import date
 
 def getUser_resolver(obj, info, email):
     try:
@@ -15,6 +16,8 @@ def getUser_resolver(obj, info, email):
 def start_authentication_resolver(obj, info, email):
     try:
         print(email)
+        current_date = date.today()
+        print(current_date)
         random_number = random.randrange(10000, 99999)
         update_user_passcode = collection.update_one({ "email": email }, { "$set" : { "password": str(random_number)}})
         # hostname = socket.gethostname()
@@ -29,9 +32,10 @@ def start_authentication_resolver(obj, info, email):
         client = mt.MailtrapClient(token=os.environ.get('MAIL_TOKE'))
         client.send(mail)
 
-        return { "passcode": "Passcode sent to email" + email}
+        return { "passcode": "Passcode sent to email" + email }
     except Exception as error:
         return error
+    
 @convert_kwargs_to_snake_case
 def authenticateUser_resolver(obj, info, email, password):
     try:
@@ -44,7 +48,7 @@ def authenticateUser_resolver(obj, info, email, password):
 @convert_kwargs_to_snake_case
 def createUser_resolver(obj, info, name, lastname, email, password, confirmpassword):
     try:
-        create_new_user = {"name": name, "lastname": lastname, "email": email, "password": password, "confirmpassword": confirmpassword, "avatar": None, "bookmarks": [] }
+        create_new_user = {"name": name, "lastname": lastname, "email": email, "password": password, "confirmpassword": confirmpassword, "avatar": None, "created": str(date.today()), "bookmarks": [] }
         new_user= collection.insert_one(create_new_user)
         get_new_user = collection.find_one(create_new_user)
         print(get_new_user)
