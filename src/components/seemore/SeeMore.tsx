@@ -256,7 +256,7 @@ const SeeMoreCard: React.FC<SeeMoreCardProps> = ({
                   <LinkIcon />
                 </Link>
               </Tooltip>
-              <BookmarkApp name={name} />
+              <BookmarkApp name={name} slug={slug} />
             </Stack>
             <Box
               width={1}
