@@ -107,7 +107,7 @@ export const getOrgHunterCharityBasic = gql`
     charityBasic(ein: $ein) {
       ein
       name
-      inCareOfName 
+      inCareOfName
       street
       city
       state
@@ -145,4 +145,101 @@ export const getOrgHunterCharityBasic = gql`
       acceptingDonations
     }
   }
+`;
+
+export const getUser = gql`
+  query Query($email: String) {
+    getUser(email: $email) {
+      bookmarks {
+        label
+        slug
+      }
+      email
+      id
+      lastname
+      name
+      avatar
+    }
+  }
+`;
+
+const userFragment = gql`
+  fragment UserInput on User {
+    email
+    id
+    lastname
+    name
+    avatar
+    bookmarks {
+      label
+      slug
+    }
+  }
+`;
+
+export const authenticateUser = gql`
+  query AuthenticateUser($email: String, $password: String) {
+    authenticateUser(email: $email, password: $password) {
+      ...UserInput
+    }
+  }
+  ${userFragment}
+`;
+
+export const startAuthentication = gql`
+  query Query($email: String) {
+    startAuthentication(email: $email) {
+      passcode
+    }
+  }
+`;
+
+export const createUser = gql`
+  mutation Mutation(
+    $name: String
+    $lastname: String
+    $email: String
+    $password: String
+    $confirmpassword: String
+  ) {
+    createUser(
+      name: $name
+      lastname: $lastname
+      email: $email
+      password: $password
+      confirmpassword: $confirmpassword
+    ) {
+      email
+      id
+      lastname
+      name
+    }
+  }
+`;
+// make fragment to reuse email, lastname, name, id
+export const addBookmark = gql`
+  mutation Mutation($email: String, $bookmark: String, $slug: String) {
+    add_bookmark(email: $email, bookmark: $bookmark, slug: $slug) {
+      ...UserInput
+    }
+  }
+  ${userFragment}
+`;
+
+export const deleteBookmark = gql`
+  mutation Mutation($bookmark: String, $email: String) {
+    delete_bookmark(bookmark: $bookmark, email: $email) {
+      ...UserInput
+    }
+  }
+  ${userFragment}
+`;
+
+export const addUserProfileImage = gql`
+  mutation Mutation($email: String, $avatar: String) {
+    add_user_profile_image(email: $email, avatar: $avatar) {
+      ...UserInput
+    }
+  }
+  ${userFragment}
 `;

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ReactElement, ReactNode, useEffect, useState } from 'react';
 import {
   Grid,
   Card,
@@ -17,11 +17,22 @@ import {
   Box,
 } from '@mui/material';
 import StockImage from '../../assets/charity-8366471_1280.png';
-import Scrollbars from 'react-custom-scrollbars';
 import SeeMore from '../seemore/SeeMore';
 import CloseIcon from '@mui/icons-material/Close';
+import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
+import BookmarkIcon from '@mui/icons-material/Bookmark';
+import { useAuthenticatedUser } from '../../providers/AuthenticatedUserProvider';
+import { useLazyQuery, useMutation } from '@apollo/client';
+import { clientPY } from '../../client';
+import { addBookmark, deleteBookmark } from '../../query';
+import { useUpdateBookmarks } from '../../hooks';
+import { customScrollBar } from '../../style';
 
-export const DialogComponent: React.FC<Children> = ({ children }) => {
+interface TestProps {
+  contentComponent: ReactNode;
+  actionComponent: ReactElement;
+}
+export const DialogComponent: React.FC<TestProps> = ({ contentComponent, actionComponent }) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => {
     setOpen(!open);
@@ -29,9 +40,10 @@ export const DialogComponent: React.FC<Children> = ({ children }) => {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
+  const onClickComponent = React.cloneElement(actionComponent, { onClick: () => handleOpen() });
   return (
     <>
-      <Button onClick={handleOpen}>See more</Button>
+      {onClickComponent}
       <Dialog
         fullScreen={fullScreen}
         open={open}
@@ -40,7 +52,7 @@ export const DialogComponent: React.FC<Children> = ({ children }) => {
         aria-describedby='alert-dialog-description'
         maxWidth='lg'
         // zIndex = 99 allows to render the donate dialog on top of this current dialog
-        sx={{ zIndex: 99, postion: 'relative' }}
+        sx={{ zIndex: 99 }}
       >
         {fullScreen && (
           <Box
@@ -56,7 +68,7 @@ export const DialogComponent: React.FC<Children> = ({ children }) => {
             <CloseIcon onClick={handleOpen} />
           </Box>
         )}
-        <DialogContent sx={{ padding: 0 }}>{children}</DialogContent>
+        <DialogContent sx={{ padding: 0 }}>{contentComponent}</DialogContent>
       </Dialog>
     </>
   );
@@ -88,6 +100,54 @@ export const createWidget = (slug: string) => {
     nonprofitSlug: slug,
   });
 };
+
+type BookmarkAppProp = { name: string; slug: string };
+export const BookmarkApp: React.FC<BookmarkAppProp> = ({ name, slug }) => {
+  const [bookmarked, setBookmarked] = useState(false);
+  const { handleAddBookmark, handleDeleteBookmark } = useUpdateBookmarks();
+  const { cookie } = useAuthenticatedUser();
+  const bookmarks = cookie?.user?.bookmarks;
+  const checkBookmark = bookmarks ? (bookmarks[name] ? true : false) : null;
+  const fontSize = 26;
+  useEffect(() => {
+    if (bookmarked) {
+      setBookmarked(false);
+    }
+  }, [cookie]);
+
+  if (!bookmarks) {
+    return null;
+  }
+  const setBookmark = () => {
+    handleAddBookmark(name, slug);
+    // allows for a quick update of the bookmark visually
+    setBookmarked(true);
+  };
+
+  const removeBookmark = () => {
+    handleDeleteBookmark(name);
+    // allows for a quick update of the bookmark visually
+    setBookmarked(false);
+  };
+  // try removing this from here and add this component in the user profile
+
+  return (
+    <Box sx={{ pr: 2 }}>
+      {checkBookmark || bookmarked ? (
+        <BookmarkIcon
+          sx={{ fontSize: fontSize, color: '#FFA500', ':hover': { cursor: 'pointer' } }}
+          onClick={removeBookmark}
+        />
+      ) : (
+        <BookmarkBorderIcon
+          sx={{ fontSize: fontSize, ':hover': { cursor: 'pointer' } }}
+          onClick={setBookmark}
+        />
+      )}
+    </Box>
+  );
+};
+
 const HoverCard: React.FC<HoverCardProps> = ({
   children,
   name,
@@ -121,20 +181,24 @@ const HoverCard: React.FC<HoverCardProps> = ({
         height={140}
         image={coverImageUrl ? coverImageUrl : StockImage}
       />
-      <CardHeader
-        title={name}
-        subheader={slug}
-        avatar={<img src={logoUrl} />}
-        sx={{ height: 32 }}
-      />
+      <Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'}>
+        <CardHeader
+          title={name}
+          subheader={slug}
+          avatar={<img src={logoUrl} />}
+          sx={{ height: 32 }}
+        />
+        <BookmarkApp name={name} slug={slug} />
+      </Stack>
       <CardContent sx={{ overflowY: 'auto', height: 114 }}>
         {description && <Typography>{getShortDescription(description)}</Typography>}
       </CardContent>
       <CardActions sx={{ height: 40, justifyContent: websiteUrl ? 'space-between' : 'flex-end' }}>
         <Stack direction={'row'} justifyContent={'space-between'} width={1}>
-          <DialogComponent>
-            <SeeMore nonPropfit={name} slug={slug} />
-          </DialogComponent>
+          <DialogComponent
+            contentComponent={<SeeMore nonProfit={name} slug={slug} />}
+            actionComponent={<Button>See more</Button>}
+          />
           {children}
         </Stack>
       </CardActions>
@@ -150,10 +214,13 @@ interface OrganizationCardProps {
 
 const OrganizationCard: React.FC<OrganizationCardProps> = ({ data, Featured }) => {
   return (
-    <Scrollbars style={{ width: '100%', height: '100%' }}>
+    <Box width={1} height={1} sx={{ overflowY: 'scroll', ...customScrollBar }}>
       {Featured}
       <Grid container spacing={2} sx={{ pt: 2, pb: 2, pr: 1 }}>
         {data?.map((item: any, index: number) => {
+          if (!item.coverImageUrl) {
+            return null;
+          }
           return (
             <Grow
               in={true}
@@ -183,7 +250,7 @@ const OrganizationCard: React.FC<OrganizationCardProps> = ({ data, Featured }) =
           );
         })}
       </Grid>
-    </Scrollbars>
+    </Box>
   );
 };
 

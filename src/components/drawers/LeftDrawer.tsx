@@ -19,6 +19,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSwipeable } from 'react-swipeable';
 import { SwipeCallback } from 'react-swipeable/es/types';
 import { useChangeZIndex } from '../../providers/ChangeZIndexProvider';
+
 interface CausesListProps {
   open: boolean;
   causes: TypeCauses[];
