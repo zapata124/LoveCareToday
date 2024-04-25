@@ -159,6 +159,7 @@ export const getUser = gql`
       lastname
       name
       avatar
+      created
     }
   }
 `;
@@ -170,6 +171,7 @@ const userFragment = gql`
     lastname
     name
     avatar
+    created
     bookmarks {
       label
       slug

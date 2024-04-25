@@ -54,20 +54,11 @@ type Organization {
 }
 type Query {
   search(search: String, take: Int): [Search]
-}
-type Query {
   nonprofit(take: Int): [Nonprofit]
-}
-type Query {
   cause(browse: String, take: Int, page: Int): GetCauses
-}
-type Query {
   searchBar(arg: String): SearchBar
-}
-type Query {
   organization(name: String): Organization
 }
-
 
 
 type SearchSummary {
@@ -93,6 +84,7 @@ type SearchSummary {
   latitude: String
   longitude: String 
 }
+
 type CharityBasic {
   ein: Int
   name: String        
@@ -135,8 +127,6 @@ type CharityBasic {
 }
 type Query {
   searchSummary(tearm: String): [SearchSummary]
-}
-type Query {
   charityBasic(ein: Int): CharityBasic
 }
 `;
