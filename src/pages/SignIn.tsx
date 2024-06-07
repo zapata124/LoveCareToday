@@ -22,7 +22,9 @@ import SignUpButton from '../components/button/SignUpButton';
 import { useNavigate } from 'react-router-dom';
 import { useAuthenticatedUser } from '../providers/AuthenticatedUserProvider';
 import Bookmark from '@mui/icons-material/Bookmark';
-
+import AuthenticationFormProvider, {
+  useAuthenticationFormState,
+} from '../providers/AuthenticationFormProvider';
 interface InputCompProps {
   label: string;
   type: string;
@@ -170,14 +172,13 @@ const PasscodeForm: React.FC<PasscodeFormProp> = ({ formEmail }) => {
 };
 
 const AuthenticationForms: React.FC = () => {
-  const [formEmail, setFormEmail] = useState<string | null>(null);
-
+  const { formEmail, handleSetEmail } = useAuthenticationFormState();
   return (
     <>
       {formEmail ? (
         <PasscodeForm formEmail={formEmail} />
       ) : (
-        <EmailForm updateEmail={setFormEmail} />
+        <EmailForm updateEmail={handleSetEmail} />
       )}
     </>
   );
@@ -195,20 +196,26 @@ const SignIn: React.FC = () => {
     >
       <Paper sx={{ width: 420, px: 4, pt: 4, pb: 1 }}>
         <Stack spacing={1} sx={{ position: 'relative' }} alignItems={'center'}>
-          <Box sx={{ position: 'absolute', left: -32, top: -32 }}>
-            <BackButton />
-          </Box>
-          <Box width={1} sx={{ display: 'flex', justifyContent: 'center' }}>
-            <Stack>
-              <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                <img src={LoveCareTodayLogo.toString()} alt='lovecaretoday-logo' width={'110rem'} />
-              </Box>
-              <Typography variant={'h5'}>Welcome to Love Care Today</Typography>
-            </Stack>
-          </Box>
-          <Box width={1}>
-            <AuthenticationForms />
-          </Box>
+          <AuthenticationFormProvider>
+            <Box sx={{ position: 'absolute', left: -32, top: -32 }}>
+              <BackButton />
+            </Box>
+            <Box width={1} sx={{ display: 'flex', justifyContent: 'center' }}>
+              <Stack>
+                <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                  <img
+                    src={LoveCareTodayLogo.toString()}
+                    alt='lovecaretoday-logo'
+                    width={'110rem'}
+                  />
+                </Box>
+                <Typography variant={'h5'}>Welcome to Love Care Today</Typography>
+              </Stack>
+            </Box>
+            <Box width={1}>
+              <AuthenticationForms />
+            </Box>
+          </AuthenticationFormProvider>
         </Stack>
       </Paper>
     </Box>

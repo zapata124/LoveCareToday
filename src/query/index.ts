@@ -196,6 +196,14 @@ export const startAuthentication = gql`
   }
 `;
 
+export const terminateUserAuthentication = gql`
+  mutation Mutation($email: String) {
+    terminateUser_authentication(email: $email) {
+      status
+    }
+  }
+`;
+
 export const createUser = gql`
   mutation Mutation(
     $name: String

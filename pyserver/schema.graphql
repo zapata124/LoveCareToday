@@ -13,6 +13,10 @@ type User {
   bookmarks: [Bookmark]
 }
 
+type LogOffUser {
+  status: String
+}
+
 type Passcode {
   passcode: String
 }
@@ -34,4 +38,5 @@ type Mutation {
   add_bookmark(email: String, bookmark: String, slug: String): User
   delete_bookmark(email: String, bookmark: String): User
   add_user_profile_image(email: String, avatar: String): User
+  terminateUser_authentication(email: String): LogOffUser
 }

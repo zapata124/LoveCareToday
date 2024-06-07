@@ -28,11 +28,14 @@ import { addBookmark, deleteBookmark } from '../../query';
 import { useUpdateBookmarks } from '../../hooks';
 import { customScrollBar } from '../../style';
 
-interface TestProps {
+interface DialogComponentProps {
   contentComponent: ReactNode;
   actionComponent: ReactElement;
 }
-export const DialogComponent: React.FC<TestProps> = ({ contentComponent, actionComponent }) => {
+export const DialogComponent: React.FC<DialogComponentProps> = ({
+  contentComponent,
+  actionComponent,
+}) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => {
     setOpen(!open);
@@ -54,6 +57,20 @@ export const DialogComponent: React.FC<TestProps> = ({ contentComponent, actionC
         // zIndex = 99 allows to render the donate dialog on top of this current dialog
         sx={{ zIndex: 99 }}
       >
+        {!fullScreen && (
+          <Box
+            sx={{
+              position: 'absolute',
+              zIndex: 1,
+              top: 0,
+              right: 0,
+              bgcolor: 'white',
+              borderRadius: '8px 0 8px',
+            }}
+          >
+            <CloseIcon onClick={handleOpen} />
+          </Box>
+        )}
         {fullScreen && (
           <Box
             sx={{

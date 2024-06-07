@@ -5,6 +5,8 @@ import mailtrap as mt
 import random
 from datetime import date
 
+#### we can possibly add a create a union or a interface for some of this functions
+
 def getUser_resolver(obj, info, email):
     try:
         current_user= collection.find_one({"email":email})
@@ -12,7 +14,7 @@ def getUser_resolver(obj, info, email):
     except Exception as error:
         return error
 
-@convert_kwargs_to_snake_case
+
 def start_authentication_resolver(obj, info, email):
     try:
         print(email)
@@ -31,12 +33,17 @@ def start_authentication_resolver(obj, info, email):
         )
         client = mt.MailtrapClient(token=os.environ.get('MAIL_TOKE'))
         client.send(mail)
+        success_full_update= update_user_passcode.matched_count > 0
+        # for record in cursor:
+        #     print(record)
+        
+        print('success!!', success_full_update)
 
-        return { "passcode": "Passcode sent to email" + email }
+        return { "passcode": success_full_update if email else None  }
     except Exception as error:
         return error
     
-@convert_kwargs_to_snake_case
+
 def authenticateUser_resolver(obj, info, email, password):
     try:
         current_user= collection.find_one({"email": email, "password": password})
@@ -45,7 +52,16 @@ def authenticateUser_resolver(obj, info, email, password):
     except Exception as error: 
         return error
     
-@convert_kwargs_to_snake_case
+def terminateUser_authentication(obj, info, email):
+    try:
+        print(email, '############')
+        current_user= collection.update_one({ "email": email }, { "$set" : { "password": None }})
+        print(current_user, email)
+        # need to validate that the user was found 
+        return { "status": 'User successfully logged off' }
+    except Exception as error:
+        return error
+    
 def createUser_resolver(obj, info, name, lastname, email, password, confirmpassword):
     try:
         create_new_user = {"name": name, "lastname": lastname, "email": email, "password": password, "confirmpassword": confirmpassword, "avatar": None, "created": str(date.today()), "bookmarks": [] }
@@ -56,7 +72,7 @@ def createUser_resolver(obj, info, name, lastname, email, password, confirmpassw
     except Exception as error:
         return error
     
-@convert_kwargs_to_snake_case
+
 def add_bookmark(obj, info, email, bookmark, slug):
     try:
         collection.update_one({ "email": email }, { "$push" : { "bookmarks": { "label" : bookmark, "slug": slug}}})
@@ -65,7 +81,7 @@ def add_bookmark(obj, info, email, bookmark, slug):
     except Exception as error:
         return error
     
-@convert_kwargs_to_snake_case
+
 def add_user_profile_image(obj, info, email, avatar):
     try:
         collection.update_one({ "email": email }, { "$set" : { "avatar": avatar}})
@@ -74,7 +90,7 @@ def add_user_profile_image(obj, info, email, avatar):
     except Exception as error:
         return error
     
-@convert_kwargs_to_snake_case
+
 def delete_bookmark(obj, info, email, bookmark):
     try:
         collection.update_one({ "email": email }, { "$pull" : { "bookmarks": { "label" : bookmark}}})
